@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 427ce6fc29c2d9946975b0f5292f1b97, type: 3}
+  m_Name: SampleScenario
+  m_EditorClassIdentifier: Assembly-CSharp::StormWaits.ScenarioTaskSet
+  scenarioName: Sample (HHI based)
+  tasks:
+  - {fileID: 11400000, guid: 14421b2e1b3e9d640b72a11e02158a7a, type: 2}
+  - {fileID: 11400000, guid: 091bd2c3ea659f8448916545aa798eaa, type: 2}
+  - {fileID: 11400000, guid: bba5967fb3b50ed45b5439718b2771d3, type: 2}
+  - {fileID: 11400000, guid: 3143ace6fa67b2f4087a6b2c776f69c2, type: 2}
+  - {fileID: 11400000, guid: 764671656186d3846b58fbf89bea7227, type: 2}
+  - {fileID: 11400000, guid: 0597ac2387e6b8249aabc86433719c3c, type: 2}
+  - {fileID: 11400000, guid: 3d383392582eb4b4294b97db4ba80b69, type: 2}
+  - {fileID: 11400000, guid: 8fb73574db086ab4fa9511c6c86f210c, type: 2}
+  - {fileID: 11400000, guid: 0e234e705a054024982d53b5747243fe, type: 2}
+  - {fileID: 11400000, guid: 9ea2e202740d0bd4091af7065a13a130, type: 2}
+  - {fileID: 11400000, guid: be5d49db71a17b445ba2b99ac69f5e46, type: 2}
+  - {fileID: 11400000, guid: baed1eaaf642a22408f3636f0f8737fb, type: 2}

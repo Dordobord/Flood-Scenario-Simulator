@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a0c41bd47bc5fb4ca678d1b5906f842, type: 3}
+  m_Name: GameSettings
+  m_EditorClassIdentifier: Assembly-CSharp::StormWaits.GameSettings
+  interactKey: 19
+  actionKey: 19
+  cursorToggleKey: 60
+  cancelMinigameKey: 65
+  allowMouseClick: 1
+  freeCursorForSelectCorrect: 0
+  freeCursorForDragToBag: 1
+  freeCursorForGridPack: 1
+  logInput: 0
+  interactRange: 3
+  promptFormat: '[{0}] {1}'
+  successDelay: 0.9
+  failDelay: 1.1
+  holdDrainMultiplier: 1.5
+  targetEdgeMargin: 0.1
+  preparationSeconds: 120
+  prepTimerFormat: 'Prep: {0}'
+  floodTimerText: FLOOD PHASE
+  timerWarningSeconds: 30
+  timerNormalColor: {r: 1, g: 1, b: 1, a: 1}
+  timerWarningColor: {r: 1, g: 0.3, b: 0.3, a: 1}
+  transitionText: Heading to higher ground...
+  transitionFadeSeconds: 1
+  transitionHoldSeconds: 1.5
+  floodStartedMessage: The flood phase has begun!
+  rotateKey: 32
+  gridColumns: 6
+  gridRows: 4
+  gridCellSize: 80
+  gridPoolIconSize: 100
+  gridHintText: Click a piece to pick it up. R to rotate. Click again to place it in the bag.
+  emptyCellColor: {r: 1, g: 1, b: 1, a: 0.22}
+  previewValidColor: {r: 0.3, g: 0.8, b: 0.4, a: 0.9}
+  previewInvalidColor: {r: 0.85, g: 0.25, b: 0.25, a: 0.9}
+  packedFormat: Packed {0}/{1}     Mistakes {2}
+  packedLimitFormat: Packed {0}/{1}     Mistakes {2}/{3}
+  tileColor: {r: 0.25, g: 0.3, b: 0.4, a: 1}
+  packedTileColor: {r: 0.25, g: 0.55, b: 0.35, a: 1}
+  wrongDropColor: {r: 0.85, g: 0.25, b: 0.25, a: 1}
+  wrongFlashSeconds: 0.4
+  dragAlpha: 0.8
+  toastSeconds: 3
+  taskHeaderFormat: Tasks {0}/{1}
+  doneMark: '[x] '
+  todoMark: '[ ] '
+  attemptFormat: Attempt {0}
+  successMessage: Success!
+  failMessage: Not quite. Try again!
+  hitsFormat: 'Hits: {0}/{1}'
+  selectedMark: '[x]  '
+  unselectedMark: '[ ]  '
+  holdHintFormat: Hold {0}
+  timingHintFormat: Press {0} when the marker is in the green zone
+  controlsHintFormat: '{0}: show or hide cursor     {1}: cancel'
+  inventoryFullMessage: Your inventory is full.
+  collectedMessage: 'Collected: '
+  taskCompleteMessage: 'Task complete: '
+  taskDoneColor: {r: 0.49, g: 0.99, b: 0, a: 1}
+  successColor: {r: 0.4, g: 0.95, b: 0.5, a: 1}
+  failColor: {r: 1, g: 0.45, b: 0.4, a: 1}
+  choiceNormalColor: {r: 0.2, g: 0.24, b: 0.32, a: 1}
+  choiceSelectedColor: {r: 0.2, g: 0.45, b: 0.75, a: 1}
