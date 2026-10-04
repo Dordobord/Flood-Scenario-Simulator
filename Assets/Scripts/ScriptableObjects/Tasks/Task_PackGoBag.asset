@@ -18,26 +18,20 @@ MonoBehaviour:
   domain: 2
   hhiPercent: 27
   isRequired: 1
-  rewardItem: {fileID: 11400000, guid: 1ed6c86e00ef5bb49bd13eee931799ee, type: 2}
+  rewardItem: {fileID: 0}
   minigame:
-    type: 4
+    type: 3
     prompt: Pack the go bag. Click a piece, R to rotate, click again to place it in the bag.
     holdSeconds: 3
     cursorSpeed: 1
     targetWidth: 0.2
     requiredHits: 1
-    maxMistakes: 0
     choices:
     - label: Drinking water and canned food
       isCorrect: 1
       icon: {fileID: 0}
       gridWidth: 2
       gridHeight: 1
-    - label: Flashlight and spare batteries
-      isCorrect: 1
-      icon: {fileID: 0}
-      gridWidth: 1
-      gridHeight: 2
     - label: Change of clothes
       isCorrect: 1
       icon: {fileID: 0}

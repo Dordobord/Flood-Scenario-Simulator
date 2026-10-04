@@ -2,48 +2,45 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace StormWaits
+public class ChoiceButton : MonoBehaviour
 {
-    public class ChoiceButton : MonoBehaviour
+    [SerializeField] private Button button;
+    [SerializeField] private Image background;
+    [SerializeField] private TMP_Text label;
+
+    public SelectChoice Choice { get; private set; }
+    public bool IsSelected { get; private set; }
+
+    public void Setup(SelectChoice choice)
     {
-        [SerializeField] private Button button;
-        [SerializeField] private Image background;
-        [SerializeField] private TMP_Text label;
+        Choice = choice;
+        IsSelected = false;
 
-        public SelectChoice Choice { get; private set; }
-        public bool IsSelected { get; private set; }
+        button.onClick.RemoveAllListeners();
+        button.onClick.AddListener(Toggle);
 
-        public void Setup(SelectChoice choice)
+        Refresh();
+    }
+
+    private void Toggle()
+    {
+        IsSelected = !IsSelected;
+        Refresh();
+    }
+
+    private void Refresh()
+    {
+        GameSettings settings = GameSettings.Current;
+
+        if (IsSelected)
         {
-            Choice = choice;
-            IsSelected = false;
-
-            button.onClick.RemoveAllListeners();
-            button.onClick.AddListener(Toggle);
-
-            Refresh();
+            background.color = settings.choiceSelectedColor;
+            label.text = settings.selectedMark + Choice.label;
         }
-
-        private void Toggle()
+        else
         {
-            IsSelected = !IsSelected;
-            Refresh();
-        }
-
-        private void Refresh()
-        {
-            GameSettings settings = GameSettings.Current;
-
-            if (IsSelected)
-            {
-                background.color = settings.choiceSelectedColor;
-                label.text = settings.selectedMark + Choice.label;
-            }
-            else
-            {
-                background.color = settings.choiceNormalColor;
-                label.text = settings.unselectedMark + Choice.label;
-            }
+            background.color = settings.choiceNormalColor;
+            label.text = settings.unselectedMark + Choice.label;
         }
     }
 }

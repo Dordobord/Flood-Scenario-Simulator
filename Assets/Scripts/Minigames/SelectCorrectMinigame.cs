@@ -2,62 +2,53 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace StormWaits
+public class SelectCorrectMinigame : MinigameBase
 {
-    
-    
-    
-    public class SelectCorrectMinigame : MinigameBase
+    [SerializeField] private Transform choicesParent;
+    [SerializeField] private ChoiceButton choiceButtonPrefab;
+    [SerializeField] private Button confirmButton;
+
+    private List<ChoiceButton> choiceButtons = new List<ChoiceButton>();
+
+    private void Awake()
     {
-        [SerializeField] private Transform choicesParent;
-        [SerializeField] private ChoiceButton choiceButtonPrefab;
-        [SerializeField] private Button confirmButton;
+        confirmButton.onClick.AddListener(OnConfirmClicked);
+    }
 
-        private List<ChoiceButton> choiceButtons = new List<ChoiceButton>();
+    protected override void Setup()
+    {
+        ClearChildren(choicesParent);
+        choiceButtons.Clear();
 
-        private void Awake()
+        List<SelectChoice> choices = new List<SelectChoice>();
+        if (settings.choices != null) choices.AddRange(settings.choices);
+        Shuffle(choices);
+
+        foreach (SelectChoice choice in choices)
         {
-            confirmButton.onClick.AddListener(OnConfirmClicked);
+            ChoiceButton newButton = Instantiate(choiceButtonPrefab, choicesParent);
+            newButton.Setup(choice);
+            choiceButtons.Add(newButton);
         }
+    }
 
-        protected override void Setup()
+    public override void Tick()
+    {
+    }
+
+    private void OnConfirmClicked()
+    {
+        bool allCorrect = true;
+
+        foreach (ChoiceButton choiceButton in choiceButtons)
         {
-            
-            ClearChildren(choicesParent);
-            choiceButtons.Clear();
-
-            
-            List<SelectChoice> choices = new List<SelectChoice>();
-            if (settings.choices != null) choices.AddRange(settings.choices);
-            Shuffle(choices);
-
-            foreach (SelectChoice choice in choices)
+            if (choiceButton.IsSelected != choiceButton.Choice.isCorrect)
             {
-                ChoiceButton newButton = Instantiate(choiceButtonPrefab, choicesParent);
-                newButton.Setup(choice);
-                choiceButtons.Add(newButton);
+                allCorrect = false;
+                break;
             }
         }
 
-        
-        public override void Tick()
-        {
-        }
-
-        private void OnConfirmClicked()
-        {
-            bool allCorrect = true;
-
-            foreach (ChoiceButton choiceButton in choiceButtons)
-            {
-                if (choiceButton.IsSelected != choiceButton.Choice.isCorrect)
-                {
-                    allCorrect = false;
-                    break;
-                }
-            }
-
-            Finish(allCorrect);
-        }
+        Finish(allCorrect);
     }
 }

@@ -1,9 +1,6 @@
-namespace StormWaits
+public interface IInteractable
 {
-    public interface IInteractable
-    {
-        string Prompt { get; }
-        bool CanInteract { get; }
-        void Interact();
-    }
+    string Prompt { get; }
+    bool CanInteract { get; }
+    void Interact();
 }
