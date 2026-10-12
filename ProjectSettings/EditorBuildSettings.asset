@@ -6,6 +6,21 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: ce20b945d46c88548a2e75ae0635e31d
+  - enabled: 1
+    path: Assets/Scenes/UrbanScenario.unity
+    guid: ab79eaa15b0987b488590e99d80a9727
+  - enabled: 1
+    path: Assets/Scenes/FlashFloodScenario.unity
+    guid: ad087e35baa4e524a8357662e27c30ae
+  - enabled: 1
+    path: Assets/Scenes/RiverScenario.unity
+    guid: 75597723f2931334d9527c8ca77dfa19
+  - enabled: 1
+    path: Assets/Scenes/CoastalScenario.unity
+    guid: 5e7e81948ae2aeb458c3ac47dec83fec
+  - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1

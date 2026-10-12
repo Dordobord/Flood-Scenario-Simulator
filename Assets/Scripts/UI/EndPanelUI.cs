@@ -8,6 +8,7 @@ public class EndPanelUI : MonoBehaviour
 {
     [SerializeField] private GameObject panel;
     [SerializeField] private Button retryButton;
+    [SerializeField] private Button mainMenuButton;
 
     [Header("Results")]
     [SerializeField] private TMP_Text scoreText;
@@ -25,6 +26,15 @@ public class EndPanelUI : MonoBehaviour
         else
         {
             Debug.LogWarning("EndPanelUI: Retry Button is not assigned.");
+        }
+
+        if (mainMenuButton != null)
+        {
+            mainMenuButton.onClick.AddListener(GoToMainMenu);
+        }
+        else
+        {
+            Debug.LogWarning("EndPanelUI: Main Menu Button is not assigned.");
         }
 
         GameEvents.EvacuationCompleted += Show;
@@ -130,5 +140,16 @@ public class EndPanelUI : MonoBehaviour
     private void Retry()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    private void GoToMainMenu()
+    {
+        string menuScene = GameSettings.Current.mainMenuSceneName;
+        if (!Application.CanStreamedLevelBeLoaded(menuScene))
+        {
+            Debug.LogWarning("EndPanelUI: the scene \"" + menuScene + "\" is not in Build Settings.");
+            return;
+        }
+        SceneManager.LoadScene(menuScene);
     }
 }

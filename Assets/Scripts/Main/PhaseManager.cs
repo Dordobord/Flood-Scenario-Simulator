@@ -17,7 +17,7 @@ public class PhaseManager : MonoBehaviour
 
     public static bool IsPlayerLocked
     {
-        get { return IsTransitionActive || (Instance != null && Instance.CurrentPhase == GamePhase.Finished); }
+        get { return IsTransitionActive || PauseMenuUI.IsPaused || (Instance != null && Instance.CurrentPhase == GamePhase.Finished); }
     }
 
     [FormerlySerializedAs("floodSpawnPoint")]
@@ -50,8 +50,18 @@ public class PhaseManager : MonoBehaviour
 
     private void Start()
     {
-        timeRemaining = GameSettings.Current.preparationSeconds;
+        timeRemaining = GetPreparationSeconds();
         CurrentPhase = GamePhase.Preparation;
+    }
+
+    private float GetPreparationSeconds()
+    {
+        if (TaskManager.Instance != null)
+        {
+            ScenarioData scenario = TaskManager.Instance.CurrentScenario;
+            if (scenario != null && scenario.preparationSeconds > 0f) return scenario.preparationSeconds;
+        }
+        return GameSettings.Current.preparationSeconds;
     }
 
     private void OnDestroy()

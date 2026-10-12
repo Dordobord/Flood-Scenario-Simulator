@@ -9,7 +9,7 @@ public class GameSettings : ScriptableObject
     [Header("Keys")]
     public Key interactKey = Key.E;
     public Key actionKey = Key.E;
-    public Key cursorToggleKey = Key.Escape;
+    public Key cursorToggleKey = Key.Tab;
     public Key cancelMinigameKey = Key.Backspace;
     public bool allowMouseClick = true;
     public Key moveForwardKey = Key.W;
@@ -97,6 +97,24 @@ public class GameSettings : ScriptableObject
         new DomainDisplayName(PreparednessDomain.MaterialPreparedness, "Material Preparedness"),
         new DomainDisplayName(PreparednessDomain.Information, "Information")
     };
+
+    [Header("Pause")]
+    public Key pauseKey = Key.Escape;
+    public string pauseTitle = "Paused";
+
+    [Header("Prep Boundary")]
+    public string leaveHouseMessage = "Finish preparing first. You will evacuate when the timer ends.";
+    public float leaveHouseMessageCooldown = 3f;
+
+    [Header("Main Menu")]
+    public string mainMenuSceneName = "MainMenu";
+    public string menuTitle = "The Storm Waits for Nobody";
+    public string menuSubtitle = "Choose a flood scenario";
+    public string noScenarioSelectedTitle = "No scenario selected";
+    public string noScenarioSelectedMessage = "Pick a scenario on the left to see its details.";
+    public string preparationTimeFormat = "Preparation time: {0}";
+    public Color scenarioNormalColor = new Color(0.2f, 0.24f, 0.32f);
+    public Color scenarioSelectedColor = new Color(0.2f, 0.45f, 0.75f);
 
     [Header("Colors")]
     public Color taskDoneColor = new Color(0.49f, 0.99f, 0f);

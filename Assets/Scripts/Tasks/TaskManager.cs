@@ -6,7 +6,7 @@ public class TaskManager : MonoBehaviour
 {
     public static TaskManager Instance { get; private set; }
 
-    [SerializeField] private ScenarioTaskSet startingTaskSet;
+    [SerializeField] private ScenarioData scenario;
 
     private List<TaskData> activeTasks = new List<TaskData>();
     private Dictionary<TaskData, int> attempts = new Dictionary<TaskData, int>();
@@ -15,6 +15,8 @@ public class TaskManager : MonoBehaviour
     private Dictionary<TaskData, TaskResult> completed = new Dictionary<TaskData, TaskResult>();
 
     public event Action Changed;
+
+    public ScenarioData CurrentScenario { get; private set; }
 
     public List<TaskData> ActiveTasks
     {
@@ -48,7 +50,7 @@ public class TaskManager : MonoBehaviour
         }
         Instance = this;
 
-        if (startingTaskSet != null) LoadScenario(startingTaskSet);
+        if (scenario != null) LoadScenario(scenario);
     }
 
     private void OnDestroy()
@@ -56,17 +58,18 @@ public class TaskManager : MonoBehaviour
         if (Instance == this) Instance = null;
     }
 
-    public void LoadScenario(ScenarioTaskSet taskSet)
+    public void LoadScenario(ScenarioData scenarioData)
     {
+        CurrentScenario = scenarioData;
         activeTasks.Clear();
         attempts.Clear();
         mistakes.Clear();
         secondsSpent.Clear();
         completed.Clear();
 
-        if (taskSet != null)
+        if (scenarioData != null)
         {
-            foreach (TaskData task in taskSet.tasks)
+            foreach (TaskData task in scenarioData.tasks)
             {
                 if (task != null) activeTasks.Add(task);
             }

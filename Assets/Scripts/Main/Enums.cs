@@ -15,3 +15,11 @@ public enum MinigameType
     Flashlight,
     Tuning
 }
+
+public enum ScenarioType
+{
+    Urban,
+    FlashFlood,
+    River,
+    Coastal
+}

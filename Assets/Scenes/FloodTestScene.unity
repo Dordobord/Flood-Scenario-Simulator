@@ -7480,7 +7480,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e853c827be0ed04f90abcf1462c7d74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StormWaits.TaskManager
-  startingTaskSet: {fileID: 11400000, guid: bcb17129388291b4488c75548c32c840, type: 2}
+  scenario: {fileID: 11400000, guid: 726cf3998fc483c41ba2b5d7a56b12b2, type: 2}
 --- !u!114 &1900404338
 MonoBehaviour:
   m_ObjectHideFlags: 0
