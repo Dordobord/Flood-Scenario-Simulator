@@ -28,6 +28,10 @@ public class TuningMinigame : MinigameBase
     [Header("Text")]
     [SerializeField] private string hintFormat = "Click and drag the knob in a circle to tune in.";
 
+    [Header("Rainfall Warning")]
+    [SerializeField] private Image warningBadge;
+    [SerializeField] private TMP_Text warningLabel;
+
     private float knobAngle;
     private float clearAngle;
     private float grabOffset;
@@ -51,6 +55,7 @@ public class TuningMinigame : MinigameBase
 
         if (messageText != null) messageText.text = "";
         if (hintText != null) hintText.text = hintFormat;
+        if (warningBadge != null) warningBadge.gameObject.SetActive(false);
 
         UpdateStatic(GetDistanceToClear());
     }
@@ -60,7 +65,9 @@ public class TuningMinigame : MinigameBase
         if (isRevealed)
         {
             revealTimer += Time.deltaTime;
-            if (revealTimer >= revealSeconds) Finish(true);
+            if (revealTimer < revealSeconds) return;
+
+            Finish(true);
             return;
         }
 
@@ -144,9 +151,37 @@ public class TuningMinigame : MinigameBase
         isDragging = false;
         UpdateStatic(0f);
 
-        string message = settings.revealMessage;
+        string message = settings.showRainfallWarning ? ShowRainfallWarning() : AddCenterName(settings.revealMessage);
         if (messageText != null) messageText.text = message;
         if (string.IsNullOrEmpty(message)) revealTimer = revealSeconds;
+    }
+
+    private string ShowRainfallWarning()
+    {
+        if (TaskManager.Instance == null || TaskManager.Instance.CurrentScenario == null) return settings.revealMessage;
+
+        GameSettings gameSettings = GameSettings.Current;
+        RainfallWarningInfo warning = gameSettings.GetRainfallWarning(TaskManager.Instance.CurrentScenario.rainfallWarning);
+        if (warning == null)
+        {
+            Debug.LogWarning("TuningMinigame: no Rainfall Warning in GameSettings matches " + TaskManager.Instance.CurrentScenario.rainfallWarning + ".");
+            return settings.revealMessage;
+        }
+
+        string title = string.Format(gameSettings.rainfallWarningTitleFormat, warning.label);
+
+        if (warningBadge == null || warningLabel == null) return title + "\n" + warning.action;
+
+        warningBadge.color = warning.color;
+        warningLabel.text = title;
+        warningBadge.gameObject.SetActive(true);
+        return warning.action;
+    }
+
+    private string AddCenterName(string message)
+    {
+        if (string.IsNullOrEmpty(message) || TaskManager.Instance == null || TaskManager.Instance.CurrentScenario == null) return message;
+        return message.Replace("{0}", TaskManager.Instance.CurrentScenario.evacuationCenterName);
     }
 
     private static void SetAlpha(Graphic graphic, float alpha)

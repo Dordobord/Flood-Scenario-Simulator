@@ -8,9 +8,14 @@ public class InventoryManager : MonoBehaviour
 
     [SerializeField, Min(1)] private int slotCount = 5;
 
+    [Header("Start")]
+    [SerializeField] private List<ItemData> startingItems = new List<ItemData>();
+
     private List<ItemData> items = new List<ItemData>();
+    private int selectedIndex;
 
     public event Action Changed;
+    public event Action SelectionChanged;
 
     public int SlotCount
     {
@@ -27,6 +32,16 @@ public class InventoryManager : MonoBehaviour
         get { return items.Count >= slotCount; }
     }
 
+    public int SelectedIndex
+    {
+        get { return selectedIndex; }
+    }
+
+    public ItemData SelectedItem
+    {
+        get { return selectedIndex < items.Count ? items[selectedIndex] : null; }
+    }
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -35,11 +50,22 @@ public class InventoryManager : MonoBehaviour
             return;
         }
         Instance = this;
+
+        foreach (ItemData item in startingItems)
+        {
+            if (item != null && !IsFull) items.Add(item);
+        }
     }
 
     private void OnDestroy()
     {
         if (Instance == this) Instance = null;
+    }
+
+    public void Select(int index)
+    {
+        selectedIndex = (index % slotCount + slotCount) % slotCount;
+        if (SelectionChanged != null) SelectionChanged();
     }
 
     public bool CanAdd(ItemData item)
@@ -52,6 +78,19 @@ public class InventoryManager : MonoBehaviour
         if (!CanAdd(item)) return false;
 
         items.Add(item);
+        if (Changed != null) Changed();
+        return true;
+    }
+
+    public bool Contains(ItemData item)
+    {
+        return item != null && items.Contains(item);
+    }
+
+    public bool Remove(ItemData item)
+    {
+        if (item == null || !items.Remove(item)) return false;
+
         if (Changed != null) Changed();
         return true;
     }

@@ -11,40 +11,26 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f7cbd0610e150a40822390088e313ec, type: 3}
   m_Name: Task_PackMedication
-  m_EditorClassIdentifier: Assembly-CSharp::StormWaits.TaskData
+  m_EditorClassIdentifier: Assembly-CSharp::TaskData
   id: Task_PackMedication
   title: Pack Regular Medication
-  description: Prepare the medication your household takes regularly.
+  description: Pack the maintenance medicine your household still needs, plus a copy of the prescription.
   domain: 2
-  hhiPercent: 32
+  priority: 0
+  scoreMethod: 2
   isRequired: 1
+  recommendation: Keep at least 3 days of maintenance medicine that has not expired, and a copy of the prescription, ready to bring.
   rewardItem: {fileID: 11400000, guid: 745842b5f0019084c97107dc61f4dfb2, type: 2}
   minigame:
-    type: 2
-    prompt: Pack your regular medication. What belongs in the pouch?
+    type: 10
+    prompt: Today is Oct 19, 2026. Pack only the medicine you can still use, plus your prescription copy.
     holdSeconds: 3
     cursorSpeed: 1
     targetWidth: 0.2
     requiredHits: 1
-    maxMistakes: 0
-    choices:
-    - label: Maintenance medication (at least 3 days of supply)
-      isCorrect: 1
-      icon: {fileID: 0}
-      gridWidth: 1
-      gridHeight: 1
-    - label: Copy of your prescription
-      isCorrect: 1
-      icon: {fileID: 0}
-      gridWidth: 1
-      gridHeight: 1
-    - label: Expired cough syrup
-      isCorrect: 0
-      icon: {fileID: 0}
-      gridWidth: 1
-      gridHeight: 1
-    - label: Empty pill bottles
-      isCorrect: 0
-      icon: {fileID: 0}
-      gridWidth: 1
-      gridHeight: 1
+    revealMessage: 
+    question: 
+    showRainfallWarning: 0
+    choices: []
+  mustBePlaced: 0
+  needsPower: 0

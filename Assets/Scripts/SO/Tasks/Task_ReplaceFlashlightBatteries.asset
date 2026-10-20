@@ -16,8 +16,10 @@ MonoBehaviour:
   title: Replace the Flashlight Batteries
   description: The flashlight batteries are dead. Swap in new ones.
   domain: 2
-  hhiPercent: 27
+  priority: 0
+  scoreMethod: 2
   isRequired: 1
+  recommendation: 
   rewardItem: {fileID: 0}
   minigame:
     type: 4
@@ -26,4 +28,6 @@ MonoBehaviour:
     cursorSpeed: 1
     targetWidth: 0.2
     requiredHits: 1
+    revealMessage: 
     choices: []
+  mustBePlaced: 0

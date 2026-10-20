@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -7,11 +6,9 @@ using UnityEngine.UI;
 public class MainMenuUI : MonoBehaviour
 {
     [SerializeField] private GameSettings settings;
-    [SerializeField] private List<ScenarioData> scenarios = new List<ScenarioData>();
 
     [Header("Scenario List")]
     [SerializeField] private Transform buttonContainer;
-    [SerializeField] private ScenarioButton buttonPrefab;
 
     [Header("Text")]
     [SerializeField] private TMP_Text titleText;
@@ -24,7 +21,7 @@ public class MainMenuUI : MonoBehaviour
     [SerializeField] private Button startButton;
     [SerializeField] private Button quitButton;
 
-    private List<ScenarioButton> buttons = new List<ScenarioButton>();
+    private ScenarioButton[] buttons = new ScenarioButton[0];
     private ScenarioData selected;
 
     private void Awake()
@@ -44,25 +41,22 @@ public class MainMenuUI : MonoBehaviour
         if (startButton != null) startButton.onClick.AddListener(StartScenario);
         if (quitButton != null) quitButton.onClick.AddListener(Quit);
 
-        BuildButtons();
+        FindButtons();
         ShowDetails(null);
     }
 
-    private void BuildButtons()
+    private void FindButtons()
     {
-        if (buttonContainer == null || buttonPrefab == null)
+        if (buttonContainer == null)
         {
-            Debug.LogWarning("MainMenuUI: Button Container or Button Prefab is not assigned.");
+            Debug.LogWarning("MainMenuUI: Button Container is not assigned.");
             return;
         }
 
-        foreach (ScenarioData scenario in scenarios)
+        buttons = buttonContainer.GetComponentsInChildren<ScenarioButton>(true);
+        foreach (ScenarioButton button in buttons)
         {
-            if (scenario == null) continue;
-
-            ScenarioButton button = Instantiate(buttonPrefab, buttonContainer);
-            button.Setup(scenario, Select);
-            buttons.Add(button);
+            button.Init(Select);
         }
     }
 

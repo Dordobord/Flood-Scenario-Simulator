@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7cbd0610e150a40822390088e313ec, type: 3}
+  m_Name: Task_SwitchOffBreaker
+  m_EditorClassIdentifier: 
+  id: Task_SwitchOffBreaker
+  title: Switch Off the Electrical Breaker
+  description: Cut the power before floodwater reaches outlets and wiring.
+  domain: 1
+  priority: 0
+  scoreMethod: 2
+  isRequired: 1
+  recommendation: Switch off each circuit first, then the main breaker, before water enters the house.
+  rewardItem: {fileID: 0}
+  minigame:
+    type: 7
+    prompt: Open the breaker panel and switch off the power safely.
+    holdSeconds: 3
+    cursorSpeed: 1
+    targetWidth: 0.2
+    requiredHits: 1
+    revealMessage: 
+    phoneApp: {fileID: 0}
+    choices:
+    - label: Kitchen
+      isCorrect: 1
+      icon: {fileID: 0}
+      gridWidth: 1
+      gridHeight: 1
+    - label: Bedrooms
+      isCorrect: 1
+      icon: {fileID: 0}
+      gridWidth: 1
+      gridHeight: 1
+    - label: Living Room
+      isCorrect: 1
+      icon: {fileID: 0}
+      gridWidth: 1
+      gridHeight: 1
+    - label: Outlets
+      isCorrect: 1
+      icon: {fileID: 0}
+      gridWidth: 1
+      gridHeight: 1
+  mustBePlaced: 0
+  mustDoFirst: {fileID: 11400000, guid: ec8e91a1de81e5d43b521b6274b5528d, type: 2}

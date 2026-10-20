@@ -8,9 +8,10 @@ public class HudUI : MonoBehaviour
 
     [SerializeField] private TMP_Text promptText;
     [SerializeField] private TMP_Text toastText;
-    [SerializeField] private TMP_Text taskListText;
     [SerializeField] private Transform hotbarParent;
-    [SerializeField] private InventorySlot slotPrefab;
+
+    [Header("Hold Bar")]
+    [SerializeField] private HoldProgressMinigame holdBar;
 
     private List<InventorySlot> slots = new List<InventorySlot>();
     private float toastHideTime;
@@ -25,22 +26,31 @@ public class HudUI : MonoBehaviour
         Instance = this;
     }
 
+    public HoldProgressMinigame HoldBar
+    {
+        get { return holdBar; }
+    }
+
+    public HoldInteractable HoldBarUser { get; set; }
+
     private void Start()
     {
-        BuildHotbar();
+        if (holdBar != null) holdBar.End();
+
+        FindSlots();
 
         if (InventoryManager.Instance != null)
         {
             InventoryManager.Instance.Changed += RefreshHotbar;
+            InventoryManager.Instance.SelectionChanged += RefreshHotbar;
         }
         if (TaskManager.Instance != null)
         {
-            TaskManager.Instance.Changed += RefreshTasks;
+            TaskManager.Instance.TaskCompleted += ShowTaskCompleted;
         }
         GameEvents.MessageRaised += ShowMessage;
 
         RefreshHotbar();
-        RefreshTasks();
     }
 
     private void OnDestroy()
@@ -48,10 +58,11 @@ public class HudUI : MonoBehaviour
         if (InventoryManager.Instance != null)
         {
             InventoryManager.Instance.Changed -= RefreshHotbar;
+            InventoryManager.Instance.SelectionChanged -= RefreshHotbar;
         }
         if (TaskManager.Instance != null)
         {
-            TaskManager.Instance.Changed -= RefreshTasks;
+            TaskManager.Instance.TaskCompleted -= ShowTaskCompleted;
         }
         GameEvents.MessageRaised -= ShowMessage;
 
@@ -78,18 +89,23 @@ public class HudUI : MonoBehaviour
         toastHideTime = Time.time + GameSettings.Current.toastSeconds;
     }
 
-    private void BuildHotbar()
+    private void ShowTaskCompleted(TaskData task)
     {
-        if (InventoryManager.Instance == null)
+        ShowMessage(GameSettings.Current.taskCompleteMessage + task.title);
+    }
+
+    private void FindSlots()
+    {
+        slots.AddRange(hotbarParent.GetComponentsInChildren<InventorySlot>(true));
+
+        for (int i = 0; i < slots.Count; i++)
         {
-            Debug.LogWarning("HudUI: no InventoryManager in the scene, so the hotbar is empty.");
-            return;
+            slots[i].SetNumber(i + 1);
         }
 
-        for (int i = 0; i < InventoryManager.Instance.SlotCount; i++)
+        if (InventoryManager.Instance != null && InventoryManager.Instance.SlotCount != slots.Count)
         {
-            InventorySlot slot = Instantiate(slotPrefab, hotbarParent);
-            slots.Add(slot);
+            Debug.LogWarning("HudUI: the Hotbar has " + slots.Count + " slots but the InventoryManager has " + InventoryManager.Instance.SlotCount + ". Make them match.");
         }
     }
 
@@ -105,37 +121,7 @@ public class HudUI : MonoBehaviour
                 item = inventory.Items[i];
             }
             slots[i].SetItem(item);
+            slots[i].SetSelected(inventory != null && i == inventory.SelectedIndex);
         }
-    }
-
-    private void RefreshTasks()
-    {
-        TaskManager tasks = TaskManager.Instance;
-        if (tasks == null)
-        {
-            taskListText.text = "";
-            return;
-        }
-
-        GameSettings settings = GameSettings.Current;
-        string doneColor = ColorUtility.ToHtmlStringRGB(settings.taskDoneColor);
-
-        string header = string.Format(settings.taskHeaderFormat, tasks.CompletedCount, tasks.TotalCount);
-        if (settings.boldTaskHeader) header = "<b>" + header + "</b>";
-        string text = header + "\n";
-
-        foreach (TaskData task in tasks.ActiveTasks)
-        {
-            if (tasks.IsCompleted(task))
-            {
-                text += "<color=#" + doneColor + ">" + settings.doneMark + task.title + "</color>\n";
-            }
-            else
-            {
-                text += settings.todoMark + task.title + "\n";
-            }
-        }
-
-        taskListText.text = text;
     }
 }

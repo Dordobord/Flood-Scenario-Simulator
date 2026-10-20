@@ -4,9 +4,9 @@ using UnityEngine.UI;
 
 public class ChoiceButton : MonoBehaviour
 {
-    [SerializeField] private Button button;
-    [SerializeField] private Image background;
-    [SerializeField] private TMP_Text label;
+    [SerializeField] protected Button button;
+    [SerializeField] protected Image background;
+    [SerializeField] protected TMP_Text label;
 
     public SelectChoice Choice { get; private set; }
     public bool IsSelected { get; private set; }
@@ -28,7 +28,7 @@ public class ChoiceButton : MonoBehaviour
         Refresh();
     }
 
-    private void Refresh()
+    protected virtual void Refresh()
     {
         GameSettings settings = GameSettings.Current;
 

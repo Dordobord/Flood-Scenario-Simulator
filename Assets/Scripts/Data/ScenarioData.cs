@@ -12,8 +12,16 @@ public class ScenarioData : ScriptableObject
     [Header("Scene")]
     public string sceneName;
 
+    [Header("Evacuation")]
+    public string evacuationCenterName = "Evacuation Center";
+
     [Header("Preparation")]
     public float preparationSeconds = 180f;
+
+    [Header("Weather")]
+    [Range(0f, 1f)] public float prepRainStrength = 0.5f;
+    [Range(0f, 1f)] public float evacuationRainStrength = 0.8f;
+    public RainfallWarningLevel rainfallWarning = RainfallWarningLevel.Orange;
 
     [Header("Tasks")]
     public List<TaskData> tasks = new List<TaskData>();

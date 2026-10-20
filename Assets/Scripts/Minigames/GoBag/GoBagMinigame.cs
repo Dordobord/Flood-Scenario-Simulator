@@ -18,8 +18,6 @@ public class GoBagMinigame : MinigameBase
 
     private GoBagGrid bagGrid;
     private readonly List<GoBagItem> items = new List<GoBagItem>();
-    private readonly List<GoBagItemView> itemViews = new List<GoBagItemView>();
-    private bool resetOnNextOpen;
 
     private bool isOpen;
 
@@ -44,13 +42,6 @@ public class GoBagMinigame : MinigameBase
     protected override void Setup()
     {
         Build();
-
-        if (resetOnNextOpen)
-        {
-            ResetBag();
-            resetOnNextOpen = false;
-        }
-
         isOpen = true;
     }
 
@@ -63,20 +54,7 @@ public class GoBagMinigame : MinigameBase
         GoBagResult result = GetResult();
         if (GameSettings.Current.logInput) Debug.Log("Go bag confirm: " + result.Describe());
 
-        Mistakes = result.PackedDistractors.Count;
-        if (!result.IsComplete) resetOnNextOpen = true;
-
         Finish(result.IsComplete);
-    }
-
-    private void ResetBag()
-    {
-        foreach (GoBagItemView view in itemViews)
-        {
-            bagGrid.Remove(view.Item);
-            view.ReturnHome();
-        }
-        gridView.HidePreview();
     }
 
     public override void End()
@@ -91,18 +69,14 @@ public class GoBagMinigame : MinigameBase
 
     private GoBagResult GetResult()
     {
-        List<SelectChoice> missingRequired = new List<SelectChoice>();
-        List<SelectChoice> packedDistractors = new List<SelectChoice>();
+        List<SelectChoice> missingItems = new List<SelectChoice>();
 
         foreach (GoBagItem item in items)
         {
-            bool isPacked = bagGrid != null && bagGrid.Contains(item);
-
-            if (item.IsRequired && !isPacked) missingRequired.Add(item.Choice);
-            else if (!item.IsRequired && isPacked) packedDistractors.Add(item.Choice);
+            if (!bagGrid.Contains(item)) missingItems.Add(item.Choice);
         }
 
-        return new GoBagResult(missingRequired, packedDistractors);
+        return new GoBagResult(missingItems);
     }
 
     public override void Tick()
@@ -238,19 +212,24 @@ public class GoBagMinigame : MinigameBase
 
     private void CheckDesign(Vector2 expected)
     {
-        List<GoBagItem> required = new List<GoBagItem>();
+        int bagCells = goBagSettings.gridWidth * goBagSettings.gridHeight;
+        int itemCells = 0;
         foreach (GoBagItem item in items)
         {
-            if (item.IsRequired) required.Add(item);
+            itemCells += item.Width * item.Height;
         }
 
-        if (required.Count == 0)
+        if (items.Count == 0)
         {
-            Debug.LogWarning("GoBagMinigame: no choice has Is Correct ticked, so an empty bag counts as complete.");
+            Debug.LogWarning("GoBagMinigame: the task has no choices, so an empty bag counts as complete.");
         }
-        else if (!GoBagGrid.CanFitAll(goBagSettings.gridWidth, goBagSettings.gridHeight, required, out GoBagItem misfit))
+        else if (itemCells > bagCells)
         {
-            Debug.LogWarning("GoBagMinigame: the required items may not fit in the bag (could not fit '" + misfit.Name + "'). Pack them by hand to check.");
+            Debug.LogWarning("GoBagMinigame: the items take " + itemCells + " cells but the bag only has " + bagCells + ". Make items smaller or the bag bigger.");
+        }
+        else if (!GoBagGrid.CanFitAll(goBagSettings.gridWidth, goBagSettings.gridHeight, items, out GoBagItem misfit))
+        {
+            Debug.LogWarning("GoBagMinigame: the items may not fit in the bag (could not fit '" + misfit.Name + "'). Pack them by hand to check.");
         }
 
         Vector2 actual = bagArea.rect.size;
@@ -270,7 +249,6 @@ public class GoBagMinigame : MinigameBase
 
             GoBagItemView view = viewObject.GetComponent<GoBagItemView>();
             view.Initialize(item, this, goBagSettings);
-            itemViews.Add(view);
 
             GoBagPileTile tile = Instantiate(tilePrefab, pileArea);
             tile.Initialize(view, this, goBagSettings);

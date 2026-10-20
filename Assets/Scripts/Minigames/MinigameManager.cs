@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class MinigameManager : MonoBehaviour
@@ -13,14 +13,21 @@ public class MinigameManager : MonoBehaviour
 
     public static bool CursorFree { get; private set; }
 
+    public static bool IsPhoneOpen
+    {
+        get { return Instance != null && IsActive && Instance.phoneDevice != null; }
+    }
+
     [Header("Window")]
     [SerializeField] private GameObject window;
     [SerializeField] private TMP_Text titleText;
-    [SerializeField] private TMP_Text attemptText;
     [SerializeField] private TMP_Text promptText;
     [SerializeField] private TMP_Text feedbackText;
-    [SerializeField] private TMP_Text controlsHintText;
     [SerializeField] private Button cancelButton;
+
+    [Header("Phone View")]
+    [SerializeField] private List<Graphic> hiddenGraphicsForPhone = new List<Graphic>();
+    [SerializeField] private List<GameObject> hiddenObjectsForPhone = new List<GameObject>();
 
     [Header("Minigames")]
     [SerializeField] private HoldProgressMinigame holdMinigame;
@@ -29,13 +36,21 @@ public class MinigameManager : MonoBehaviour
     [SerializeField] private GoBagMinigame goBagMinigame;
     [SerializeField] private FlashlightMinigame flashlightMinigame;
     [SerializeField] private TuningMinigame tuningMinigame;
+    [SerializeField] private BreakerMinigame breakerMinigame;
+    [SerializeField] private StoveMinigame stoveMinigame;
+    [SerializeField] private PhoneMinigame phoneMinigame;
+    [SerializeField] private MedicationMinigame medicationMinigame;
+    [SerializeField] private FirstAidMinigame firstAidMinigame;
 
+    private Dictionary<MinigameType, MinigameBase> minigames = new Dictionary<MinigameType, MinigameBase>();
     private MinigameBase currentMinigame;
     private TaskData currentTask;
     private Action<bool> onFinished;
     private Coroutine resultRoutine;
+    private PhoneDevice phoneDevice;
+    private bool phoneInWindow;
+    private bool plainPageOpen;
 
-    private int attemptNumber;
     private float attemptStartTime;
     private bool acceptingInput;
     private bool lastAttemptSucceeded;
@@ -52,12 +67,30 @@ public class MinigameManager : MonoBehaviour
         IsActive = false;
         CursorFree = false;
 
-        holdMinigame.Finished += OnAttemptFinished;
-        timingMinigame.Finished += OnAttemptFinished;
-        selectMinigame.Finished += OnAttemptFinished;
-        if (goBagMinigame != null) goBagMinigame.Finished += OnAttemptFinished;
-        if (flashlightMinigame != null) flashlightMinigame.Finished += OnAttemptFinished;
-        if (tuningMinigame != null) tuningMinigame.Finished += OnAttemptFinished;
+        Register(MinigameType.HoldProgress, holdMinigame);
+        Register(MinigameType.TimingBar, timingMinigame);
+        Register(MinigameType.SelectCorrect, selectMinigame);
+        Register(MinigameType.GoBag, goBagMinigame);
+        Register(MinigameType.Flashlight, flashlightMinigame);
+        Register(MinigameType.Tuning, tuningMinigame);
+        Register(MinigameType.Breaker, breakerMinigame);
+        Register(MinigameType.Stove, stoveMinigame);
+        Register(MinigameType.Medication, medicationMinigame);
+        Register(MinigameType.FirstAid, firstAidMinigame);
+
+        if (phoneMinigame == null) phoneMinigame = FindFirstObjectByType<PhoneMinigame>(FindObjectsInactive.Include);
+        phoneInWindow = phoneMinigame != null && phoneMinigame.transform.IsChildOf(window.transform);
+
+        if (phoneMinigame != null && phoneMinigame.HomeScreen == null)
+        {
+            Debug.LogWarning("MinigameManager: the phone has no Home Screen assigned.");
+        }
+        else if (phoneMinigame != null)
+        {
+            Register(MinigameType.Phone, phoneMinigame);
+            phoneMinigame.HomeScreen.AppChosen += OnPhoneAppChosen;
+            phoneMinigame.HomePressed += OnPhoneHomePressed;
+        }
 
         if (cancelButton != null)
         {
@@ -72,6 +105,14 @@ public class MinigameManager : MonoBehaviour
 
         HideAllMinigames();
         window.SetActive(false);
+    }
+
+    private void Register(MinigameType type, MinigameBase minigame)
+    {
+        if (minigame == null) return;
+
+        minigames[type] = minigame;
+        minigame.Finished += OnAttemptFinished;
     }
 
     private void OnDestroy()
@@ -90,40 +131,96 @@ public class MinigameManager : MonoBehaviour
     {
         if (IsActive || task == null) return false;
 
-        GameSettings settings = GameSettings.Current;
-
         currentTask = task;
         onFinished = finishedCallback;
         lastAttemptSucceeded = false;
 
-        attemptNumber = 1;
-        if (TaskManager.Instance != null)
-        {
-            attemptNumber = TaskManager.Instance.GetAttempts(task) + 1;
-        }
-
         IsActive = true;
         window.SetActive(true);
+        SetPhoneView(false);
         titleText.text = task.title;
 
-        if (controlsHintText != null)
-        {
-            controlsHintText.text = string.Format(settings.controlsHintFormat, settings.cursorToggleKey, settings.cancelMinigameKey);
-        }
-
-        bool startFree = false;
-        if (task.minigame.type == MinigameType.SelectCorrect) startFree = settings.freeCursorForSelectCorrect;
-        if (task.minigame.type == MinigameType.GoBag) startFree = settings.freeCursorForGoBag;
-        if (task.minigame.type == MinigameType.Flashlight) startFree = settings.freeCursorForFlashlight;
-        if (task.minigame.type == MinigameType.Tuning) startFree = settings.freeCursorForTuning;
-        SetCursorFree(startFree);
-
-        if (settings.logInput)
-        {
-            Debug.Log("[Minigame input] Opened '" + task.title + "'. Keyboard found: " + (Keyboard.current != null) + ". Cursor shown: " + startFree);
-        }
+        SetCursorFree(true);
 
         StartAttempt();
+        return true;
+    }
+
+    public bool BeginPhone(PhoneDevice device)
+    {
+        if (IsActive || device == null) return false;
+
+        if (!minigames.ContainsKey(MinigameType.Phone))
+        {
+            Debug.LogWarning("MinigameManager: Phone Minigame is not assigned.");
+            return false;
+        }
+
+        phoneDevice = device;
+        IsActive = true;
+        window.SetActive(phoneInWindow);
+        SetPhoneView(true);
+
+        ShowPhoneHome();
+        return true;
+    }
+
+    private void ShowPhoneHome()
+    {
+        GameSettings settings = GameSettings.Current;
+
+        HideAllMinigames();
+        currentMinigame = null;
+        currentTask = null;
+        onFinished = null;
+        acceptingInput = false;
+        plainPageOpen = false;
+
+        titleText.text = settings.phoneTitle;
+        promptText.text = "";
+        feedbackText.text = "";
+        SetCursorFree(true);
+
+        phoneMinigame.ShowHome();
+    }
+
+    private void OnPhoneAppChosen(PhonePage page)
+    {
+        if (phoneDevice == null || page == null || currentTask != null)
+        {
+            Debug.LogWarning("MinigameManager: could not open " + (page != null ? page.name : "the app") + " because the phone is busy or the icon has no Page.");
+            return;
+        }
+
+        if (page.Task == null)
+        {
+            plainPageOpen = true;
+            phoneMinigame.ShowPage(page);
+            return;
+        }
+
+        currentTask = page.Task;
+        lastAttemptSucceeded = false;
+        titleText.text = currentTask.title;
+        StartAttempt();
+    }
+
+    private void OnPhoneHomePressed()
+    {
+        if (phoneDevice == null) return;
+
+        if (currentTask != null) Cancel();
+        else if (plainPageOpen) ShowPhoneHome();
+    }
+
+    private bool TryReturnToPhone(bool success)
+    {
+        if (phoneDevice == null || currentTask == null) return false;
+
+        TaskData finishedTask = currentTask;
+        currentTask = null;
+        phoneDevice.OnAppFinished(finishedTask, success);
+        ShowPhoneHome();
         return true;
     }
 
@@ -132,13 +229,6 @@ public class MinigameManager : MonoBehaviour
         if (!IsActive) return;
 
         GameSettings settings = GameSettings.Current;
-        if (settings.logInput) LogInput(settings);
-
-        if (MinigameInput.KeyPressedThisFrame(settings.cursorToggleKey))
-        {
-            SetCursorFree(!CursorFree);
-        }
-
         if (MinigameInput.KeyPressedThisFrame(settings.cancelMinigameKey))
         {
             Cancel();
@@ -152,8 +242,17 @@ public class MinigameManager : MonoBehaviour
         currentMinigame.Tick();
     }
 
+    public void ClosePhone()
+    {
+        if (phoneDevice == null) return;
+
+        phoneDevice = null;
+        Cancel();
+    }
+
     private void OnPreparationEnded()
     {
+        phoneDevice = null;
         Cancel();
     }
 
@@ -175,12 +274,14 @@ public class MinigameManager : MonoBehaviour
     {
         HideAllMinigames();
         feedbackText.text = "";
-        bool hideAttempt = currentTask.minigame.type == MinigameType.GoBag && !GameSettings.Current.showAttemptTextForGoBag;
-        attemptText.text = hideAttempt ? "" : string.Format(GameSettings.Current.attemptFormat, attemptNumber);
         lastAttemptSucceeded = false;
 
         MinigameSettings minigameSettings = currentTask.minigame;
-        if (string.IsNullOrEmpty(minigameSettings.prompt))
+        if (minigameSettings.type == MinigameType.Phone)
+        {
+            promptText.text = "";
+        }
+        else if (string.IsNullOrEmpty(minigameSettings.prompt))
         {
             promptText.text = currentTask.description;
         }
@@ -199,46 +300,17 @@ public class MinigameManager : MonoBehaviour
 
     private MinigameBase GetMinigame(MinigameType type)
     {
-        switch (type)
-        {
-            case MinigameType.TimingBar:
-                return timingMinigame;
-            case MinigameType.SelectCorrect:
-                return selectMinigame;
-            case MinigameType.GoBag:
-                if (goBagMinigame == null)
-                {
-                    Debug.LogError("MinigameManager: Go Bag Minigame is not assigned. Using Select Correct for now.");
-                    return selectMinigame;
-                }
-                return goBagMinigame;
-            case MinigameType.Flashlight:
-                if (flashlightMinigame == null)
-                {
-                    Debug.LogError("MinigameManager: Flashlight Minigame is not assigned. Using Select Correct for now.");
-                    return selectMinigame;
-                }
-                return flashlightMinigame;
-            case MinigameType.Tuning:
-                if (tuningMinigame == null)
-                {
-                    Debug.LogError("MinigameManager: Tuning Minigame is not assigned. Using Select Correct for now.");
-                    return selectMinigame;
-                }
-                return tuningMinigame;
-            default:
-                return holdMinigame;
-        }
+        MinigameBase minigame;
+        if (minigames.TryGetValue(type, out minigame)) return minigame;
+        return holdMinigame;
     }
 
     private void HideAllMinigames()
     {
-        holdMinigame.End();
-        timingMinigame.End();
-        selectMinigame.End();
-        if (goBagMinigame != null) goBagMinigame.End();
-        if (flashlightMinigame != null) flashlightMinigame.End();
-        if (tuningMinigame != null) tuningMinigame.End();
+        foreach (MinigameBase minigame in minigames.Values)
+        {
+            minigame.End();
+        }
     }
 
     private void OnAttemptFinished(bool success)
@@ -277,13 +349,15 @@ public class MinigameManager : MonoBehaviour
             yield return new WaitForSecondsRealtime(settings.failDelay);
 
             resultRoutine = null;
-            attemptNumber++;
             StartAttempt();
         }
     }
 
     private void Close(bool success)
     {
+        if (TryReturnToPhone(success)) return;
+
+        phoneDevice = null;
         currentMinigame = null;
         HideAllMinigames();
         window.SetActive(false);
@@ -296,6 +370,18 @@ public class MinigameManager : MonoBehaviour
         currentTask = null;
 
         if (callback != null) callback(success);
+    }
+
+    private void SetPhoneView(bool phoneView)
+    {
+        foreach (Graphic graphic in hiddenGraphicsForPhone)
+        {
+            if (graphic != null) graphic.enabled = !phoneView;
+        }
+        foreach (GameObject hidden in hiddenObjectsForPhone)
+        {
+            if (hidden != null) hidden.SetActive(!phoneView);
+        }
     }
 
     private void SetCursorFree(bool free)
@@ -311,29 +397,5 @@ public class MinigameManager : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
         }
         Cursor.visible = free;
-    }
-
-    private void LogInput(GameSettings settings)
-    {
-        if (MinigameInput.KeyPressedThisFrame(settings.actionKey))
-        {
-            Debug.Log("[Minigame input] Action key pressed.");
-        }
-
-        Mouse mouse = Mouse.current;
-        if (mouse != null && mouse.leftButton.wasPressedThisFrame)
-        {
-            Debug.Log("[Minigame input] Left click. Counts as the action: " + (settings.allowMouseClick && !CursorFree));
-        }
-
-        if (MinigameInput.KeyPressedThisFrame(settings.cursorToggleKey))
-        {
-            Debug.Log("[Minigame input] Cursor toggle key pressed. Cursor shown before this press: " + CursorFree);
-        }
-
-        if (MinigameInput.KeyPressedThisFrame(settings.cancelMinigameKey))
-        {
-            Debug.Log("[Minigame input] Cancel key pressed.");
-        }
     }
 }

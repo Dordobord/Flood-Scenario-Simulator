@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7cbd0610e150a40822390088e313ec, type: 3}
+  m_Name: Task_UnplugAppliances
+  m_EditorClassIdentifier: Assembly-CSharp::TaskData
+  id: Task_UnplugAppliances
+  title: Unplug the Appliances
+  description: Unplug the appliances before switching off the main breaker.
+  domain: 1
+  priority: 0
+  scoreMethod: 0
+  isRequired: 1
+  recommendation: Unplug your appliances first, then switch off the main breaker, but only if the area around it is dry.
+  rewardItem: {fileID: 0}
+  minigame:
+    type: 0
+    prompt: 
+    holdSeconds: 3
+    cursorSpeed: 1
+    targetWidth: 0.2
+    requiredHits: 1
+    revealMessage: 
+    phoneApp: {fileID: 0}
+    choices: []
+  mustBePlaced: 0
+  mustDoFirst: {fileID: 0}

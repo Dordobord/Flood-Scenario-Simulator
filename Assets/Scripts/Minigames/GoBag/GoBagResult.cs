@@ -3,21 +3,17 @@ using System.Collections.Generic;
 public class GoBagResult
 {
     public bool IsComplete { get; private set; }
-    public List<SelectChoice> MissingRequired { get; private set; }
-    public List<SelectChoice> PackedDistractors { get; private set; }
+    public List<SelectChoice> MissingItems { get; private set; }
 
-    public GoBagResult(List<SelectChoice> missingRequired, List<SelectChoice> packedDistractors)
+    public GoBagResult(List<SelectChoice> missingItems)
     {
-        MissingRequired = missingRequired;
-        PackedDistractors = packedDistractors;
-        IsComplete = missingRequired.Count == 0 && packedDistractors.Count == 0;
+        MissingItems = missingItems;
+        IsComplete = missingItems.Count == 0;
     }
 
     public string Describe()
     {
-        return (IsComplete ? "COMPLETE" : "INCOMPLETE")
-            + ". Missing: " + GetNames(MissingRequired)
-            + ". Distractors packed: " + GetNames(PackedDistractors);
+        return (IsComplete ? "COMPLETE" : "INCOMPLETE") + ". Missing: " + GetNames(MissingItems);
     }
 
     private static string GetNames(List<SelectChoice> list)

@@ -16,7 +16,8 @@ MonoBehaviour:
   title: Check the TV for the Warning Level
   description: Tune the TV to get the latest PAGASA warning.
   domain: 3
-  hhiPercent: 70
+  priority: 0
+  scoreMethod: 0
   isRequired: 1
   recommendation: Check the TV, radio, or phone for the latest PAGASA warning before the storm arrives.
   rewardItem: {fileID: 0}
@@ -30,4 +31,9 @@ MonoBehaviour:
     revealMessage: 'PAGASA: ORANGE RAINFALL WARNING
 
       Flooding is threatening in low-lying areas and near rivers.'
+    question: 
+    showRainfallWarning: 1
+    phoneApp: {fileID: 0}
     choices: []
+  mustBePlaced: 0
+  needsPower: 1

@@ -14,46 +14,62 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StormWaits.TaskData
   id: Task_PackGoBag
   title: Pack the Go Bag
-  description: Pack only the essentials for evacuation.
+  description: Fit all the essentials in the go bag.
   domain: 2
-  hhiPercent: 27
+  priority: 0
+  scoreMethod: 2
   isRequired: 1
+  recommendation: 
   rewardItem: {fileID: 0}
   minigame:
     type: 3
-    prompt: Pack the go bag. Click a piece, R to rotate, click again to place it in the bag.
+    prompt: Fit everything in the go bag. Click a piece, R to rotate, click again to place it.
     holdSeconds: 3
     cursorSpeed: 1
     targetWidth: 0.2
     requiredHits: 1
+    revealMessage: 
     choices:
-    - label: Drinking water and canned food
+    - label: Canned food
       isCorrect: 1
       icon: {fileID: 0}
+      detail: 
+      avatarColor: {r: 0.45, g: 0.48, b: 0.52, a: 1}
       gridWidth: 2
-      gridHeight: 1
+      gridHeight: 2
     - label: Change of clothes
       isCorrect: 1
       icon: {fileID: 0}
+      detail: 
+      avatarColor: {r: 0.45, g: 0.48, b: 0.52, a: 1}
       gridWidth: 2
+      gridHeight: 2
+    - label: Drinking water
+      isCorrect: 1
+      icon: {fileID: 0}
+      detail: 
+      avatarColor: {r: 0.45, g: 0.48, b: 0.52, a: 1}
+      gridWidth: 3
+      gridHeight: 1
+    - label: First aid kit
+      isCorrect: 1
+      icon: {fileID: 0}
+      detail: 
+      avatarColor: {r: 0.45, g: 0.48, b: 0.52, a: 1}
+      gridWidth: 2
+      gridHeight: 1
+    - label: Flashlight
+      isCorrect: 1
+      icon: {fileID: 0}
+      detail: 
+      avatarColor: {r: 0.45, g: 0.48, b: 0.52, a: 1}
+      gridWidth: 1
       gridHeight: 2
     - label: Whistle
       isCorrect: 1
       icon: {fileID: 0}
+      detail: 
+      avatarColor: {r: 0.45, g: 0.48, b: 0.52, a: 1}
       gridWidth: 1
       gridHeight: 1
-    - label: Television
-      isCorrect: 0
-      icon: {fileID: 0}
-      gridWidth: 3
-      gridHeight: 2
-    - label: Board games
-      isCorrect: 0
-      icon: {fileID: 0}
-      gridWidth: 2
-      gridHeight: 1
-    - label: Large electric fan
-      isCorrect: 0
-      icon: {fileID: 0}
-      gridWidth: 2
-      gridHeight: 1
+  mustBePlaced: 0

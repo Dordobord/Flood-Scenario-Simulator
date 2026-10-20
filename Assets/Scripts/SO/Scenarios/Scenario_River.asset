@@ -16,19 +16,23 @@ MonoBehaviour:
   displayName: Riverine Flood
   description: Your house is on a riverbank and the river keeps rising. Not every bridge is safe to cross. Prepare your household, then cross the river to the school on high ground.
   sceneName: RiverScenario
+  evacuationCenterName: School
   preparationSeconds: 180
+  prepRainStrength: 0.5
+  evacuationRainStrength: 0.8
+  rainfallWarning: 1
   tasks:
   - {fileID: 11400000, guid: 14421b2e1b3e9d640b72a11e02158a7a, type: 2}
-  - {fileID: 11400000, guid: 091bd2c3ea659f8448916545aa798eaa, type: 2}
   - {fileID: 11400000, guid: bba5967fb3b50ed45b5439718b2771d3, type: 2}
-  - {fileID: 11400000, guid: 3143ace6fa67b2f4087a6b2c776f69c2, type: 2}
-  - {fileID: 11400000, guid: 764671656186d3846b58fbf89bea7227, type: 2}
   - {fileID: 11400000, guid: 0597ac2387e6b8249aabc86433719c3c, type: 2}
-  - {fileID: 11400000, guid: 3d383392582eb4b4294b97db4ba80b69, type: 2}
   - {fileID: 11400000, guid: 8fb73574db086ab4fa9511c6c86f210c, type: 2}
-  - {fileID: 11400000, guid: 0e234e705a054024982d53b5747243fe, type: 2}
   - {fileID: 11400000, guid: 9ea2e202740d0bd4091af7065a13a130, type: 2}
   - {fileID: 11400000, guid: be5d49db71a17b445ba2b99ac69f5e46, type: 2}
-  - {fileID: 11400000, guid: baed1eaaf642a22408f3636f0f8737fb, type: 2}
   - {fileID: 11400000, guid: b2b3f32d5b695ef4c87e090baafa59d6, type: 2}
+  - {fileID: 11400000, guid: cbf6a41ff045fae4c8f2189c2f826f14, type: 2}
   - {fileID: 11400000, guid: 1f263728515eb2d4aa27263798ae5701, type: 2}
+  - {fileID: 11400000, guid: ec8e91a1de81e5d43b521b6274b5528d, type: 2}
+  - {fileID: 11400000, guid: 7ab07306cc304f17b9aa6934a40c5907, type: 2}
+  - {fileID: 11400000, guid: 26acd832ed4d4234a1b40dd36ccf6f7b, type: 2}
+  - {fileID: 11400000, guid: 764671656186d3846b58fbf89bea7227, type: 2}
+  - {fileID: 11400000, guid: 0e234e705a054024982d53b5747243fe, type: 2}

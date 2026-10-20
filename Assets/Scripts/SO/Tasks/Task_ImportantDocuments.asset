@@ -14,19 +14,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StormWaits.TaskData
   id: Task_ImportantDocuments
   title: Safeguard Important Documents
-  description: Put the documents you cannot replace into a waterproof pouch.
-  domain: 0
-  hhiPercent: 87
+  description: Move the documents you cannot replace somewhere high and dry.
+  domain: 2
+  priority: 0
+  scoreMethod: 0
   isRequired: 1
+  recommendation: 
   rewardItem: {fileID: 11400000, guid: 411a2805952cc2344b08c36bff28c831, type: 2}
   minigame:
-    type: 2
-    prompt: Select every document that belongs in the waterproof pouch.
+    type: 6
+    prompt: 
     holdSeconds: 3
     cursorSpeed: 1
     targetWidth: 0.2
     requiredHits: 1
-    maxMistakes: 0
+    revealMessage: 
     choices:
     - label: Government-issued ID
       isCorrect: 1
@@ -63,3 +65,4 @@ MonoBehaviour:
       icon: {fileID: 0}
       gridWidth: 1
       gridHeight: 1
+  mustBePlaced: 1

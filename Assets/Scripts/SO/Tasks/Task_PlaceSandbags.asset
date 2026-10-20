@@ -16,15 +16,18 @@ MonoBehaviour:
   title: Place Sandbags at the Entrance
   description: Block the entrance against incoming floodwater.
   domain: 2
-  hhiPercent: 55
+  priority: 1
+  scoreMethod: 0
   isRequired: 1
-  rewardItem: {fileID: 0}
+  recommendation: 
+  rewardItem: {fileID: 11400000, guid: e2025340df444eb3afe23685527dca5e, type: 2}
   minigame:
     type: 0
-    prompt: Hold the action key to stack the sandbags at the entrance.
+    prompt: Carry sandbags from the pile and stack them at the entrance.
     holdSeconds: 4
     cursorSpeed: 1
     targetWidth: 0.2
     requiredHits: 1
-    maxMistakes: 0
+    revealMessage: 
     choices: []
+  mustBePlaced: 0

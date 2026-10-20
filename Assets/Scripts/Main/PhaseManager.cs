@@ -27,6 +27,8 @@ public class PhaseManager : MonoBehaviour
 
     private float timeRemaining;
     private float evacuationStartTime;
+    private Bounds yardBounds;
+    private bool hasYard;
 
     public GamePhase CurrentPhase { get; private set; }
 
@@ -36,6 +38,10 @@ public class PhaseManager : MonoBehaviour
     }
 
     public float EvacuationSeconds { get; private set; }
+
+    public bool LeftEarly { get; private set; }
+
+    public float TimeLeftWhenLeaving { get; private set; }
 
     private void Awake()
     {
@@ -52,6 +58,27 @@ public class PhaseManager : MonoBehaviour
     {
         timeRemaining = GetPreparationSeconds();
         CurrentPhase = GamePhase.Preparation;
+        FindYard();
+    }
+
+    private void FindYard()
+    {
+        PrepBoundary[] boundaries = FindObjectsByType<PrepBoundary>(FindObjectsSortMode.None);
+        foreach (PrepBoundary boundary in boundaries)
+        {
+            Collider wall = boundary.GetComponent<Collider>();
+            if (wall == null) continue;
+
+            if (!hasYard)
+            {
+                yardBounds = wall.bounds;
+                hasYard = true;
+            }
+            else
+            {
+                yardBounds.Encapsulate(wall.bounds);
+            }
+        }
     }
 
     private float GetPreparationSeconds()
@@ -83,6 +110,15 @@ public class PhaseManager : MonoBehaviour
             timeRemaining = 0f;
             BeginTransition();
         }
+    }
+
+    public void LeaveEarly()
+    {
+        if (CurrentPhase != GamePhase.Preparation) return;
+
+        LeftEarly = true;
+        TimeLeftWhenLeaving = timeRemaining;
+        BeginTransition();
     }
 
     private void BeginTransition()
@@ -123,6 +159,19 @@ public class PhaseManager : MonoBehaviour
         player.transform.SetPositionAndRotation(evacuationSpawnPoint.position, evacuationSpawnPoint.rotation);
 
         if (controller != null) controller.enabled = true;
+
+        if (IsInYard(player.transform.position))
+        {
+            Debug.LogWarning("PhaseManager: the player is still inside the house or yard after evacuating. Move the Evacuation Spawn Point outside the gate.");
+        }
+    }
+
+    private bool IsInYard(Vector3 position)
+    {
+        if (!hasYard) return false;
+
+        Vector3 flatPosition = new Vector3(position.x, yardBounds.center.y, position.z);
+        return yardBounds.Contains(flatPosition);
     }
 
     private void StartEvacuation()

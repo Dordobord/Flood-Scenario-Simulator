@@ -6,7 +6,6 @@ public class GoBagItem
     public bool IsRotated { get; private set; }
 
     public string Name => Choice.label;
-    public bool IsRequired => Choice.isCorrect;
     public Sprite Icon => Choice.icon;
 
     public int BaseWidth => Mathf.Max(1, Choice.gridWidth);

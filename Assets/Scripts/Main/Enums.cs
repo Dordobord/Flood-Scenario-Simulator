@@ -6,6 +6,20 @@ public enum PreparednessDomain
     Information
 }
 
+public enum TaskPriority
+{
+    Critical,
+    Important
+}
+
+public enum ScoreMethod
+{
+    Done,
+    Speed,
+    Accuracy,
+    Knowledge
+}
+
 public enum MinigameType
 {
     HoldProgress,
@@ -13,7 +27,20 @@ public enum MinigameType
     SelectCorrect,
     GoBag,
     Flashlight,
-    Tuning
+    Tuning,
+    HoldInWorld,
+    Breaker,
+    Stove,
+    Phone,
+    Medication,
+    FirstAid
+}
+
+public enum RainfallWarningLevel
+{
+    Yellow,
+    Orange,
+    Red
 }
 
 public enum ScenarioType

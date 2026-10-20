@@ -35,7 +35,7 @@ MonoBehaviour:
   targetEdgeMargin: 0.1
   preparationSeconds: 120
   prepTimerFormat: 'Prep: {0}'
-  evacuationTimerText: FLOOD PHASE
+  evacuationTimerText: EVACUATION PHASE
   timerWarningSeconds: 30
   timerNormalColor: {r: 1, g: 1, b: 1, a: 1}
   timerWarningColor: {r: 1, g: 0.3, b: 0.3, a: 1}
@@ -43,7 +43,7 @@ MonoBehaviour:
   transitionText: Heading to higher ground...
   transitionFadeSeconds: 1
   transitionHoldSeconds: 1.5
-  evacuationStartedMessage: The flood phase has begun!
+  evacuationStartedMessage: The evacuation phase has begun! Get to the evacuation center.
   toastSeconds: 3
   taskHeaderFormat: Tasks {0}/{1}
   boldTaskHeader: 1

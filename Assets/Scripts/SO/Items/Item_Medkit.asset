@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Item_Medkit
   m_EditorClassIdentifier: Assembly-CSharp::StormWaits.ItemData
   id: Item_Medkit
-  displayName: Medkit
-  description: A checked and stocked first aid kit.
+  displayName: Emergency Kit
+  description: A stocked first aid kit with the household's medicine.
   icon: {fileID: 0}
   fallbackColor: {r: 0.9, g: 0.3, b: 0.3, a: 1}
   cost: 0

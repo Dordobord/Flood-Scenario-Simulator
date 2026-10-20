@@ -72,19 +72,21 @@ public class EndPanelUI : MonoBehaviour
 
         if (settings.logInput)
         {
-            Debug.Log("Results: " + score.completedCount + "/" + score.totalCount + " tasks, " + score.Percentage + "%, evacuation " + score.evacuationSeconds + " s");
+            Debug.Log("Results: " + score.completedCount + "/" + score.totalCount + " tasks, " + score.percent + "%, " + score.rating + ", evacuation " + score.evacuationSeconds + " s");
         }
     }
 
     private string BuildScoreText(PreparednessScore score, GameSettings settings)
     {
-        string text = string.Format(settings.scoreFormat, score.Percentage, score.completedCount, score.totalCount) + "\n";
+        string text = string.Format(settings.scorePercentFormat, score.percent) + "\n";
+        text += string.Format(settings.ratingFormat, score.rating) + "\n";
+        if (score.ratingCapped) text += settings.ratingCappedNote + "\n";
         text += string.Format(settings.evacuationTimeFormat, FormatTime(score.evacuationSeconds)) + "\n\n";
 
         foreach (DomainScore domainScore in score.domainScores)
         {
             string domainName = settings.GetDomainName(domainScore.domain);
-            text += string.Format(settings.domainScoreFormat, domainName, domainScore.completed, domainScore.total) + "\n";
+            text += string.Format(settings.domainPercentFormat, domainName, domainScore.Percent) + "\n";
         }
         return text;
     }
@@ -96,15 +98,28 @@ public class EndPanelUI : MonoBehaviour
         string text = "";
         foreach (TaskData task in score.completedTasks)
         {
-            text += settings.listBullet + task.title + "\n";
+            text += settings.listBullet + string.Format(settings.taskScoreFormat, task.title, score.taskPercents[task]) + "\n";
         }
         return text;
     }
 
     private string BuildRecommendationsText(PreparednessScore score, GameSettings settings)
     {
-        if (score.IsPerfect) return settings.wellPreparedMessage;
-        if (score.weakestDomains.Count == 0) return "";
+        if (score.IsPerfect) return settings.allDoneMessage;
+
+        string text = "";
+
+        if (score.missedCriticalTasks.Count > 0)
+        {
+            text += settings.missedCriticalHeading + "\n";
+            foreach (TaskData task in score.missedCriticalTasks)
+            {
+                text += settings.listBullet + GetRecommendation(task, settings) + "\n";
+            }
+            text += "\n";
+        }
+
+        if (score.weakestDomains.Count == 0) return text;
 
         List<string> domainNames = new List<string>();
         foreach (PreparednessDomain domain in score.weakestDomains)
@@ -112,22 +127,20 @@ public class EndPanelUI : MonoBehaviour
             domainNames.Add(settings.GetDomainName(domain));
         }
 
-        string text = string.Format(settings.weakestDomainFormat, string.Join(settings.domainSeparator, domainNames)) + "\n\n";
+        text += string.Format(settings.weakestDomainFormat, string.Join(settings.domainSeparator, domainNames)) + "\n";
 
         foreach (TaskData task in score.missedTasks)
         {
-            if (!score.weakestDomains.Contains(task.domain)) continue;
-
-            if (string.IsNullOrEmpty(task.recommendation))
-            {
-                text += settings.listBullet + task.title + "\n";
-            }
-            else
-            {
-                text += settings.listBullet + string.Format(settings.recommendationFormat, task.title, task.recommendation) + "\n";
-            }
+            if (!score.weakestDomains.Contains(task.domain) || score.missedCriticalTasks.Contains(task)) continue;
+            text += settings.listBullet + GetRecommendation(task, settings) + "\n";
         }
         return text;
+    }
+
+    private string GetRecommendation(TaskData task, GameSettings settings)
+    {
+        if (string.IsNullOrEmpty(task.recommendation)) return task.title;
+        return string.Format(settings.recommendationFormat, task.title, task.recommendation);
     }
 
     private string FormatTime(float seconds)

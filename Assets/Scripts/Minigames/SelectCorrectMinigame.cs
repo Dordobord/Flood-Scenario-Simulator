@@ -38,17 +38,14 @@ public class SelectCorrectMinigame : MinigameBase
 
     private void OnConfirmClicked()
     {
-        bool allCorrect = true;
+        int wrongCount = 0;
 
         foreach (ChoiceButton choiceButton in choiceButtons)
         {
-            if (choiceButton.IsSelected != choiceButton.Choice.isCorrect)
-            {
-                allCorrect = false;
-                break;
-            }
+            if (choiceButton.IsSelected != choiceButton.Choice.isCorrect) wrongCount++;
         }
 
-        Finish(allCorrect);
+        Mistakes = wrongCount;
+        Finish(wrongCount == 0);
     }
 }

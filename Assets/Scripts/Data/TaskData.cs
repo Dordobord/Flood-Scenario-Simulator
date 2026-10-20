@@ -29,6 +29,8 @@ public class MinigameSettings
 
     [Header("Tuning")]
     [TextArea] public string revealMessage;
+    [TextArea] public string question;
+    public bool showRainfallWarning;
 
     [Header("Choices (Select Correct: 7 or fewer. Go bag: any number.)")]
     public List<SelectChoice> choices = new List<SelectChoice>();
@@ -43,14 +45,20 @@ public class TaskData : ScriptableObject
 
     [Header("Preparedness")]
     public PreparednessDomain domain;
-    [Range(0f, 100f)]
-    public float hhiPercent;
+    public TaskPriority priority = TaskPriority.Important;
+    public ScoreMethod scoreMethod = ScoreMethod.Done;
     public bool isRequired = true;
     [TextArea] public string recommendation;
 
     [Header("Reward and minigame")]
     public ItemData rewardItem;
     public MinigameSettings minigame = new MinigameSettings();
+
+    [Header("Placing")]
+    public bool mustBePlaced;
+
+    [Header("Power")]
+    public bool needsPower;
 }
 
 [Serializable]

@@ -14,17 +14,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StormWaits.TaskData
   id: Task_ListenToRadio
   title: Listen to the Radio Bulletin
-  description: Keep listening to the typhoon bulletin.
+  description: Tune in to the barangay advisory on the radio.
   domain: 3
-  hhiPercent: 70
+  priority: 1
+  scoreMethod: 0
   isRequired: 1
+  recommendation: Listen to the radio for evacuation orders. A battery radio still works when the power is off.
   rewardItem: {fileID: 0}
   minigame:
-    type: 0
-    prompt: Hold the action key to keep listening to the latest typhoon bulletin.
+    type: 5
+    prompt: The radio is full of static. Turn the dial until you hear the bulletin.
     holdSeconds: 3
     cursorSpeed: 1
     targetWidth: 0.2
     requiredHits: 1
-    maxMistakes: 0
+    revealMessage: 'BARANGAY ADVISORY
+
+      A pre-emptive evacuation is now in effect for low-lying areas. Evacuate now to the {0}.'
+    question: 
+    phoneApp: {fileID: 0}
     choices: []
+  mustBePlaced: 0
+  needsPower: 0

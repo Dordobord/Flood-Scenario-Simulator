@@ -14,42 +14,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StormWaits.TaskData
   id: Task_SaveEmergencyContacts
   title: Save Emergency Contacts
-  description: Charge the phone and save the numbers you will need.
-  domain: 4
-  hhiPercent: 42
+  description: Save the numbers you will need during the flood.
+  domain: 0
+  priority: 0
+  scoreMethod: 3
   isRequired: 1
-  rewardItem: {fileID: 11400000, guid: 0194c55d9756ff8478131e52706261ee, type: 2}
+  recommendation: Save your barangay hotline and a contact outside the flood area, and tell someone where you will evacuate so they know where to find you.
+  rewardItem: {fileID: 0}
   minigame:
-    type: 2
-    prompt: Charge your phone and save the contacts you will need. Select all that apply.
+    type: 9
+    prompt: Tap the contacts you need, then save them.
     holdSeconds: 3
     cursorSpeed: 1
     targetWidth: 0.2
     requiredHits: 1
-    maxMistakes: 0
-    choices:
-    - label: Barangay disaster hotline
-      isCorrect: 1
-      icon: {fileID: 0}
-      gridWidth: 1
-      gridHeight: 1
-    - label: Family member outside the flood area
-      isCorrect: 1
-      icon: {fileID: 0}
-      gridWidth: 1
-      gridHeight: 1
-    - label: Nearest evacuation center
-      isCorrect: 1
-      icon: {fileID: 0}
-      gridWidth: 1
-      gridHeight: 1
-    - label: Food delivery app
-      isCorrect: 0
-      icon: {fileID: 0}
-      gridWidth: 1
-      gridHeight: 1
-    - label: Old classmate
-      isCorrect: 0
-      icon: {fileID: 0}
-      gridWidth: 1
-      gridHeight: 1
+    revealMessage: 
+    question: 
+    choices: []
+  mustBePlaced: 0
+  needsPower: 0

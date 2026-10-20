@@ -15,6 +15,7 @@ public class TaskManager : MonoBehaviour
     private Dictionary<TaskData, TaskResult> completed = new Dictionary<TaskData, TaskResult>();
 
     public event Action Changed;
+    public event Action<TaskData> TaskCompleted;
 
     public ScenarioData CurrentScenario { get; private set; }
 
@@ -78,6 +79,12 @@ public class TaskManager : MonoBehaviour
         if (Changed != null) Changed();
     }
 
+    public void ResetTask(TaskData task)
+    {
+        if (task == null || !completed.Remove(task)) return;
+        if (Changed != null) Changed();
+    }
+
     public bool IsCompleted(TaskData task)
     {
         return task != null && completed.ContainsKey(task);
@@ -87,6 +94,14 @@ public class TaskManager : MonoBehaviour
     {
         if (task != null && attempts.ContainsKey(task)) return attempts[task];
         return 0;
+    }
+
+    public bool TryGetResult(TaskData task, out TaskResult result)
+    {
+        if (task != null && completed.TryGetValue(task, out result)) return true;
+
+        result = new TaskResult();
+        return false;
     }
 
     public List<TaskResult> GetResults()
@@ -117,6 +132,7 @@ public class TaskManager : MonoBehaviour
         result.secondsSpent = secondsSpent[task];
 
         completed[task] = result;
+        if (TaskCompleted != null) TaskCompleted(task);
         if (Changed != null) Changed();
     }
 }

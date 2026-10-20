@@ -11,6 +11,9 @@ public class FirstPersonController : MonoBehaviour
     [SerializeField, Range(0f, 90f)] private float maxLookAngle = 85f;
     [SerializeField] private float groundedDownSpeed = -2f;
 
+    [Header("Start")]
+    [SerializeField] private float lookDelayOnStart = 0.25f;
+
     public float SpeedMultiplier = 1f;
 
     private CharacterController controller;
@@ -36,7 +39,14 @@ public class FirstPersonController : MonoBehaviour
 
     private void Update()
     {
-        if (MinigameManager.IsActive || PhaseManager.IsPlayerLocked) return;
+        if (PhaseManager.IsPlayerLocked) return;
+
+        if (MinigameManager.IsPhoneOpen)
+        {
+            Move();
+            return;
+        }
+        if (MinigameManager.IsActive) return;
 
         Look();
         Move();
@@ -46,6 +56,7 @@ public class FirstPersonController : MonoBehaviour
     {
         Mouse mouse = Mouse.current;
         if (mouse == null) return;
+        if (Time.timeSinceLevelLoad < lookDelayOnStart) return;
 
         Vector2 delta = mouse.delta.ReadValue() * lookSensitivity;
 

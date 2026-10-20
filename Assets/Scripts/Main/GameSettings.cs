@@ -9,7 +9,6 @@ public class GameSettings : ScriptableObject
     [Header("Keys")]
     public Key interactKey = Key.E;
     public Key actionKey = Key.E;
-    public Key cursorToggleKey = Key.Tab;
     public Key cancelMinigameKey = Key.Backspace;
     public bool allowMouseClick = true;
     public Key moveForwardKey = Key.W;
@@ -17,18 +16,14 @@ public class GameSettings : ScriptableObject
     public Key moveLeftKey = Key.A;
     public Key moveRightKey = Key.D;
 
-    [Header("Cursor")]
-    public bool freeCursorForSelectCorrect = false;
-    public bool freeCursorForGoBag = true;
-    public bool freeCursorForFlashlight = true;
-    public bool freeCursorForTuning = true;
-
     [Header("Debug")]
     public bool logInput = false;
 
     [Header("Interaction")]
     public float interactRange = 3f;
     public string promptFormat = "[{0}] {1}";
+    public string holdPromptFormat = "Hold [{0}] {1}";
+    public string placePromptFormat = "Place {0}";
     public string defaultPrompt = "Interact";
 
     [Header("Minigame timing")]
@@ -57,14 +52,8 @@ public class GameSettings : ScriptableObject
 
     [Header("HUD")]
     public float toastSeconds = 3f;
-    public string taskHeaderFormat = "Tasks {0}/{1}";
-    public bool boldTaskHeader = true;
-    public string doneMark = "[x] ";
-    public string todoMark = "[ ] ";
 
     [Header("Minigame text")]
-    public string attemptFormat = "Attempt {0}";
-    public bool showAttemptTextForGoBag = false;
     public string successMessage = "Success!";
     public string failMessage = "Not quite. Try again!";
     public string hitsFormat = "Hits: {0}/{1}";
@@ -73,29 +62,140 @@ public class GameSettings : ScriptableObject
     public string actionWithClickFormat = "{0} or left click";
     public string holdHintFormat = "Hold {0}";
     public string timingHintFormat = "Press {0} when the marker is in the green zone";
-    public string controlsHintFormat = "{0}: show or hide cursor     {1}: cancel";
+
+    [Header("Breaker")]
+    public string breakerMainLabel = "MAIN";
+    public string breakerOnText = "ON";
+    public string breakerOffText = "OFF";
+    public Color breakerOnColor = new Color(0.75f, 0.25f, 0.25f);
+    public Color breakerOffColor = new Color(0.25f, 0.6f, 0.35f);
+    public string breakerCoverHint = "Click the cover to open the breaker panel.";
+    public string breakerSwitchHint = "Switch off every circuit first, then MAIN.";
+    public string breakerMainEarlyHint = "Spark! Switch off the other circuits before MAIN.";
+
+    [Header("Stove")]
+    public Color stoveOnColor = new Color(0.85f, 0.45f, 0.2f);
+    public Color stoveOffColor = new Color(0.25f, 0.6f, 0.35f);
+    public string stoveKnobHint = "Drag each burner knob around until it points to OFF.";
+    public string stoveValveHint = "Now turn the LPG valve clockwise until it is closed.";
+    public string stoveValveLockedHint = "Turn off every burner before closing the LPG valve.";
+
+    [Header("Sandbags")]
+    public string sandbagTakePrompt = "Take a sandbag";
+    public string sandbagPlacePromptFormat = "Place Sandbag ({0}/{1})";
+    public string sandbagPlacedMessageFormat = "Sandbag placed ({0}/{1}). Get another from the pile!";
+    public string sandbagAlreadyCarryingMessage = "You are already carrying a sandbag.";
+
+    [Header("Leave Early")]
+    public string leavePrompt = "Leave now and evacuate";
+    public string leaveConfirmPrompt = "Confirm: leave now";
+    public string leaveConfirmMessageFormat = "Leave now? Unfinished tasks will not count. Press {0} again to confirm.";
+    public float leaveConfirmSeconds = 3f;
+
+    [Header("Hotbar")]
+    public Key[] hotbarKeys = { Key.Digit1, Key.Digit2, Key.Digit3, Key.Digit4, Key.Digit5 };
+    public bool hotbarScrollWheel = true;
+    public Color hotbarNormalColor = new Color(0f, 0f, 0f, 0.55f);
+    public Color hotbarSelectedColor = new Color(0.25f, 0.28f, 0.32f, 0.85f);
+    public Color hotbarOutlineColor = new Color(1f, 1f, 1f, 1f);
+    public float hotbarSelectedScale = 1.1f;
+
+    [Header("Phone")]
+    public string phoneTitle = "Phone";
+    public string phoneTimeFormat = "HH:mm";
+    public string phoneDoneText = "Done";
+    public Color phoneDoneIconColor = new Color(0.45f, 0.48f, 0.52f);
+
+    [Header("Phone Contacts")]
+    public Color contactSavedRowColor = new Color(0.12f, 0.165f, 0.21f);
+    public Color contactMarkerSavedColor = new Color(0.216f, 0.541f, 0.867f);
+
+    [Header("Phone Notes")]
+    public Color noteDoneTextColor = new Color(0.45f, 0.48f, 0.52f);
+    public Color noteBoxDoneColor = new Color(0.114f, 0.62f, 0.459f);
+
+    [Header("Power Bank")]
+    public string powerBankPlugPrompt = "Plug in the power bank";
+    public string powerBankChargingFormat = "Charging power bank {0}%";
+    public string powerBankTakePrompt = "Take the charged power bank";
+    public string powerBankStillChargingMessage = "Still charging. Do other tasks while you wait.";
+    public string powerBankPackedMessage = "The power bank is charged and packed in the Go Bag.";
+    public string powerBankLabelFormat = "<b>Power Bank {0}%</b>";
+
+    [Header("Unplug Appliances")]
+    public string unplugPromptFormat = "Unplug the {0}";
+    public string unpluggedMessageFormat = "Unplugged the {0} ({1}/{2})";
+    public string unpluggedLabelFormat = "<b>{0} (unplugged)</b>";
+
+    [Header("Windows")]
+    public string windowClosePrompt = "Close the window";
+    public string windowOpenPrompt = "Open the window";
+    public string windowClosedMessageFormat = "{0} closed ({1}/{2}). Close the rest!";
+    public string windowName = "Window";
+
+    [Header("Power")]
+    public string noPowerMessage = "No power. The breaker is turned off.";
+    public string noPowerPrompt = "No power (breaker is off)";
+    public string powerOnPrompt = "Turn the power back on";
+    public string powerOnMessage = "The power is back on.";
+
+    [Header("Evacuation Marker")]
+    public string evacuationMarkerLabelFormat = "{0}\n{1} m";
+    public Color evacuationMarkerColor = new Color(0.25f, 0.85f, 0.4f);
 
     [Header("Messages")]
     public string inventoryFullMessage = "Your inventory is full.";
     public string collectedMessage = "Collected: ";
     public string taskCompleteMessage = "Task complete: ";
 
+    [Header("Scoring")]
+    public float criticalWeight = 2f;
+    public float importantWeight = 1f;
+    public float speedTimeLimit = 30f;
+    [Range(0f, 1f)] public float minSpeedScore = 0.5f;
+    [Range(0f, 1f)] public float mistakePenalty = 0.2f;
+    [Range(0f, 1f)] public float retryPenalty = 0.1f;
+    [Range(0f, 1f)] public float minTaskScore = 0.4f;
+    public float wellPreparedPercent = 85f;
+    public float partlyPreparedPercent = 50f;
+    public string wellPreparedRating = "Well Prepared";
+    public string partlyPreparedRating = "Partially Prepared";
+    public string notPreparedRating = "Not Prepared";
+
     [Header("Results")]
-    public string scoreFormat = "Preparedness Score: {0:0.##}% ({1}/{2} tasks)";
+    public string scorePercentFormat = "Preparedness Score: {0:0}%";
+    public string ratingFormat = "Rating: {0}";
+    public string ratingCappedNote = "(capped because a critical task was missed)";
+    public string domainPercentFormat = "{0}: {1:0}%";
+    public string taskScoreFormat = "{0} ({1:0}%)";
+    public string missedCriticalHeading = "Missed critical tasks:";
+    public string allDoneMessage = "You completed every task. You are well prepared!";
     public string evacuationTimeFormat = "Evacuation Time: {0}";
-    public string domainScoreFormat = "{0}: {1}/{2}";
     public string weakestDomainFormat = "Weakest: {0}";
     public string domainSeparator = ", ";
     public string listBullet = "- ";
     public string recommendationFormat = "{0}: {1}";
     public string noTasksCompletedMessage = "None";
-    public string wellPreparedMessage = "You completed every task. You are well prepared!";
     public List<DomainDisplayName> domainDisplayNames = new List<DomainDisplayName>
     {
         new DomainDisplayName(PreparednessDomain.Planning, "Planning"),
         new DomainDisplayName(PreparednessDomain.Training, "Training"),
         new DomainDisplayName(PreparednessDomain.MaterialPreparedness, "Material Preparedness"),
         new DomainDisplayName(PreparednessDomain.Information, "Information")
+    };
+
+    [Header("Medication")]
+    public Color medicinePickedColor = new Color(0.18f, 0.31f, 0.48f);
+    public string pouchItemFormat = "{0} ({1})";
+    public string pouchEmptyText = "Click a medicine to pack it.";
+
+    [Header("Rainfall Warning")]
+    public string rainfallWarningTitleFormat = "PAGASA: {0} RAINFALL WARNING";
+    public List<RainfallWarningInfo> rainfallWarnings = new List<RainfallWarningInfo>
+    {
+        new RainfallWarningInfo(RainfallWarningLevel.Yellow, "YELLOW", new Color(0.95f, 0.77f, 0.06f), "Be alert. Flooding is possible in low-lying areas."),
+        new RainfallWarningInfo(RainfallWarningLevel.Orange, "ORANGE", new Color(0.9f, 0.49f, 0.13f), "Be prepared. Get ready to evacuate."),
+        new RainfallWarningInfo(RainfallWarningLevel.Red, "RED", new Color(0.91f, 0.3f, 0.24f), "Take action. Evacuate now.")
     };
 
     [Header("Pause")]
@@ -105,6 +205,21 @@ public class GameSettings : ScriptableObject
     [Header("Prep Boundary")]
     public string leaveHouseMessage = "Finish preparing first. You will evacuate when the timer ends.";
     public float leaveHouseMessageCooldown = 3f;
+
+    [Header("Weather")]
+    public float maxRainDropsPerSecond = 4000f;
+    public float rainRampSeconds = 4f;
+    public float maxWetness = 1f;
+    public Color clearFogColor = new Color(0.62f, 0.66f, 0.72f);
+    public Color stormFogColor = new Color(0.3f, 0.33f, 0.38f);
+    public float clearFogDensity = 0.002f;
+    public float stormFogDensity = 0.03f;
+    [Range(0f, 1f)] public float stormSunMultiplier = 0.35f;
+    [Range(0f, 1f)] public float stormSkyMultiplier = 0.4f;
+    [Range(0f, 1f)] public float rainVolume = 0.8f;
+    [Range(0f, 1f)] public float indoorFogMultiplier = 0.15f;
+    [Range(0f, 1f)] public float indoorRainVolumeMultiplier = 0.4f;
+    public float indoorBlendSeconds = 0.5f;
 
     [Header("Main Menu")]
     public string mainMenuSceneName = "MainMenu";
@@ -117,7 +232,6 @@ public class GameSettings : ScriptableObject
     public Color scenarioSelectedColor = new Color(0.2f, 0.45f, 0.75f);
 
     [Header("Colors")]
-    public Color taskDoneColor = new Color(0.49f, 0.99f, 0f);
     public Color successColor = new Color(0.4f, 0.95f, 0.5f);
     public Color failColor = new Color(1f, 0.45f, 0.4f);
     public Color choiceNormalColor = new Color(0.2f, 0.24f, 0.32f);
@@ -130,6 +244,15 @@ public class GameSettings : ScriptableObject
             if (entry.domain == domain && !string.IsNullOrEmpty(entry.displayName)) return entry.displayName;
         }
         return domain.ToString();
+    }
+
+    public RainfallWarningInfo GetRainfallWarning(RainfallWarningLevel level)
+    {
+        foreach (RainfallWarningInfo warning in rainfallWarnings)
+        {
+            if (warning.level == level) return warning;
+        }
+        return null;
     }
 
     private static GameSettings current;

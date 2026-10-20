@@ -1,0 +1,106 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2868433276549775016
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5840863441013485656}
+  - component: {fileID: 2699624489144048083}
+  - component: {fileID: 5195520642688410964}
+  - component: {fileID: 5238758998818273673}
+  - component: {fileID: 4423078758676701199}
+  - component: {fileID: 439455234843807374}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5840863441013485656
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2868433276549775016}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2699624489144048083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2868433276549775016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f40df873a4695b4ba9e68343345495f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StormWaits.InventoryManager
+  slotCount: 5
+  startingItems:
+  - {fileID: 11400000, guid: 0194c55d9756ff8478131e52706261ee, type: 2}
+--- !u!114 &5195520642688410964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2868433276549775016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e853c827be0ed04f90abcf1462c7d74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StormWaits.TaskManager
+  scenario: {fileID: 11400000, guid: 726cf3998fc483c41ba2b5d7a56b12b2, type: 2}
+--- !u!114 &5238758998818273673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2868433276549775016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07e7bdbb855f4a0459a030651b5917c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StormWaits.PhaseManager
+  evacuationSpawnPoint: {fileID: 0}
+  useTransitionScreen: 0
+--- !u!114 &4423078758676701199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2868433276549775016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c110b91c150c0e4185115951732775c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StormWaits.GameSystems
+  settings: {fileID: 11400000, guid: 1cea5dc9fdce22c4697a45dd067799f0, type: 2}
+--- !u!114 &439455234843807374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2868433276549775016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5de79144450e58042a1b651fba839d80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PowerSupply
+  breakerTask: {fileID: 11400000, guid: 7ab07306cc304f17b9aa6934a40c5907, type: 2}
