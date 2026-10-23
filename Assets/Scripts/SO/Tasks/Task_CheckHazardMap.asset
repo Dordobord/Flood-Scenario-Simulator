@@ -14,41 +14,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TaskData
   id: Task_CheckHazardMap
   title: Check the Barangay Hazard Map
-  description: Look up your barangay's flood hazard map on your phone.
-  domain: 3
+  description: Open the Hazard Map app on your phone and read the flood warning.
+  domain: 0
   priority: 0
-  scoreMethod: 3
+  scoreMethod: 0
   isRequired: 1
-  recommendation: Check your barangay's hazard map before the rainy season so you know if your area is flood-prone.
+  recommendation: Check your barangay's hazard map so you know if your area is flood prone and which roads to avoid.
   rewardItem: {fileID: 0}
   minigame:
     type: 9
-    prompt: Your barangay's page shows the flood hazard map. Your street is shaded red. What does this mean?
+    prompt: 
     holdSeconds: 3
     cursorSpeed: 1
     targetWidth: 0.2
     requiredHits: 1
     revealMessage: 
     phoneApp: {fileID: 11400000, guid: a88ced61decda6141a47ab330ea0183d, type: 2}
-    choices:
-    - label: Your area is flood-prone, so plan to evacuate early
-      isCorrect: 1
-      icon: {fileID: 0}
-      gridWidth: 1
-      gridHeight: 1
-    - label: Red means your area is safe from floods
-      isCorrect: 0
-      icon: {fileID: 0}
-      gridWidth: 1
-      gridHeight: 1
-    - label: Hazard maps only matter during earthquakes
-      isCorrect: 0
-      icon: {fileID: 0}
-      gridWidth: 1
-      gridHeight: 1
-    - label: You only need to act once water enters the house
-      isCorrect: 0
-      icon: {fileID: 0}
-      gridWidth: 1
-      gridHeight: 1
+    choices: []
   mustBePlaced: 0

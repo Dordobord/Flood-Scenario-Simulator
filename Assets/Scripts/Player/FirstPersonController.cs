@@ -15,10 +15,12 @@ public class FirstPersonController : MonoBehaviour
     [SerializeField] private float lookDelayOnStart = 0.25f;
 
     public float SpeedMultiplier = 1f;
+    public float CameraDrop;
 
     private CharacterController controller;
     private float pitch;
     private float verticalVelocity;
+    private float cameraBaseHeight;
 
     private void Awake()
     {
@@ -29,6 +31,8 @@ public class FirstPersonController : MonoBehaviour
             Camera childCamera = GetComponentInChildren<Camera>();
             if (childCamera != null) cameraRoot = childCamera.transform;
         }
+
+        if (cameraRoot != null) cameraBaseHeight = cameraRoot.localPosition.y;
     }
 
     private void Start()
@@ -39,6 +43,8 @@ public class FirstPersonController : MonoBehaviour
 
     private void Update()
     {
+        UpdateCameraDrop();
+
         if (PhaseManager.IsPlayerLocked) return;
 
         if (MinigameManager.IsPhoneOpen)
@@ -67,6 +73,16 @@ public class FirstPersonController : MonoBehaviour
         {
             cameraRoot.localRotation = Quaternion.Euler(pitch, 0f, 0f);
         }
+    }
+
+    private void UpdateCameraDrop()
+    {
+        if (cameraRoot == null) return;
+
+        Vector3 position = cameraRoot.localPosition;
+        float target = cameraBaseHeight - CameraDrop;
+        position.y = Mathf.MoveTowards(position.y, target, GameSettings.Current.potholeDropSpeed * Time.deltaTime);
+        cameraRoot.localPosition = position;
     }
 
     private void Move()

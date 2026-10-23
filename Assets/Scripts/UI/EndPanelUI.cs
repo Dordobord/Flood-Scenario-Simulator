@@ -66,9 +66,18 @@ public class EndPanelUI : MonoBehaviour
             TaskManager.Instance.ActiveTasks, TaskManager.Instance, PhaseManager.Instance.EvacuationSeconds);
 
         GameSettings settings = GameSettings.Current;
-        if (scoreText != null) scoreText.text = BuildScoreText(score, settings);
-        if (tasksText != null) tasksText.text = BuildTasksText(score, settings);
-        if (recommendationsText != null) recommendationsText.text = BuildRecommendationsText(score, settings);
+        if (settings.showScore)
+        {
+            if (scoreText != null) scoreText.text = BuildScoreText(score, settings);
+            if (tasksText != null) tasksText.text = BuildTasksText(score, settings);
+            if (recommendationsText != null) recommendationsText.text = BuildRecommendationsText(score, settings);
+        }
+        else
+        {
+            if (scoreText != null) scoreText.text = BuildSummaryText(score, settings);
+            if (tasksText != null) tasksText.text = BuildTaskNamesText(score, settings);
+            if (recommendationsText != null) recommendationsText.text = BuildMissedText(score, settings);
+        }
 
         if (settings.logInput)
         {
@@ -81,12 +90,45 @@ public class EndPanelUI : MonoBehaviour
         string text = string.Format(settings.scorePercentFormat, score.percent) + "\n";
         text += string.Format(settings.ratingFormat, score.rating) + "\n";
         if (score.ratingCapped) text += settings.ratingCappedNote + "\n";
-        text += string.Format(settings.evacuationTimeFormat, FormatTime(score.evacuationSeconds)) + "\n\n";
+        text += string.Format(settings.evacuationTimeFormat, FormatTime(score.evacuationSeconds)) + "\n";
+        text += string.Format(settings.potholeCountFormat, PhaseManager.Instance.PotholesSteppedIn) + "\n\n";
 
         foreach (DomainScore domainScore in score.domainScores)
         {
             string domainName = settings.GetDomainName(domainScore.domain);
             text += string.Format(settings.domainPercentFormat, domainName, domainScore.Percent) + "\n";
+        }
+        return text;
+    }
+
+    private string BuildSummaryText(PreparednessScore score, GameSettings settings)
+    {
+        string text = string.Format(settings.tasksDoneFormat, score.completedCount, score.totalCount) + "\n";
+        text += string.Format(settings.evacuationTimeFormat, FormatTime(score.evacuationSeconds)) + "\n";
+        text += string.Format(settings.potholeCountFormat, PhaseManager.Instance.PotholesSteppedIn);
+        return text;
+    }
+
+    private string BuildTaskNamesText(PreparednessScore score, GameSettings settings)
+    {
+        if (score.completedTasks.Count == 0) return settings.noTasksCompletedMessage;
+
+        string text = "";
+        foreach (TaskData task in score.completedTasks)
+        {
+            text += settings.listBullet + task.title + "\n";
+        }
+        return text;
+    }
+
+    private string BuildMissedText(PreparednessScore score, GameSettings settings)
+    {
+        if (score.missedTasks.Count == 0) return settings.allDoneMessage;
+
+        string text = settings.missedTasksHeading + "\n";
+        foreach (TaskData task in score.missedTasks)
+        {
+            text += settings.listBullet + GetRecommendation(task, settings) + "\n";
         }
         return text;
     }

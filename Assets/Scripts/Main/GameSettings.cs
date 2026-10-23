@@ -143,6 +143,15 @@ public class GameSettings : ScriptableObject
     public string evacuationMarkerLabelFormat = "{0}\n{1} m";
     public Color evacuationMarkerColor = new Color(0.25f, 0.85f, 0.4f);
 
+    [Header("Hazards")]
+    [Range(0f, 1f)] public float potholeSpeedMultiplier = 0.4f;
+    public float potholeDepth = 0.3f;
+    public float potholeDropSpeed = 3f;
+    public float hazardAlertDelay = 5f;
+    public string hazardAlertMessage = "Barangay alert: your area is flood prone. Check the Hazard Map app on your phone.";
+    [TextArea] public string hazardWarningText = "<color=#D63031><b>Flood warning</b></color>\n<b>Your area is prone to flooding soon.</b>\nAvoid potholes and evacuate immediately.";
+    public string potholeCountFormat = "Potholes stepped in: {0}";
+
     [Header("Messages")]
     public string inventoryFullMessage = "Your inventory is full.";
     public string collectedMessage = "Collected: ";
@@ -163,6 +172,9 @@ public class GameSettings : ScriptableObject
     public string notPreparedRating = "Not Prepared";
 
     [Header("Results")]
+    public bool showScore = false;
+    public string tasksDoneFormat = "Tasks done: {0}/{1}";
+    public string missedTasksHeading = "Missed tasks:";
     public string scorePercentFormat = "Preparedness Score: {0:0}%";
     public string ratingFormat = "Rating: {0}";
     public string ratingCappedNote = "(capped because a critical task was missed)";

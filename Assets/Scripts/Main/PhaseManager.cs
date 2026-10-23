@@ -43,6 +43,8 @@ public class PhaseManager : MonoBehaviour
 
     public float TimeLeftWhenLeaving { get; private set; }
 
+    public int PotholesSteppedIn { get; private set; }
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -180,6 +182,11 @@ public class PhaseManager : MonoBehaviour
         IsTransitionActive = false;
         evacuationStartTime = Time.time;
         GameEvents.RaiseMessage(GameSettings.Current.evacuationStartedMessage);
+    }
+
+    public void AddPotholeStep()
+    {
+        if (CurrentPhase == GamePhase.Evacuation) PotholesSteppedIn++;
     }
 
     public void ReachEvacuationPoint()
