@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd6fb4a57903d0a428735ae80cee74db, type: 3}
+  m_Name: HouseKit_Data
+  m_EditorClassIdentifier: Assembly-CSharp::HouseKitData
+  wallPlain: {fileID: 1166759253751948638, guid: 619c17b861dfc1f48ac21fb4dad489ec, type: 3}
+  wallWindow: {fileID: 237067706334522658, guid: adec5731017cef540949f2b78e09063c, type: 3}
+  wallDoor: {fileID: 8512354999335513324, guid: 836bb9507993dd54d9256af0e5c4a565, type: 3}
+  cornerPost: {fileID: 3371281541023633076, guid: b04451707c08e014f8d4d43cea517d57, type: 3}
+  floorBand: {fileID: 3768401255530144314, guid: 600dc6300d082f540b05cba15ccd45cd, type: 3}
+  roof: {fileID: 6000254485832742743, guid: a04acc8f97293a540be435f497f2c530, type: 3}
+  roofEdge: {fileID: 1924034998924183500, guid: c9ee1ded76a8d674f8d45d588d7fef93, type: 3}
+  door: {fileID: 3373673593329998357, guid: 727025e338812c742bcabf04e1cf3b6d, type: 3}
+  window: {fileID: 137436199938887966, guid: 274d1de05963b1d4d8b22df0d08f7b23, type: 3}
+  doorInset: 0.05
+  windowCenterHeight: 1.5
+  windowHoleSize: {x: 1.5, y: 1.2}
+  wallPaints:
+  - {fileID: 2100000, guid: 98705ec72e74c91499df1e0841b1c251, type: 2}
+  - {fileID: 2100000, guid: 15e79b536aee9ec4a980a155f7531484, type: 2}
+  - {fileID: 2100000, guid: 627f9fb945faf30459ec5c42d52fef55, type: 2}
+  - {fileID: 2100000, guid: 5a4de3994fa158c42bced7ba7e78e93c, type: 2}
+  - {fileID: 2100000, guid: 945fd10efd4e7e54881a3ce75ab0a110, type: 2}
+  - {fileID: 2100000, guid: ecc5f1c99c0d24a478fe0958b10ee1ff, type: 2}
+  roofPaints:
+  - {fileID: 2100000, guid: df74487f903fb1b4481d49cd3bcb16d2, type: 2}
+  - {fileID: 2100000, guid: 067db9d82879b29459a02f78650a72bd, type: 2}
+  - {fileID: 2100000, guid: e2d90529554c13a4d9827e39a86747eb, type: 2}

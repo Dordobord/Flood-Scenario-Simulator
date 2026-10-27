@@ -133,6 +133,10 @@ public class GameSettings : ScriptableObject
     public string windowClosedMessageFormat = "{0} closed ({1}/{2}). Close the rest!";
     public string windowName = "Window";
 
+    [Header("Doors")]
+    public string doorOpenPrompt = "Open the door";
+    public string doorClosePrompt = "Close the door";
+
     [Header("Power")]
     public string noPowerMessage = "No power. The breaker is turned off.";
     public string noPowerPrompt = "No power (breaker is off)";

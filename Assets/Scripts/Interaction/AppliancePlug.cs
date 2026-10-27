@@ -17,6 +17,11 @@ public class AppliancePlug : MonoBehaviour, IInteractable
         get { return applianceName; }
     }
 
+    public bool IsPluggedIn
+    {
+        get { return !unplugged; }
+    }
+
     private void Awake()
     {
         if (group == null) group = GetComponentInParent<TaskStepGroup>();
