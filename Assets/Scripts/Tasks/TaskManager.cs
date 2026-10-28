@@ -5,6 +5,7 @@ using UnityEngine;
 public class TaskManager : MonoBehaviour
 {
     public static TaskManager Instance { get; private set; }
+    public static ScenarioData ChosenScenario;
 
     [SerializeField] private ScenarioData scenario;
 
@@ -42,6 +43,12 @@ public class TaskManager : MonoBehaviour
         }
     }
 
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    private static void ResetChosenScenario()
+    {
+        ChosenScenario = null;
+    }
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -51,7 +58,8 @@ public class TaskManager : MonoBehaviour
         }
         Instance = this;
 
-        if (scenario != null) LoadScenario(scenario);
+        ScenarioData toLoad = ChosenScenario != null ? ChosenScenario : scenario;
+        if (toLoad != null) LoadScenario(toLoad);
     }
 
     private void OnDestroy()

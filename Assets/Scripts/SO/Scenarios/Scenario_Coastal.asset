@@ -15,8 +15,8 @@ MonoBehaviour:
   type: 3
   displayName: Coastal Flood
   description: Your house is near the shore and a storm surge is coming in from the sea. You have more time to prepare, but the evacuation center is far inland at the covered court.
-  sceneName: CoastalScenario
-  evacuationCenterName: Covered Court
+  sceneName: UrbanScenario
+  evacuationCenterName: Evacuation Center
   preparationSeconds: 240
   prepRainStrength: 0.6
   evacuationRainStrength: 0.9
@@ -36,3 +36,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7ab07306cc304f17b9aa6934a40c5907, type: 2}
   - {fileID: 11400000, guid: 26acd832ed4d4234a1b40dd36ccf6f7b, type: 2}
   - {fileID: 11400000, guid: 0e234e705a054024982d53b5747243fe, type: 2}
+  - {fileID: 11400000, guid: ad1424c25aa5c4d49b6735d6e5b5b352, type: 2}
+  floodWaterMaterial: {fileID: 2100000, guid: 398623d144d740b4bba0d8d8517e6c58, type: 2}

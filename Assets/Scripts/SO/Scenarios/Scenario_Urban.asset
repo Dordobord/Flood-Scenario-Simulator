@@ -16,7 +16,7 @@ MonoBehaviour:
   displayName: Urban Flood
   description: Heavy rain has overwhelmed the drainage in your crowded neighborhood. Streets flood fast and some roads are already closed. Prepare your household, then find your way to the barangay hall on higher ground.
   sceneName: UrbanScenario
-  evacuationCenterName: Barangay Hall
+  evacuationCenterName: Evacuation Center
   preparationSeconds: 180
   prepRainStrength: 0.5
   evacuationRainStrength: 0.8
@@ -37,3 +37,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 764671656186d3846b58fbf89bea7227, type: 2}
   - {fileID: 11400000, guid: 0e234e705a054024982d53b5747243fe, type: 2}
   - {fileID: 11400000, guid: ad1424c25aa5c4d49b6735d6e5b5b352, type: 2}
+  floodWaterMaterial: {fileID: 2100000, guid: f76d235881463b045a80c76868b2fd7c, type: 2}

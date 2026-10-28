@@ -147,6 +147,10 @@ public class GameSettings : ScriptableObject
     public string evacuationMarkerLabelFormat = "{0}\n{1} m";
     public Color evacuationMarkerColor = new Color(0.25f, 0.85f, 0.4f);
 
+    [Header("Flood Warning Marker")]
+    public string floodWarningMarkerLabelFormat = "WARNING\nFlooded\n{0} m";
+    public Color floodWarningMarkerColor = new Color(0.96f, 0.77f, 0.09f);
+
     [Header("Hazards")]
     [Range(0f, 1f)] public float potholeSpeedMultiplier = 0.4f;
     public float potholeDepth = 0.3f;
@@ -155,6 +159,8 @@ public class GameSettings : ScriptableObject
     public string hazardAlertMessage = "Barangay alert: your area is flood prone. Check the Hazard Map app on your phone.";
     [TextArea] public string hazardWarningText = "<color=#D63031><b>Flood warning</b></color>\n<b>Your area is prone to flooding soon.</b>\nAvoid potholes and evacuate immediately.";
     public string potholeCountFormat = "Potholes stepped in: {0}";
+    public string floodedRouteMessage = "This area is flooded. Find another route.";
+    public float floodedRouteMessageCooldown = 8f;
 
     [Header("Messages")]
     public string inventoryFullMessage = "Your inventory is full.";

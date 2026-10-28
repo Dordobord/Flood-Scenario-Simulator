@@ -64,6 +64,13 @@ public class EvacuationMarker : MonoBehaviour
         return TaskManager.Instance.CurrentScenario.evacuationCenterName;
     }
 
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = new Color(0.25f, 0.85f, 0.4f);
+        Gizmos.DrawWireSphere(transform.position, 1f);
+        Gizmos.DrawLine(transform.position, transform.position + Vector3.down * 3f);
+    }
+
     private bool ShouldShow()
     {
         if (Camera.main == null || unlockTask == null) return false;

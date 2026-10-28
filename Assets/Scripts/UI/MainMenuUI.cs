@@ -103,6 +103,7 @@ public class MainMenuUI : MonoBehaviour
             return;
         }
 
+        TaskManager.ChosenScenario = selected;
         SceneManager.LoadScene(selected.sceneName);
     }
 

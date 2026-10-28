@@ -4063,7 +4063,7 @@
     "m_ObjectId": "4c4d1fe2902740faa6e5850eeca7324e",
     "m_Title": "Wet Surface",
     "m_Position": {
-        "x": 2874.999755859375,
+        "x": 2875.0,
         "y": 1041.0
     }
 }
@@ -4401,8 +4401,8 @@
     "m_ObjectId": "575f7fb555454c6fb4eefacc5b1eb69f",
     "m_Title": "Ring Shape",
     "m_Position": {
-        "x": 1094.999755859375,
-        "y": -1078.9998779296875
+        "x": 1095.0,
+        "y": -1079.0
     }
 }
 
@@ -5460,7 +5460,7 @@
     "m_ObjectId": "7a06d5722ea84235ac12abb03e130980",
     "m_Title": "Ripple Normal",
     "m_Position": {
-        "x": 3174.999755859375,
+        "x": 3175.0,
         "y": -359.0
     }
 }
@@ -5922,8 +5922,8 @@
     "m_ObjectId": "852e2cc7978e4eada1923f77a9d6f653",
     "m_Title": "Grid Cells",
     "m_Position": {
-        "x": -1525.000244140625,
-        "y": -1058.9998779296875
+        "x": -1525.0,
+        "y": -1059.0
     }
 }
 
@@ -7894,8 +7894,8 @@
     "m_ObjectId": "bf2ffd83a6ad4ecab93a172367f081df",
     "m_Title": "Fade and On Off",
     "m_Position": {
-        "x": 1094.999755859375,
-        "y": 40.999935150146484
+        "x": 1095.0,
+        "y": 41.0
     }
 }
 
@@ -8581,8 +8581,8 @@
     "m_ObjectId": "cf6514e57b574f0a849f25f98a6b2d5d",
     "m_Title": "Drop Timing",
     "m_Position": {
-        "x": -445.000244140625,
-        "y": -389.00006103515625
+        "x": -445.0,
+        "y": -389.0
     }
 }
 
@@ -8798,7 +8798,7 @@
     "m_ObjectId": "d8140d4000a84a45894f4b35b94e17cc",
     "m_Title": "Drop Position",
     "m_Position": {
-        "x": -175.000244140625,
+        "x": -175.0,
         "y": -1399.0
     }
 }

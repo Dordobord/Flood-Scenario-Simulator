@@ -16,7 +16,7 @@ MonoBehaviour:
   displayName: Riverine Flood
   description: Your house is on a riverbank and the river keeps rising. Not every bridge is safe to cross. Prepare your household, then cross the river to the school on high ground.
   sceneName: RiverScenario
-  evacuationCenterName: School
+  evacuationCenterName: Evacuation Center
   preparationSeconds: 180
   prepRainStrength: 0.5
   evacuationRainStrength: 0.8
@@ -36,3 +36,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 26acd832ed4d4234a1b40dd36ccf6f7b, type: 2}
   - {fileID: 11400000, guid: 764671656186d3846b58fbf89bea7227, type: 2}
   - {fileID: 11400000, guid: 0e234e705a054024982d53b5747243fe, type: 2}
+  - {fileID: 11400000, guid: ad1424c25aa5c4d49b6735d6e5b5b352, type: 2}

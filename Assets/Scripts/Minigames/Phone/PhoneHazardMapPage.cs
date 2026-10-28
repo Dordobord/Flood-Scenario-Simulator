@@ -17,6 +17,26 @@ public class PhoneHazardMapPage : PhonePage
     {
         base.Open();
         warningText.text = GameSettings.Current.hazardWarningText;
+        ShowScenarioMap();
+    }
+
+    // Each scenario has its own map under this page, named Map_Urban, Map_FlashFlood, Map_River or Map_Coastal.
+    // Only the one for the scenario being played is shown. A plain "Map" is used when there is no match.
+    private void ShowScenarioMap()
+    {
+        ScenarioData scenario = TaskManager.Instance != null ? TaskManager.Instance.CurrentScenario : null;
+        string wanted = scenario != null ? "Map_" + scenario.type : null;
+
+        Transform match = null;
+        foreach (Transform child in transform)
+        {
+            if (child.name == wanted || (match == null && child.name == "Map")) match = child;
+        }
+
+        foreach (Transform child in transform)
+        {
+            if (child.name == "Map" || child.name.StartsWith("Map_")) child.gameObject.SetActive(child == match);
+        }
     }
 
     private void OnGotItClicked()

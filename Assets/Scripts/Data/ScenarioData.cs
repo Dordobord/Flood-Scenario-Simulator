@@ -23,6 +23,9 @@ public class ScenarioData : ScriptableObject
     [Range(0f, 1f)] public float evacuationRainStrength = 0.8f;
     public RainfallWarningLevel rainfallWarning = RainfallWarningLevel.Orange;
 
+    [Header("Water")]
+    public Material floodWaterMaterial;
+
     [Header("Tasks")]
     public List<TaskData> tasks = new List<TaskData>();
 }

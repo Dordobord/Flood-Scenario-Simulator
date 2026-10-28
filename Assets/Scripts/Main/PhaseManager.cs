@@ -127,11 +127,11 @@ public class PhaseManager : MonoBehaviour
     {
         CurrentPhase = GamePhase.Transitioning;
         IsTransitionActive = true;
-        GameEvents.RaisePreparationEnded();
+        CloseMinigames();
 
         if (useTransitionScreen && TransitionUI.Instance != null)
         {
-            TransitionUI.Instance.Play(TeleportPlayer, StartEvacuation);
+            TransitionUI.Instance.Play(ChangeToEvacuation, StartEvacuation);
             return;
         }
 
@@ -140,8 +140,22 @@ public class PhaseManager : MonoBehaviour
             Debug.LogWarning("PhaseManager: Use Transition Screen is on, but there is no TransitionCanvas in the scene. Moving the player instantly.");
         }
 
-        TeleportPlayer();
+        ChangeToEvacuation();
         StartEvacuation();
+    }
+
+    private void CloseMinigames()
+    {
+        if (MinigameManager.Instance == null) return;
+
+        MinigameManager.Instance.ClosePhone();
+        MinigameManager.Instance.Cancel();
+    }
+
+    private void ChangeToEvacuation()
+    {
+        GameEvents.RaisePreparationEnded();
+        TeleportPlayer();
     }
 
     private void TeleportPlayer()

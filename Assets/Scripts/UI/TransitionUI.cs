@@ -10,6 +10,10 @@ public class TransitionUI : MonoBehaviour
     [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private TMP_Text messageText;
 
+    [Header("Sound")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip blackoutClip;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -21,6 +25,8 @@ public class TransitionUI : MonoBehaviour
 
         canvasGroup.alpha = 0f;
         canvasGroup.blocksRaycasts = false;
+
+        if (audioSource == null) audioSource = GetComponent<AudioSource>();
     }
 
     private void OnDestroy()
@@ -43,7 +49,14 @@ public class TransitionUI : MonoBehaviour
 
         if (atBlackout != null) atBlackout();
 
-        yield return new WaitForSecondsRealtime(settings.transitionHoldSeconds);
+        float holdSeconds = settings.transitionHoldSeconds;
+        if (blackoutClip != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(blackoutClip);
+            holdSeconds = Mathf.Max(holdSeconds, blackoutClip.length);
+        }
+
+        yield return new WaitForSecondsRealtime(holdSeconds);
 
         yield return Fade(1f, 0f, settings.transitionFadeSeconds);
 

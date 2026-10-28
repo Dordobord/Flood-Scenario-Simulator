@@ -77,7 +77,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StormWaits.PhaseManager
   evacuationSpawnPoint: {fileID: 0}
-  useTransitionScreen: 0
+  useTransitionScreen: 1
 --- !u!114 &4423078758676701199
 MonoBehaviour:
   m_ObjectHideFlags: 0
