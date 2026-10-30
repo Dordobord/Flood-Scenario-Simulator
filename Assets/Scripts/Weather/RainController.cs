@@ -46,6 +46,16 @@ public class RainController : MonoBehaviour
         Apply();
 
         GameEvents.PreparationEnded += OnPreparationEnded;
+        UseRainClip(SoundLibrary.Current.rainLight);
+    }
+
+    private void UseRainClip(AudioClip clip)
+    {
+        if (rainSound == null || clip == null) return;
+
+        rainSound.clip = clip;
+        rainSound.loop = true;
+        rainSound.Play();
     }
 
     private void OnDestroy()
@@ -79,6 +89,7 @@ public class RainController : MonoBehaviour
     private void OnPreparationEnded()
     {
         if (scenario != null) targetStrength = scenario.evacuationRainStrength;
+        UseRainClip(SoundLibrary.Current.rainHeavy);
     }
 
     private void Update()

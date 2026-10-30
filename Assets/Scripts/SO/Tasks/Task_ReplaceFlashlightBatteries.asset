@@ -20,7 +20,7 @@ MonoBehaviour:
   scoreMethod: 2
   isRequired: 1
   recommendation: 
-  rewardItem: {fileID: 0}
+  rewardItem: {fileID: 11400000, guid: 342e9bb50f800e06c03d5caa7bb7bf92, type: 2}
   minigame:
     type: 4
     prompt: The batteries are dead. Swap in the new ones, + end facing the way each slot shows.

@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
 public class GoBagMinigame : MinigameBase
 {
     [SerializeField] private GoBagSettings goBagSettings;
     [SerializeField] private GoBagPileTile tilePrefab;
+    [SerializeField] private GoBagItemView piecePrefab;
 
     [Header("References")]
     [SerializeField] private RectTransform bagArea;
@@ -14,7 +14,9 @@ public class GoBagMinigame : MinigameBase
     [SerializeField] private RectTransform itemLayer;
     [SerializeField] private RectTransform pileArea;
     [SerializeField] private RectTransform dragLayer;
-    [SerializeField] private Button confirmButton;
+
+    [Header("Pile")]
+    [SerializeField] private float pileSpacing = 10f;
 
     private GoBagGrid bagGrid;
     private readonly List<GoBagItem> items = new List<GoBagItem>();
@@ -27,25 +29,19 @@ public class GoBagMinigame : MinigameBase
 
     public RectTransform DragLayer => dragLayer;
 
-    private void Awake()
+    public override bool UsesConfirm
     {
-        if (confirmButton != null)
-        {
-            confirmButton.onClick.AddListener(OnConfirmClicked);
-        }
-        else
-        {
-            Debug.LogWarning("GoBagMinigame: Confirm Button is not assigned in the Inspector.");
-        }
+        get { return true; }
     }
 
     protected override void Setup()
     {
+        AudioManager.PlaySfx(SoundLibrary.Current.goBagZip);
         Build();
         isOpen = true;
     }
 
-    private void OnConfirmClicked()
+    public override void Confirm()
     {
         if (!isOpen || IsFinished || bagGrid == null) return;
 
@@ -54,6 +50,7 @@ public class GoBagMinigame : MinigameBase
         GoBagResult result = GetResult();
         if (GameSettings.Current.logInput) Debug.Log("Go bag confirm: " + result.Describe());
 
+        if (result.IsComplete) AudioManager.PlaySfx(SoundLibrary.Current.goBagZip);
         Finish(result.IsComplete);
     }
 
@@ -153,6 +150,7 @@ public class GoBagMinigame : MinigameBase
             if (TryGetTargetCell(out int x, out int y) && bagGrid.Place(heldItem.Item, x, y))
             {
                 heldItem.MoveTo(itemLayer, gridView.GetCellPosition(x, y));
+                AudioManager.PlaySfx(SoundLibrary.Current.goBagPlace);
                 heldItem = null;
                 gridView.HidePreview();
             }
@@ -186,7 +184,9 @@ public class GoBagMinigame : MinigameBase
     {
         if (bagGrid != null) return;
 
-        if (settings == null || goBagSettings == null || tilePrefab == null || bagArea == null
+        if (dragLayer == null) dragLayer = GetCanvasLayer();
+
+        if (settings == null || goBagSettings == null || tilePrefab == null || piecePrefab == null || bagArea == null
             || gridView == null || itemLayer == null || pileArea == null || dragLayer == null)
         {
             Debug.LogError("GoBagMinigame: a field is empty in the Inspector.");
@@ -203,8 +203,11 @@ public class GoBagMinigame : MinigameBase
         Vector2 bagSize = new Vector2(goBagSettings.gridWidth * goBagSettings.cellSize, goBagSettings.gridHeight * goBagSettings.cellSize);
         CheckDesign(bagSize);
 
-        PinTopLeft((RectTransform)gridView.transform, bagSize);
-        PinTopLeft(itemLayer, bagSize);
+        ClearChildren(itemLayer);
+        ClearChildren(pileArea);
+
+        PinCentered((RectTransform)gridView.transform, bagSize);
+        PinCentered(itemLayer, bagSize);
 
         gridView.Build(goBagSettings);
         CreateItems();
@@ -233,35 +236,61 @@ public class GoBagMinigame : MinigameBase
         }
 
         Vector2 actual = bagArea.rect.size;
-        if (Mathf.Abs(actual.x - expected.x) > 0.5f || Mathf.Abs(actual.y - expected.y) > 0.5f)
+        if (actual.x + 0.5f < expected.x || actual.y + 0.5f < expected.y)
         {
-            Debug.LogWarning("GoBagMinigame: BagArea is " + actual.x + "x" + actual.y + " but should be " + expected.x + "x" + expected.y + ".");
+            Debug.LogWarning("GoBagMinigame: BagArea is " + actual.x + "x" + actual.y + " but needs at least " + expected.x + "x" + expected.y + ".");
         }
     }
 
     private void CreateItems()
     {
+        List<GoBagPileTile> tiles = new List<GoBagPileTile>();
+
         foreach (GoBagItem item in items)
         {
-            GameObject viewObject = new GameObject("ItemView_" + item.Name, typeof(RectTransform), typeof(Image), typeof(GoBagItemView));
-            viewObject.layer = gameObject.layer;
-            viewObject.transform.SetParent(dragLayer, false);
-
-            GoBagItemView view = viewObject.GetComponent<GoBagItemView>();
+            GoBagItemView view = Instantiate(piecePrefab, dragLayer);
+            view.name = "Piece_" + item.Name;
             view.Initialize(item, this, goBagSettings);
 
             GoBagPileTile tile = Instantiate(tilePrefab, pileArea);
             tile.Initialize(view, this, goBagSettings);
             view.SetTile(tile);
+            tiles.Add(tile);
+        }
+
+        LayoutPile(tiles);
+    }
+
+    private void LayoutPile(List<GoBagPileTile> tiles)
+    {
+        float width = pileArea.rect.width;
+        float x = 0f;
+        float y = 0f;
+        float rowHeight = 0f;
+
+        foreach (GoBagPileTile tile in tiles)
+        {
+            Vector2 size = tile.Size;
+            if (x > 0f && x + size.x > width)
+            {
+                x = 0f;
+                y -= rowHeight + pileSpacing;
+                rowHeight = 0f;
+            }
+
+            tile.PlaceAt(new Vector2(x, y));
+            x += size.x + pileSpacing;
+            rowHeight = Mathf.Max(rowHeight, size.y);
         }
     }
 
-    private static void PinTopLeft(RectTransform rect, Vector2 size)
+    private void PinCentered(RectTransform rect, Vector2 size)
     {
+        Vector2 area = bagArea.rect.size;
         rect.anchorMin = new Vector2(0f, 1f);
         rect.anchorMax = new Vector2(0f, 1f);
         rect.pivot = new Vector2(0f, 1f);
-        rect.anchoredPosition = Vector2.zero;
+        rect.anchoredPosition = new Vector2((area.x - size.x) * 0.5f, -(area.y - size.y) * 0.5f);
         rect.sizeDelta = size;
     }
 }

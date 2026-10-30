@@ -48,7 +48,7 @@ public class PhoneDevice : MonoBehaviour
 
         if (task.rewardItem != null && inventory != null && !inventory.Contains(task.rewardItem) && inventory.TryAdd(task.rewardItem))
         {
-            GameEvents.RaiseMessage(GameSettings.Current.collectedMessage + task.rewardItem.displayName);
+            GameEvents.RaiseMessage(string.Format(GameSettings.Current.collectedMessageFormat, task.rewardItem.displayName));
         }
     }
 }

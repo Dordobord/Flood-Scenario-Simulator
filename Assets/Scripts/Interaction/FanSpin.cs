@@ -1,7 +1,5 @@
 using UnityEngine;
 
-// Spins the fan blades while the fan is plugged in and the house has power.
-// Unplugging it or a power cut lets the blades coast to a stop.
 public class FanSpin : MonoBehaviour
 {
     [SerializeField] private Transform blades;
@@ -20,7 +18,6 @@ public class FanSpin : MonoBehaviour
     {
         if (plug == null) plug = GetComponent<AppliancePlug>();
 
-        // The blades spin around their thinnest side.
         MeshFilter filter = blades != null ? blades.GetComponent<MeshFilter>() : null;
         if (filter != null && filter.sharedMesh != null)
         {

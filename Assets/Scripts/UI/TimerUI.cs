@@ -5,6 +5,8 @@ public class TimerUI : MonoBehaviour
 {
     [SerializeField] private TMP_Text timerText;
 
+    private int lastBeepSecond = -1;
+
     private void Update()
     {
         if (PhaseManager.Instance == null)
@@ -29,5 +31,18 @@ public class TimerUI : MonoBehaviour
 
         timerText.text = string.Format(settings.prepTimerFormat, clock);
         timerText.color = remaining <= settings.timerWarningSeconds ? settings.timerWarningColor : settings.timerNormalColor;
+
+        BeepEachSecond(remaining, settings);
+    }
+
+    private void BeepEachSecond(float remaining, GameSettings settings)
+    {
+        if (remaining <= 0f || remaining > settings.timerWarningSeconds) return;
+
+        int second = Mathf.CeilToInt(remaining);
+        if (second == lastBeepSecond) return;
+
+        lastBeepSecond = second;
+        AudioManager.PlaySfx(SoundLibrary.Current.timerBeep);
     }
 }

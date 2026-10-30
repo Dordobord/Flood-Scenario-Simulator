@@ -1,7 +1,5 @@
 using UnityEngine;
 
-// Shows the breaker's state on the model: while the power is off the circuit switches flip down.
-// Turning the power back on flips them up again. The door stays shut.
 public class BreakerPanelView : MonoBehaviour
 {
     [Header("Model")]
@@ -29,7 +27,6 @@ public class BreakerPanelView : MonoBehaviour
         if (powerOff != switchesOff) ShowSwitches(powerOff);
     }
 
-    // A switch turned upside down puts its lever in the lower half, which reads as OFF.
     private void ShowSwitches(bool off)
     {
         switchesOff = off;

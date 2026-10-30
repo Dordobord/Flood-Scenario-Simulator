@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -7,11 +5,9 @@ using UnityEngine.UI;
 public class StoveMinigame : MinigameBase
 {
     [Header("References")]
-    [SerializeField] private Transform knobParent;
-    [SerializeField] private StoveKnob knobTemplate;
+    [SerializeField] private StoveKnob[] knobs;
     [SerializeField] private RectTransform valve;
     [SerializeField] private Image valveGauge;
-    [SerializeField] private TMP_Text hintText;
 
     [Header("Knobs")]
     [SerializeField] private float offAngle = 0f;
@@ -21,7 +17,6 @@ public class StoveMinigame : MinigameBase
     [Header("Valve")]
     [SerializeField] private float turnsToClose = 1.5f;
 
-    private List<StoveKnob> knobs = new List<StoveKnob>();
     private StoveKnob draggedKnob;
     private float grabOffset;
     private bool draggingValve;
@@ -30,26 +25,16 @@ public class StoveMinigame : MinigameBase
 
     protected override void Setup()
     {
-        ClearChildren(knobParent);
-        knobs.Clear();
-        knobTemplate.gameObject.SetActive(false);
-
-        foreach (SelectChoice choice in settings.choices)
+        foreach (StoveKnob knob in knobs)
         {
-            StoveKnob knob = Instantiate(knobTemplate, knobParent);
-            knob.gameObject.SetActive(true);
-
             float startDistance = Random.Range(minimumStartDistance, 360f - minimumStartDistance);
-            knob.Setup(choice.label, offAngle + startDistance);
-            knobs.Add(knob);
+            knob.Setup(offAngle + startDistance);
         }
 
         draggedKnob = null;
         draggingValve = false;
         valveProgress = 0f;
         UpdateValve();
-
-        SetHint(GameSettings.Current.stoveKnobHint);
     }
 
     public override void Tick()
@@ -92,7 +77,7 @@ public class StoveMinigame : MinigameBase
 
         if (!AllKnobsOff())
         {
-            SetHint(GameSettings.Current.stoveValveLockedHint);
+            ShowFeedback(GameSettings.Current.stoveValveLockedHint);
             return;
         }
 
@@ -108,9 +93,10 @@ public class StoveMinigame : MinigameBase
         if (Mathf.Abs(Mathf.DeltaAngle(angle, offAngle)) > offZoneDegrees) return;
 
         draggedKnob.TurnOff(offAngle);
+        AudioManager.PlaySfx(SoundLibrary.Current.stoveKnob);
         draggedKnob = null;
 
-        if (AllKnobsOff()) SetHint(GameSettings.Current.stoveValveHint);
+        if (AllKnobsOff()) ShowInstructions(GameSettings.Current.stoveValveHint);
     }
 
     private void DragValve(Vector2 mousePosition)
@@ -151,10 +137,5 @@ public class StoveMinigame : MinigameBase
         Vector2 center = RectTransformUtility.WorldToScreenPoint(null, target.position);
         Vector2 direction = screenPosition - center;
         return Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-    }
-
-    private void SetHint(string text)
-    {
-        if (hintText != null) hintText.text = text;
     }
 }

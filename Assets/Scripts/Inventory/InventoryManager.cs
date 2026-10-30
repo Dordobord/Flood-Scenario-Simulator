@@ -87,6 +87,11 @@ public class InventoryManager : MonoBehaviour
         return item != null && items.Contains(item);
     }
 
+    public bool IsHolding(ItemData item)
+    {
+        return item != null && SelectedItem == item;
+    }
+
     public bool Remove(ItemData item)
     {
         if (item == null || !items.Remove(item)) return false;

@@ -10,10 +10,10 @@ public class FlashlightMinigame : MinigameBase
     [SerializeField] private BatterySlot[] slots;
     [SerializeField] private RectTransform sparesArea;
     [SerializeField] private RectTransform usedTray;
+    [SerializeField] private RectTransform usedPile;
     [SerializeField] private RectTransform dragLayer;
-    [SerializeField] private Button confirmButton;
     [SerializeField] private TMP_Text statusText;
-    [SerializeField] private TMP_Text hintText;
+    [SerializeField] private TMP_Text countText;
 
     [Header("Controls")]
     [SerializeField] private Key flipKey = Key.R;
@@ -28,13 +28,20 @@ public class FlashlightMinigame : MinigameBase
     [SerializeField] private bool randomizeDeadDirection = false;
     [SerializeField] private bool randomizeNewDirection = true;
 
+    [Header("Drop Highlight")]
+    [SerializeField] private Color highlightColor = new Color(0.247f, 0.682f, 0.353f);
+
     [Header("Text")]
     [SerializeField] private string statusFormat = "New batteries in: {0}/{1}";
-    [SerializeField] private string hintFormat = "Click a battery to pick it up. {0} to flip it. Click a slot or the tray to put it down.";
+    [SerializeField] private string countFormat = "{0} Left";
+    [SerializeField] private string hintFormat = "Drag a battery. Press {0} to flip it while you hold it.";
 
     private readonly List<BatteryView> allBatteries = new List<BatteryView>();
     private readonly List<BatteryView> spares = new List<BatteryView>();
     private readonly List<BatteryView> tray = new List<BatteryView>();
+    private readonly Dictionary<Outline, Color> outlineColors = new Dictionary<Outline, Color>();
+    private readonly List<Vector3> pileSpots = new List<Vector3>();
+    private readonly List<float> pileTilts = new List<float>();
 
     private bool isBuilt;
     private bool isOpen;
@@ -44,18 +51,11 @@ public class FlashlightMinigame : MinigameBase
     private BatterySlot originSlot;
     private List<BatteryView> originList;
     private int pickUpFrame = -1;
-    private int lastPlaceClickFrame = -1;
+    private Outline highlighted;
 
-    private void Awake()
+    public override bool UsesConfirm
     {
-        if (confirmButton != null)
-        {
-            confirmButton.onClick.AddListener(OnConfirmClicked);
-        }
-        else
-        {
-            Debug.LogWarning("FlashlightMinigame: Confirm Button is not assigned in the Inspector.");
-        }
+        get { return true; }
     }
 
     protected override void Setup()
@@ -70,7 +70,8 @@ public class FlashlightMinigame : MinigameBase
         }
         resetOnNextOpen = false;
 
-        if (hintText != null) hintText.text = string.Format(hintFormat, flipKey);
+        string hint = string.Format(hintFormat, flipKey);
+        ShowInstructions(string.IsNullOrEmpty(settings.prompt) ? hint : settings.prompt + "\n" + hint);
         UpdateStatus();
 
         isOpen = isBuilt;
@@ -103,19 +104,19 @@ public class FlashlightMinigame : MinigameBase
         }
 
         heldBattery.FollowPointer(mousePosition, dragLayer);
+        SetHighlight(GetDropOutline(mousePosition));
 
         if (Time.frameCount == pickUpFrame) return;
 
-        if (Mouse.current.leftButton.wasPressedThisFrame)
+        if (!Mouse.current.leftButton.isPressed)
         {
-            HandlePlaceClick(mousePosition);
+            Drop(mousePosition);
         }
     }
 
     public void TryPickUp(BatteryView battery)
     {
         if (!isOpen || IsFinished || heldBattery != null || !MinigameManager.CursorFree) return;
-        if (Time.frameCount == lastPlaceClickFrame) return;
 
         originSlot = null;
         originList = null;
@@ -143,12 +144,11 @@ public class FlashlightMinigame : MinigameBase
         UpdateStatus();
     }
 
-    private void HandlePlaceClick(Vector2 mousePosition)
+    private void Drop(Vector2 mousePosition)
     {
-        lastPlaceClickFrame = Time.frameCount;
-
         BatteryView battery = heldBattery;
         heldBattery = null;
+        SetHighlight(null);
 
         BatterySlot slot = GetSlotAt(mousePosition);
         if (slot != null && slot.Battery == null)
@@ -158,7 +158,7 @@ public class FlashlightMinigame : MinigameBase
             return;
         }
 
-        if (battery.IsDead && RectTransformUtility.RectangleContainsScreenPoint(usedTray, mousePosition, null))
+        if (battery.IsDead && IsOverTray(mousePosition))
         {
             tray.Add(battery);
             LayoutRow(tray);
@@ -171,6 +171,7 @@ public class FlashlightMinigame : MinigameBase
 
     private void CancelHeld()
     {
+        SetHighlight(null);
         if (heldBattery == null) return;
 
         ReturnToOrigin(heldBattery);
@@ -196,11 +197,9 @@ public class FlashlightMinigame : MinigameBase
         UpdateStatus();
     }
 
-    private void OnConfirmClicked()
+    public override void Confirm()
     {
-        if (!isOpen || IsFinished || !isBuilt) return;
-
-        if (heldBattery != null || Time.frameCount == lastPlaceClickFrame) return;
+        if (!isOpen || IsFinished || !isBuilt || heldBattery != null) return;
 
         int wrongSlots = 0;
         foreach (BatterySlot slot in slots)
@@ -211,6 +210,7 @@ public class FlashlightMinigame : MinigameBase
         Mistakes = wrongSlots;
         bool success = wrongSlots == 0;
         if (!success) resetOnNextOpen = true;
+        if (success) AudioManager.PlaySfx(SoundLibrary.Current.battery);
 
         Finish(success);
     }
@@ -230,6 +230,34 @@ public class FlashlightMinigame : MinigameBase
         return null;
     }
 
+    private bool IsOverTray(Vector2 screenPosition)
+    {
+        return RectTransformUtility.RectangleContainsScreenPoint(usedTray, screenPosition, null);
+    }
+
+    private Outline GetDropOutline(Vector2 screenPosition)
+    {
+        BatterySlot slot = GetSlotAt(screenPosition);
+        if (slot != null && slot.Battery == null) return slot.GetComponent<Outline>();
+
+        if (heldBattery.IsDead && IsOverTray(screenPosition)) return usedTray.GetComponent<Outline>();
+
+        return null;
+    }
+
+    private void SetHighlight(Outline outline)
+    {
+        if (outline == highlighted) return;
+
+        if (highlighted != null) highlighted.effectColor = outlineColors[highlighted];
+
+        highlighted = outline;
+        if (highlighted == null) return;
+
+        if (!outlineColors.ContainsKey(highlighted)) outlineColors[highlighted] = highlighted.effectColor;
+        highlighted.effectColor = highlightColor;
+    }
+
     private void PutInSlot(BatteryView battery, BatterySlot slot)
     {
         slot.Battery = battery;
@@ -238,7 +266,19 @@ public class FlashlightMinigame : MinigameBase
 
     private void LayoutRow(List<BatteryView> row)
     {
-        RectTransform area = row == tray ? usedTray : sparesArea;
+        RectTransform area = row == tray ? usedPile : sparesArea;
+
+        if (row == tray && pileSpots.Count > 0)
+        {
+            for (int i = 0; i < row.Count; i++)
+            {
+                int spot = i % pileSpots.Count;
+                row[i].PlaceAt(area, Vector2.zero);
+                row[i].transform.localPosition = pileSpots[spot];
+                row[i].SetTilt(pileTilts[spot]);
+            }
+            return;
+        }
 
         for (int i = 0; i < row.Count; i++)
         {
@@ -249,19 +289,26 @@ public class FlashlightMinigame : MinigameBase
 
     private void UpdateStatus()
     {
-        if (statusText == null || slots == null) return;
+        if (slots == null) return;
 
-        int newInSlots = 0;
-        foreach (BatterySlot slot in slots)
+        if (statusText != null)
         {
-            if (slot.Battery != null && !slot.Battery.IsDead) newInSlots++;
+            int newInSlots = 0;
+            foreach (BatterySlot slot in slots)
+            {
+                if (slot.Battery != null && !slot.Battery.IsDead) newInSlots++;
+            }
+            statusText.text = string.Format(statusFormat, newInSlots, slots.Length);
         }
-        statusText.text = string.Format(statusFormat, newInSlots, slots.Length);
+
+        if (countText != null) countText.text = string.Format(countFormat, spares.Count);
     }
 
     private void Build()
     {
-        if (slots == null || slots.Length == 0 || sparesArea == null || usedTray == null || dragLayer == null
+        if (dragLayer == null) dragLayer = GetCanvasLayer();
+
+        if (slots == null || slots.Length == 0 || sparesArea == null || usedTray == null || usedPile == null
             || newBatteryPrefab == null || deadBatteryPrefab == null)
         {
             Debug.LogError("FlashlightMinigame: a field is empty in the Inspector.");
@@ -277,6 +324,11 @@ public class FlashlightMinigame : MinigameBase
             }
         }
 
+        SavePileSpots();
+        ClearBlueprint(sparesArea);
+        ClearBlueprint(usedPile);
+        foreach (BatterySlot slot in slots) ClearBlueprint(slot.Rect);
+
         for (int i = 0; i < slots.Length; i++)
         {
             allBatteries.Add(CreateBattery(true, i));
@@ -285,6 +337,23 @@ public class FlashlightMinigame : MinigameBase
 
         isBuilt = true;
         ResetBatteries();
+    }
+
+    private void SavePileSpots()
+    {
+        foreach (Transform child in usedPile)
+        {
+            pileSpots.Add(child.localPosition);
+            pileTilts.Add(child.localEulerAngles.z);
+        }
+    }
+
+    private static void ClearBlueprint(RectTransform area)
+    {
+        LayoutGroup layoutGroup = area.GetComponent<LayoutGroup>();
+        if (layoutGroup != null) layoutGroup.enabled = false;
+
+        ClearChildren(area);
     }
 
     private BatteryView CreateBattery(bool isDead, int index)

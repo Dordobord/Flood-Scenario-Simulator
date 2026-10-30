@@ -24,6 +24,7 @@ public class MinigameManager : MonoBehaviour
     [SerializeField] private TMP_Text promptText;
     [SerializeField] private TMP_Text feedbackText;
     [SerializeField] private Button cancelButton;
+    [SerializeField] private Button confirmButton;
 
     [Header("Phone View")]
     [SerializeField] private List<Graphic> hiddenGraphicsForPhone = new List<Graphic>();
@@ -31,11 +32,10 @@ public class MinigameManager : MonoBehaviour
 
     [Header("Minigames")]
     [SerializeField] private HoldProgressMinigame holdMinigame;
-    [SerializeField] private TimingBarMinigame timingMinigame;
-    [SerializeField] private SelectCorrectMinigame selectMinigame;
     [SerializeField] private GoBagMinigame goBagMinigame;
     [SerializeField] private FlashlightMinigame flashlightMinigame;
-    [SerializeField] private TuningMinigame tuningMinigame;
+    [SerializeField] private TVMinigame tvMinigame;
+    [SerializeField] private RadioMinigame radioMinigame;
     [SerializeField] private BreakerMinigame breakerMinigame;
     [SerializeField] private StoveMinigame stoveMinigame;
     [SerializeField] private PhoneMinigame phoneMinigame;
@@ -68,11 +68,10 @@ public class MinigameManager : MonoBehaviour
         CursorFree = false;
 
         Register(MinigameType.HoldProgress, holdMinigame);
-        Register(MinigameType.TimingBar, timingMinigame);
-        Register(MinigameType.SelectCorrect, selectMinigame);
         Register(MinigameType.GoBag, goBagMinigame);
         Register(MinigameType.Flashlight, flashlightMinigame);
-        Register(MinigameType.Tuning, tuningMinigame);
+        Register(MinigameType.TV, tvMinigame);
+        Register(MinigameType.Radio, radioMinigame);
         Register(MinigameType.Breaker, breakerMinigame);
         Register(MinigameType.Stove, stoveMinigame);
         Register(MinigameType.Medication, medicationMinigame);
@@ -101,6 +100,15 @@ public class MinigameManager : MonoBehaviour
             Debug.LogWarning("MinigameManager: Cancel Button is not assigned.");
         }
 
+        if (confirmButton != null)
+        {
+            confirmButton.onClick.AddListener(OnConfirmClicked);
+        }
+        else
+        {
+            Debug.LogWarning("MinigameManager: Confirm Button is not assigned.");
+        }
+
         GameEvents.PreparationEnded += OnPreparationEnded;
 
         HideAllMinigames();
@@ -113,6 +121,32 @@ public class MinigameManager : MonoBehaviour
 
         minigames[type] = minigame;
         minigame.Finished += OnAttemptFinished;
+        minigame.FeedbackShown += OnFeedbackShown;
+        minigame.InstructionsChanged += OnInstructionsChanged;
+    }
+
+    private void OnFeedbackShown(string message)
+    {
+        feedbackText.color = GameSettings.Current.failColor;
+        feedbackText.text = message;
+        AudioManager.PlaySfx(SoundLibrary.Current.fail);
+    }
+
+    private void OnInstructionsChanged(string message)
+    {
+        promptText.text = message;
+    }
+
+    private void OnConfirmClicked()
+    {
+        if (!acceptingInput || currentMinigame == null) return;
+
+        currentMinigame.Confirm();
+    }
+
+    private void SetConfirmVisible(bool visible)
+    {
+        if (confirmButton != null) confirmButton.gameObject.SetActive(visible);
     }
 
     private void OnDestroy()
@@ -143,6 +177,34 @@ public class MinigameManager : MonoBehaviour
         SetCursorFree(true);
 
         StartAttempt();
+        return true;
+    }
+
+    public bool Reopen(TaskData task)
+    {
+        if (IsActive || task == null) return false;
+
+        MinigameBase minigame = GetMinigame(task.minigame.type);
+        if (!minigame.CanReopen) return false;
+
+        currentTask = task;
+        onFinished = null;
+        lastAttemptSucceeded = true;
+        acceptingInput = false;
+
+        IsActive = true;
+        window.SetActive(true);
+        SetPhoneView(false);
+        HideAllMinigames();
+
+        titleText.text = task.title;
+        promptText.text = GameSettings.Current.reopenInstructions;
+        feedbackText.text = "";
+        SetConfirmVisible(false);
+        SetCursorFree(true);
+
+        currentMinigame = minigame;
+        minigame.Reopen(task.minigame);
         return true;
     }
 
@@ -179,6 +241,7 @@ public class MinigameManager : MonoBehaviour
         titleText.text = settings.phoneTitle;
         promptText.text = "";
         feedbackText.text = "";
+        SetConfirmVisible(false);
         SetCursorFree(true);
 
         phoneMinigame.ShowHome();
@@ -291,6 +354,7 @@ public class MinigameManager : MonoBehaviour
         }
 
         currentMinigame = GetMinigame(minigameSettings.type);
+        SetConfirmVisible(currentMinigame.UsesConfirm);
 
         startFrame = Time.frameCount;
         attemptStartTime = Time.time;
@@ -346,6 +410,7 @@ public class MinigameManager : MonoBehaviour
         {
             feedbackText.color = settings.failColor;
             feedbackText.text = settings.failMessage;
+            AudioManager.PlaySfx(SoundLibrary.Current.fail);
             yield return new WaitForSecondsRealtime(settings.failDelay);
 
             resultRoutine = null;

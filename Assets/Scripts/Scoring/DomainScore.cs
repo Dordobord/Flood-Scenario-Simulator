@@ -1,18 +1,22 @@
 public class DomainScore
 {
     public PreparednessDomain domain;
-    public int completed;
-    public int total;
-    public float earned;
-    public float possible;
+    public float maxPoints;
+    public float earnedWeight;
+    public float totalWeight;
 
-    public DomainScore(PreparednessDomain domain)
+    public DomainScore(PreparednessDomain domain, float maxPoints)
     {
         this.domain = domain;
+        this.maxPoints = maxPoints;
     }
 
-    public float Percent
+    public float Points
     {
-        get { return possible > 0f ? earned * 100f / possible : 0f; }
+        get
+        {
+            if (totalWeight <= 0f) return 0f;
+            return earnedWeight / totalWeight * maxPoints;
+        }
     }
 }

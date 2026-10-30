@@ -6,6 +6,20 @@ public abstract class MinigameBase : MonoBehaviour
 {
     public event Action<bool> Finished;
 
+    public event Action<string> FeedbackShown;
+
+    public event Action<string> InstructionsChanged;
+
+    public virtual bool UsesConfirm
+    {
+        get { return false; }
+    }
+
+    public virtual bool CanReopen
+    {
+        get { return false; }
+    }
+
     public int Mistakes { get; protected set; }
 
     protected MinigameSettings settings;
@@ -26,6 +40,18 @@ public abstract class MinigameBase : MonoBehaviour
         Setup();
     }
 
+    public void Reopen(MinigameSettings newSettings)
+    {
+        settings = newSettings;
+        finished = true;
+        gameObject.SetActive(true);
+        ShowFinished();
+    }
+
+    protected virtual void ShowFinished()
+    {
+    }
+
     public virtual void End()
     {
         gameObject.SetActive(false);
@@ -35,12 +61,33 @@ public abstract class MinigameBase : MonoBehaviour
 
     public abstract void Tick();
 
+    public virtual void Confirm()
+    {
+    }
+
     protected void Finish(bool success)
     {
         if (finished) return;
         finished = true;
 
         if (Finished != null) Finished(success);
+    }
+
+    protected void ShowFeedback(string message)
+    {
+        if (FeedbackShown != null) FeedbackShown(message);
+    }
+
+    protected void ShowInstructions(string message)
+    {
+        if (InstructionsChanged != null) InstructionsChanged(message);
+    }
+
+    protected RectTransform GetCanvasLayer()
+    {
+        Canvas canvas = GetComponentInParent<Canvas>(true);
+        if (canvas == null) return (RectTransform)transform;
+        return (RectTransform)canvas.rootCanvas.transform;
     }
 
     protected static void Shuffle<T>(List<T> list)

@@ -1,9 +1,5 @@
 using UnityEngine;
 
-// A road on the way to the evacuation center that is already under water. The barrier always blocks it.
-// Players who read the Hazard Map see the "Flooded, no entry" sign from afar; everyone else only
-// finds out when they walk into the warning zone in front of it. Once evacuation starts, the low ground
-// behind the barrier is under deep water, about half way up the houses.
 [RequireComponent(typeof(Collider))]
 public class FloodedRoute : MonoBehaviour
 {

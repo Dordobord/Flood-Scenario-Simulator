@@ -22,8 +22,8 @@ MonoBehaviour:
   recommendation: Check the TV, radio, or phone for the latest PAGASA warning before the storm arrives.
   rewardItem: {fileID: 0}
   minigame:
-    type: 5
-    prompt: The TV is full of static. Turn the knob until the picture clears.
+    type: 12
+    prompt: The TV is full of static. Change the channel until the picture clears.
     holdSeconds: 3
     cursorSpeed: 1
     targetWidth: 0.2

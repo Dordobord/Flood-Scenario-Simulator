@@ -17,6 +17,8 @@ public class FirstAidItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
     private RectTransform rectTransform;
     private CanvasGroup canvasGroup;
+    private Image background;
+    private Outline outline;
     private RectTransform dragLayer;
     private Transform startParent;
     private Vector2 startPosition;
@@ -45,6 +47,8 @@ public class FirstAidItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     {
         rectTransform = (RectTransform)transform;
         canvasGroup = GetComponent<CanvasGroup>();
+        background = GetComponent<Image>();
+        outline = GetComponent<Outline>();
         startParent = transform.parent;
         startPosition = rectTransform.anchoredPosition;
         startSiblingIndex = transform.GetSiblingIndex();
@@ -78,6 +82,7 @@ public class FirstAidItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         isDragging = false;
         canvasGroup.blocksRaycasts = true;
         ReturnToStart();
+        SetCardVisible(true);
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -88,6 +93,7 @@ public class FirstAidItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         transform.SetParent(dragLayer, true);
         transform.SetAsLastSibling();
         canvasGroup.blocksRaycasts = false;
+        SetCardVisible(false);
 
         Vector3 pointer;
         grabOffset = GetPointer(eventData, out pointer) ? rectTransform.position - pointer : Vector3.zero;
@@ -107,7 +113,17 @@ public class FirstAidItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
         isDragging = false;
         canvasGroup.blocksRaycasts = true;
-        if (!IsPlaced) ReturnToStart();
+        if (IsPlaced) return;
+
+        ReturnToStart();
+        SetCardVisible(true);
+    }
+
+    private void SetCardVisible(bool visible)
+    {
+        if (background != null) background.enabled = visible;
+        if (outline != null) outline.enabled = visible;
+        if (nameText != null) nameText.enabled = visible;
     }
 
     public void PlaceIn(RectTransform slot)

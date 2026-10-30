@@ -36,6 +36,7 @@ public class HudUI : MonoBehaviour
     private void Start()
     {
         if (holdBar != null) holdBar.End();
+        if (toastText != null) toastText.text = "";
 
         FindSlots();
 

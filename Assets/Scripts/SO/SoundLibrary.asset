@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd6219c31e59ec54d8880811ff84e9c8, type: 3}
+  m_Name: SoundLibrary
+  m_EditorClassIdentifier: 
+  musicVolume: 0.6
+  sfxVolume: 1
+  ambienceVolume: 0.8
+  musicFadeSeconds: 1.5
+  rainLight: {fileID: 0}
+  rainHeavy: {fileID: 0}
+  wind: {fileID: 0}
+  thunder: []
+  indoorRain: {fileID: 0}
+  floodWater: {fileID: 0}
+  menuMusic: {fileID: 0}
+  tensionMusic: {fileID: 0}
+  resultsSting: {fileID: 0}
+  potholeSplash: {fileID: 0}
+  flashlightOn: {fileID: 8300000, guid: bcb9ecc3a1af6f745bab430e204656c2, type: 3}
+  flashlightOff: {fileID: 8300000, guid: 39ad55288274a9743828b87078341042, type: 3}
+  doorOpen: {fileID: 8300000, guid: 26eb91f75a28ea549a2d6606aaa0d28c, type: 3}
+  doorClose: {fileID: 8300000, guid: 26eb91f75a28ea549a2d6606aaa0d28c, type: 3}
+  windowOpen: {fileID: 0}
+  windowClose: {fileID: 0}
+  drawerOpen: {fileID: 0}
+  drawerClose: {fileID: 0}
+  gateCreak: {fileID: 0}
+  lampBuzz: {fileID: 0}
+  lampPowerOff: {fileID: 0}
+  powerOn: {fileID: 8300000, guid: a36825aa7886588428b6adec77140ebe, type: 3}
+  fanHum: {fileID: 0}
+  breakerCover: {fileID: 8300000, guid: 7bb73ef067208b44b824faf77a6b25a4, type: 3}
+  breakerFlip: {fileID: 8300000, guid: 35a431184d4ac304ebe3bc2650fe5631, type: 3}
+  spark: {fileID: 0}
+  unplug: {fileID: 0}
+  stoveKnob: {fileID: 0}
+  lpgValve: {fileID: 0}
+  battery: {fileID: 8300000, guid: afe21787a1166c540b043916694a2058, type: 3}
+  itemDrop: {fileID: 8300000, guid: 639c0a32053208a4bbfd968aa23b280d, type: 3}
+  goBagPlace: {fileID: 8300000, guid: 69c35e9a0fb4e3f42bd791ccc139d1e8, type: 3}
+  goBagZip: {fileID: 8300000, guid: 59bd0b6aadb41f54689fa74c08120913, type: 3}
+  cardPick: {fileID: 8300000, guid: 2e22e458692bfa74998be3345b4b7fb4, type: 3}
+  tvStatic: {fileID: 0}
+  tvClick: {fileID: 8300000, guid: b720c169f17080c4190442717604874f, type: 3}
+  radioStatic: {fileID: 0}
+  sandbagThud: {fileID: 0}
+  plugInBeep: {fileID: 0}
+  paper: {fileID: 0}
+  holdTick: {fileID: 0}
+  buttonClick: {fileID: 8300000, guid: f4820c1b2753a5643a03074ee64762af, type: 3}
+  taskComplete: {fileID: 8300000, guid: 3e42184132498344c8be5c56ab724791, type: 3}
+  fail: {fileID: 8300000, guid: 200d8b8e1597a4b41b2e44f17acbe07e, type: 3}
+  hotbarTick: {fileID: 0}
+  toastPop: {fileID: 0}
+  timerBeep: {fileID: 8300000, guid: a3f54db019a64044d8739efe7cf60e86, type: 3}
+  evacSiren: {fileID: 8300000, guid: c460ec45c45c8b444a6cb675067d866b, type: 3}
+  arrivalChime: {fileID: 0}

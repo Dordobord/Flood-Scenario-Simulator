@@ -20,8 +20,6 @@ public class PhoneHazardMapPage : PhonePage
         ShowScenarioMap();
     }
 
-    // Each scenario has its own map under this page, named Map_Urban, Map_FlashFlood, Map_River or Map_Coastal.
-    // Only the one for the scenario being played is shown. A plain "Map" is used when there is no match.
     private void ShowScenarioMap()
     {
         ScenarioData scenario = TaskManager.Instance != null ? TaskManager.Instance.CurrentScenario : null;

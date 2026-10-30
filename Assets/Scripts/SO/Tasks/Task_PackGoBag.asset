@@ -32,44 +32,32 @@ MonoBehaviour:
     choices:
     - label: Canned food
       isCorrect: 1
-      icon: {fileID: 0}
-      detail: 
-      avatarColor: {r: 0.45, g: 0.48, b: 0.52, a: 1}
-      gridWidth: 2
-      gridHeight: 2
+      icon: {fileID: 6680352188679413225, guid: be5201161cceb0443b0ee2221d378bcf, type: 3}
+      gridWidth: 1
+      gridHeight: 1
     - label: Change of clothes
       isCorrect: 1
-      icon: {fileID: 0}
-      detail: 
-      avatarColor: {r: 0.45, g: 0.48, b: 0.52, a: 1}
+      icon: {fileID: 6158802113039044628, guid: 1f345eb03f0fd604696bc14057399068, type: 3}
       gridWidth: 2
       gridHeight: 2
-    - label: Drinking water
-      isCorrect: 1
-      icon: {fileID: 0}
-      detail: 
-      avatarColor: {r: 0.45, g: 0.48, b: 0.52, a: 1}
-      gridWidth: 3
-      gridHeight: 1
     - label: First aid kit
       isCorrect: 1
-      icon: {fileID: 0}
-      detail: 
-      avatarColor: {r: 0.45, g: 0.48, b: 0.52, a: 1}
+      icon: {fileID: -2500420188521090062, guid: 0f04a13cff5b35541ae7a5baa645ffec, type: 3}
       gridWidth: 2
-      gridHeight: 1
-    - label: Flashlight
+      gridHeight: 2
+    - label: Power bank
       isCorrect: 1
-      icon: {fileID: 0}
-      detail: 
-      avatarColor: {r: 0.45, g: 0.48, b: 0.52, a: 1}
+      icon: {fileID: -7267600140173410192, guid: c4cd45791ad39fe4ebc78a6145c3b57e, type: 3}
+      gridWidth: 1
+      gridHeight: 1
+    - label: Drinking water
+      isCorrect: 1
+      icon: {fileID: 8649392411088928328, guid: 7c8b4420311783a47a882d82ef2d8126, type: 3}
       gridWidth: 1
       gridHeight: 2
-    - label: Whistle
+    - label: Flashlight
       isCorrect: 1
-      icon: {fileID: 0}
-      detail: 
-      avatarColor: {r: 0.45, g: 0.48, b: 0.52, a: 1}
-      gridWidth: 1
+      icon: {fileID: -5913738696227704600, guid: 32fa820db8904324daf1a3f3771a9896, type: 3}
+      gridWidth: 2
       gridHeight: 1
   mustBePlaced: 0

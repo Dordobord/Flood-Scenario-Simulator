@@ -15,7 +15,7 @@ MonoBehaviour:
   id: Item_PhoneWithContacts
   displayName: Phone
   description: A charged phone with emergency contacts saved.
-  icon: {fileID: 0}
+  icon: {fileID: 9099878647056640332, guid: 82db21aebee6b7c45993f64c0a3cb115, type: 3}
   fallbackColor: {r: 0.7, g: 0.55, b: 0.9, a: 1}
   cost: 0
   hhiIndicator: Household communication plan for disaster (42%)

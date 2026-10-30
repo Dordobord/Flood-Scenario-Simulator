@@ -15,7 +15,7 @@ MonoBehaviour:
   id: Item_Sandbag
   displayName: Sandbag
   description: A heavy bag of sand for blocking floodwater at the entrance.
-  icon: {fileID: 0}
+  icon: {fileID: 8766740682603709380, guid: 35982a545d7b78d4bb65b67fa80e7347, type: 3}
   fallbackColor: {r: 0.6, g: 0.45, b: 0.35, a: 1}
   cost: 0
   hhiIndicator: 

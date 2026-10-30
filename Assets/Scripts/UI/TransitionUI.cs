@@ -10,10 +10,6 @@ public class TransitionUI : MonoBehaviour
     [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private TMP_Text messageText;
 
-    [Header("Sound")]
-    [SerializeField] private AudioSource audioSource;
-    [SerializeField] private AudioClip blackoutClip;
-
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -25,8 +21,6 @@ public class TransitionUI : MonoBehaviour
 
         canvasGroup.alpha = 0f;
         canvasGroup.blocksRaycasts = false;
-
-        if (audioSource == null) audioSource = GetComponent<AudioSource>();
     }
 
     private void OnDestroy()
@@ -50,10 +44,11 @@ public class TransitionUI : MonoBehaviour
         if (atBlackout != null) atBlackout();
 
         float holdSeconds = settings.transitionHoldSeconds;
-        if (blackoutClip != null && audioSource != null)
+        AudioClip gateCreak = SoundLibrary.Current.gateCreak;
+        if (gateCreak != null)
         {
-            audioSource.PlayOneShot(blackoutClip);
-            holdSeconds = Mathf.Max(holdSeconds, blackoutClip.length);
+            AudioManager.PlaySfx(gateCreak);
+            holdSeconds = Mathf.Max(holdSeconds, gateCreak.length);
         }
 
         yield return new WaitForSecondsRealtime(holdSeconds);

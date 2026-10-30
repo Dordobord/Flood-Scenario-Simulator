@@ -40,6 +40,9 @@ public class ClosableWindow : MonoBehaviour, IInteractable
         isClosed = !isClosed;
         if (animator != null) animator.SetBool(closedParameter, isClosed);
 
+        SoundLibrary sounds = SoundLibrary.Current;
+        AudioManager.PlaySfx(isClosed ? sounds.windowClose : sounds.windowOpen);
+
         if (!isClosed)
         {
             group.UndoStep();

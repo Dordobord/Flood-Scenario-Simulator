@@ -14,10 +14,9 @@ public enum TaskPriority
 
 public enum ScoreMethod
 {
-    Done,
-    Speed,
-    Accuracy,
-    Knowledge
+    Done = 0,
+    Procedure = 2,
+    Knowledge = 3
 }
 
 public enum MinigameType
@@ -33,7 +32,9 @@ public enum MinigameType
     Stove,
     Phone,
     Medication,
-    FirstAid
+    FirstAid,
+    TV,
+    Radio
 }
 
 public enum RainfallWarningLevel

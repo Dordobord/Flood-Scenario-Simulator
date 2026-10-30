@@ -31,6 +31,7 @@ public class PowerSupply : MonoBehaviour
         if (HasPower || TaskManager.Instance == null) return;
 
         TaskManager.Instance.ResetTask(breakerTask);
+        AudioManager.PlaySfx(SoundLibrary.Current.powerOn);
         GameEvents.RaiseMessage(GameSettings.Current.powerOnMessage);
     }
 }

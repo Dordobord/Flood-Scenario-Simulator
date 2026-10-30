@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GoBagSettings
   gridWidth: 4
   gridHeight: 4
-  cellSize: 100
+  cellSize: 74
   cellGap: 4
   rotateKey: 32
   emptyCellColor: {r: 1, g: 1, b: 1, a: 0.15}

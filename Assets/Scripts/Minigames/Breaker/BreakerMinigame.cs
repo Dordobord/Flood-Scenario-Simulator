@@ -1,31 +1,24 @@
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class BreakerMinigame : MinigameBase
 {
     [Header("References")]
-    [SerializeField] private Button coverButton;
-    [SerializeField] private GameObject switchArea;
     [SerializeField] private Transform circuitParent;
     [SerializeField] private BreakerSwitch mainSwitch;
-    [SerializeField] private GameObject spark;
-    [SerializeField] private TMP_Text hintText;
 
     [Header("Prefabs")]
     [SerializeField] private BreakerSwitch circuitPrefab;
 
-    [Header("Spark")]
-    [SerializeField] private float sparkSeconds = 0.4f;
+    [Header("Warning")]
+    [SerializeField] private float warningSeconds = 0.4f;
 
     private List<BreakerSwitch> circuits = new List<BreakerSwitch>();
-    private float sparkTimer;
+    private float warningTimer;
 
     protected override void Setup()
     {
-        GameSettings gameSettings = GameSettings.Current;
-
+        AudioManager.PlaySfx(SoundLibrary.Current.breakerCover);
         ClearChildren(circuitParent);
         circuits.Clear();
 
@@ -36,32 +29,17 @@ public class BreakerMinigame : MinigameBase
             circuits.Add(circuit);
         }
 
-        mainSwitch.Setup(gameSettings.breakerMainLabel, OnMainClicked);
+        mainSwitch.Setup(GameSettings.Current.breakerMainLabel, OnMainClicked);
 
-        coverButton.onClick.RemoveAllListeners();
-        coverButton.onClick.AddListener(OpenCover);
-        coverButton.gameObject.SetActive(true);
-        switchArea.SetActive(false);
-
-        sparkTimer = 0f;
-        if (spark != null) spark.SetActive(false);
-
-        SetHint(gameSettings.breakerCoverHint);
+        warningTimer = 0f;
     }
 
     public override void Tick()
     {
-        if (sparkTimer <= 0f) return;
+        if (warningTimer <= 0f) return;
 
-        sparkTimer -= Time.deltaTime;
-        if (sparkTimer <= 0f && spark != null) spark.SetActive(false);
-    }
-
-    private void OpenCover()
-    {
-        coverButton.gameObject.SetActive(false);
-        switchArea.SetActive(true);
-        SetHint(GameSettings.Current.breakerSwitchHint);
+        warningTimer -= Time.deltaTime;
+        if (warningTimer <= 0f) mainSwitch.SetWarning(false);
     }
 
     private void OnCircuitClicked(BreakerSwitch circuit)
@@ -69,6 +47,7 @@ public class BreakerMinigame : MinigameBase
         if (IsFinished || !circuit.IsOn) return;
 
         circuit.SetOn(false);
+        AudioManager.PlaySfx(SoundLibrary.Current.breakerFlip);
     }
 
     private void OnMainClicked(BreakerSwitch main)
@@ -78,12 +57,15 @@ public class BreakerMinigame : MinigameBase
         if (CountCircuitsOn() > 0)
         {
             Mistakes++;
-            ShowSpark();
-            SetHint(GameSettings.Current.breakerMainEarlyHint);
+            AudioManager.PlaySfx(SoundLibrary.Current.spark);
+            main.SetWarning(true);
+            warningTimer = warningSeconds;
+            ShowFeedback(GameSettings.Current.breakerMainEarlyHint);
             return;
         }
 
         main.SetOn(false);
+        AudioManager.PlaySfx(SoundLibrary.Current.breakerFlip);
         Finish(true);
     }
 
@@ -95,18 +77,5 @@ public class BreakerMinigame : MinigameBase
             if (circuit.IsOn) count++;
         }
         return count;
-    }
-
-    private void ShowSpark()
-    {
-        if (spark == null) return;
-
-        spark.SetActive(true);
-        sparkTimer = sparkSeconds;
-    }
-
-    private void SetHint(string text)
-    {
-        if (hintText != null) hintText.text = text;
     }
 }

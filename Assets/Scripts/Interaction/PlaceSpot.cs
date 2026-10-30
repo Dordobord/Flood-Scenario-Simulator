@@ -54,11 +54,12 @@ public class PlaceSpot : HoldInteractable, IInteractable
 
     public void Interact()
     {
+        if (IsCarrying() && !IsHolding()) ShowSelectItemMessage();
     }
 
     protected override bool CanStartHold()
     {
-        return IsCarrying();
+        return IsCarrying() && IsHolding();
     }
 
     protected override void OnHoldComplete(float seconds)
@@ -77,6 +78,16 @@ public class PlaceSpot : HoldInteractable, IInteractable
         if (placed || task == null || task.rewardItem == null) return false;
         if (TaskManager.Instance != null && TaskManager.Instance.IsCompleted(task)) return false;
         return InventoryManager.Instance != null && InventoryManager.Instance.Contains(task.rewardItem);
+    }
+
+    private bool IsHolding()
+    {
+        return InventoryManager.Instance != null && InventoryManager.Instance.IsHolding(task.rewardItem);
+    }
+
+    private void ShowSelectItemMessage()
+    {
+        GameEvents.RaiseMessage(string.Format(GameSettings.Current.selectItemMessageFormat, task.rewardItem.displayName));
     }
 
     private void ShowGhost(bool show)

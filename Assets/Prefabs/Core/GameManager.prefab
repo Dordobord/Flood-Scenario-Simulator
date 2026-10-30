@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5238758998818273673}
   - component: {fileID: 4423078758676701199}
   - component: {fileID: 439455234843807374}
+  - component: {fileID: 2036636005291187389}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -104,3 +105,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PowerSupply
   breakerTask: {fileID: 11400000, guid: 7ab07306cc304f17b9aa6934a40c5907, type: 2}
+--- !u!114 &2036636005291187389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2868433276549775016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 366d9bdfcad73d349a44b7f59b0ddf8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  library: {fileID: 11400000, guid: 9c019fd93d81580d134ee4f65c13b650, type: 2}
+  musicGroup: {fileID: 0}
+  sfxGroup: {fileID: 0}
+  ambienceGroup: {fileID: 0}
+  loopMinDistance: 1
+  loopMaxDistance: 15

@@ -38,6 +38,9 @@ public class HouseDoor : MonoBehaviour, IInteractable
     {
         if (!CanInteract) return;
         isOpen = !isOpen;
+
+        SoundLibrary sounds = SoundLibrary.Current;
+        AudioManager.PlaySfx(isOpen ? sounds.doorOpen : sounds.doorClose);
     }
 
     private void Update()

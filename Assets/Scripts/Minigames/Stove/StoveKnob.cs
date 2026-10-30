@@ -4,9 +4,14 @@ using UnityEngine.UI;
 
 public class StoveKnob : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField] private RectTransform dial;
     [SerializeField] private Image dialImage;
-    [SerializeField] private TMP_Text nameText;
+    [SerializeField] private TMP_Text statusText;
+
+    [Header("Colours")]
+    [SerializeField] private Color onColor = new Color(0.75f, 0.22f, 0.17f);
+    [SerializeField] private Color offColor = new Color(0.33f, 0.33f, 0.33f);
 
     public bool IsOff { get; private set; }
     public float Angle { get; private set; }
@@ -16,11 +21,11 @@ public class StoveKnob : MonoBehaviour
         get { return dial; }
     }
 
-    public void Setup(string label, float startAngle)
+    public void Setup(float startAngle)
     {
-        nameText.text = label;
         IsOff = false;
-        dialImage.color = GameSettings.Current.stoveOnColor;
+        dialImage.color = onColor;
+        if (statusText != null) statusText.text = GameSettings.Current.stoveOnText;
         SetAngle(startAngle);
     }
 
@@ -33,7 +38,8 @@ public class StoveKnob : MonoBehaviour
     public void TurnOff(float offAngle)
     {
         IsOff = true;
-        dialImage.color = GameSettings.Current.stoveOffColor;
+        dialImage.color = offColor;
+        if (statusText != null) statusText.text = GameSettings.Current.stoveOffText;
         SetAngle(offAngle);
     }
 }

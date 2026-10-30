@@ -31,7 +31,12 @@ public class BatteryView : MonoBehaviour, IPointerDownHandler
     public void SetPlusUp(bool up)
     {
         PlusUp = up;
-        rectTransform.localEulerAngles = new Vector3(0f, 0f, up ? 0f : 180f);
+        SetTilt(0f);
+    }
+
+    public void SetTilt(float degrees)
+    {
+        rectTransform.localEulerAngles = new Vector3(0f, 0f, (PlusUp ? 0f : 180f) + degrees);
     }
 
     public void Flip()
@@ -43,6 +48,7 @@ public class BatteryView : MonoBehaviour, IPointerDownHandler
     {
         transform.SetParent(dragLayer, true);
         transform.SetAsLastSibling();
+        SetTilt(0f);
         canvasGroup.alpha = alpha;
         canvasGroup.blocksRaycasts = false;
     }
@@ -61,6 +67,7 @@ public class BatteryView : MonoBehaviour, IPointerDownHandler
         rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
         rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
         rectTransform.anchoredPosition = anchoredPosition;
+        SetTilt(0f);
         canvasGroup.alpha = 1f;
         canvasGroup.blocksRaycasts = true;
     }

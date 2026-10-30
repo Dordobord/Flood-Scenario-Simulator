@@ -19,7 +19,12 @@ public class MedicineCard : MonoBehaviour
     [SerializeField] private TMP_Text expiryText;
     [SerializeField] private Outline outline;
 
+    [Header("Colours")]
+    [SerializeField] private Color pickedColor = new Color(0.184f, 0.29f, 0.212f);
+    [SerializeField] private Color pickedOutlineColor = new Color(0.247f, 0.682f, 0.353f);
+
     private Color backgroundColor;
+    private Color outlineColor;
 
     public event Action Changed;
 
@@ -43,6 +48,7 @@ public class MedicineCard : MonoBehaviour
     private void Awake()
     {
         backgroundColor = background.color;
+        if (outline != null) outlineColor = outline.effectColor;
         button.onClick.AddListener(Toggle);
     }
 
@@ -55,18 +61,14 @@ public class MedicineCard : MonoBehaviour
     {
         if (nameText != null) nameText.text = medicineName;
         if (expiryText != null) expiryText.text = expiry;
-        if (iconImage != null)
-        {
-            iconImage.sprite = icon;
-            iconImage.enabled = icon != null;
-        }
+        if (iconImage != null && icon != null) iconImage.sprite = icon;
     }
 
     public void SetPicked(bool picked)
     {
         IsPicked = picked;
-        background.color = picked ? GameSettings.Current.medicinePickedColor : backgroundColor;
-        if (outline != null) outline.enabled = picked;
+        background.color = picked ? pickedColor : backgroundColor;
+        if (outline != null) outline.effectColor = picked ? pickedOutlineColor : outlineColor;
     }
 
     private void Toggle()

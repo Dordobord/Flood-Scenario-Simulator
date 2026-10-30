@@ -69,13 +69,22 @@ public class SandbagWall : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        if (IsCarrying()) PlaceSandbag();
+        if (!IsCarrying()) return;
+
+        if (!IsHolding())
+        {
+            GameEvents.RaiseMessage(string.Format(GameSettings.Current.selectItemMessageFormat, task.rewardItem.displayName));
+            return;
+        }
+
+        PlaceSandbag();
     }
 
     private void PlaceSandbag()
     {
         if (InventoryManager.Instance != null) InventoryManager.Instance.Remove(task.rewardItem);
         if (placedCount == 0) firstPlaceTime = Time.time;
+        AudioManager.PlaySfx(SoundLibrary.Current.sandbagThud);
 
         SandbagSlot slot = slots[placedCount];
         if (slot.ghost != null) slot.ghost.SetActive(false);
@@ -90,6 +99,11 @@ public class SandbagWall : MonoBehaviour, IInteractable
         }
 
         if (TaskManager.Instance != null) TaskManager.Instance.RecordAttempt(task, true, Time.time - firstPlaceTime);
+    }
+
+    private bool IsHolding()
+    {
+        return InventoryManager.Instance != null && InventoryManager.Instance.IsHolding(task.rewardItem);
     }
 
     private bool IsCarrying()

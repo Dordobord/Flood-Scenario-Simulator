@@ -89,6 +89,7 @@ public class PowerBankCharger : MonoBehaviour, IInteractable
 
         pluggedIn = true;
         plugTime = Time.time;
+        AudioManager.PlaySfx(SoundLibrary.Current.plugInBeep);
         ShowCable();
     }
 
@@ -97,9 +98,6 @@ public class PowerBankCharger : MonoBehaviour, IInteractable
         return charge >= 1f;
     }
 
-    // Places the cable model with its plug in the outlet and bends the cable along a hanging curve
-    // to the power bank's port. The model is laid out straight along one axis with the plug at its origin.
-    // The cable is a child of the power bank, so it disappears when the power bank is packed.
     private void ShowCable()
     {
         if (outlet == null || cableModel == null) return;
@@ -119,7 +117,6 @@ public class PowerBankCharger : MonoBehaviour, IInteractable
         MeshFilter[] filters = cable.GetComponentsInChildren<MeshFilter>();
         Transform root = cable.transform;
 
-        // Find the long axis of the model and which way the cable runs from the plug.
         Bounds bounds = new Bounds();
         bool first = true;
         foreach (MeshFilter filter in filters)
@@ -147,7 +144,6 @@ public class PowerBankCharger : MonoBehaviour, IInteractable
         float plugFront = this.plugFront * cableScale;
         float length = Mathf.Max(0.001f, max - plugFront);
 
-        // Curve from the front of the plug to the port.
         Vector3 outward = outlet.forward;
         Vector3 plugOrigin = outlet.position + outward * plugBack;
         Vector3 start = plugOrigin + outward * plugFront;
@@ -174,7 +170,6 @@ public class PowerBankCharger : MonoBehaviour, IInteractable
 
                 if (along <= plugFront)
                 {
-                    // The plug stays rigid, pushed into the outlet.
                     Vector3 wallSide = Vector3.Cross(Vector3.up, outward).normalized;
                     world = plugOrigin + outward * along + wallSide * side + Vector3.up * up;
                 }
@@ -192,7 +187,6 @@ public class PowerBankCharger : MonoBehaviour, IInteractable
                     curveSide = curveSide.sqrMagnitude > 0.000001f ? curveSide.normalized : Vector3.Cross(Vector3.up, outward).normalized;
                     Vector3 normal = Vector3.Cross(tangent, curveSide);
 
-                    // Thickness stays the same; only the waves of the model are scaled.
                     float wave = Mathf.Lerp(1f, cableWiggle, Mathf.Clamp01((along - plugFront) / (0.02f * cableScale)));
                     Vector2 offset = new Vector2(side, up);
                     float radius = 0.004f * cableScale;
@@ -215,7 +209,6 @@ public class PowerBankCharger : MonoBehaviour, IInteractable
         }
     }
 
-    // The cable lies on the floor under the power bank instead of sinking through it.
     private float FloorHeight(Vector3 point)
     {
         float floor = point.y - 1f;

@@ -15,7 +15,7 @@ MonoBehaviour:
   id: Item_ImportantDocuments
   displayName: Important Documents
   description: IDs, land title or lease, and insurance papers sealed in a waterproof pouch.
-  icon: {fileID: 0}
+  icon: {fileID: 4876988969562311245, guid: 523337059750a9542801e3aa6989fc8a, type: 3}
   fallbackColor: {r: 0.95, g: 0.85, b: 0.45, a: 1}
   cost: 0
   hhiIndicator: Safeguard important documents (87%)

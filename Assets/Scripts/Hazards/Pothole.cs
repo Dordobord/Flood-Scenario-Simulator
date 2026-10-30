@@ -47,6 +47,7 @@ public class Pothole : MonoBehaviour
         player.SpeedMultiplier = GameSettings.Current.potholeSpeedMultiplier;
         player.CameraDrop = GameSettings.Current.potholeDepth;
         PhaseManager.Instance.AddPotholeStep();
+        AudioManager.PlaySfx(SoundLibrary.Current.potholeSplash);
     }
 
     private void OnTriggerExit(Collider other)

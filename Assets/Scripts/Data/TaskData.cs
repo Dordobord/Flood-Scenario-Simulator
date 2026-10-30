@@ -22,17 +22,11 @@ public class MinigameSettings
     [Header("Hold Progress")]
     public float holdSeconds = 3f;
 
-    [Header("Timing Bar")]
-    public float cursorSpeed = 1f;
-    [Range(0.05f, 0.5f)] public float targetWidth = 0.2f;
-    [Min(1)] public int requiredHits = 1;
-
     [Header("Tuning")]
     [TextArea] public string revealMessage;
-    [TextArea] public string question;
     public bool showRainfallWarning;
 
-    [Header("Choices (Select Correct: 7 or fewer. Go bag: any number.)")]
+    [Header("Choices")]
     public List<SelectChoice> choices = new List<SelectChoice>();
 }
 
@@ -47,7 +41,6 @@ public class TaskData : ScriptableObject
     public PreparednessDomain domain;
     public TaskPriority priority = TaskPriority.Important;
     public ScoreMethod scoreMethod = ScoreMethod.Done;
-    public bool isRequired = true;
     [TextArea] public string recommendation;
 
     [Header("Reward and minigame")]
@@ -59,6 +52,9 @@ public class TaskData : ScriptableObject
 
     [Header("Power")]
     public bool needsPower;
+
+    [Header("After completing")]
+    public bool reopenToRead;
 }
 
 [Serializable]

@@ -53,6 +53,7 @@ public class AppliancePlug : MonoBehaviour, IInteractable
         }
 
         unplugged = true;
+        AudioManager.PlaySfx(SoundLibrary.Current.unplug);
         if (label != null) label.text = string.Format(GameSettings.Current.unpluggedLabelFormat, applianceName);
         group.CompleteStep(GameSettings.Current.unpluggedMessageFormat, applianceName);
     }

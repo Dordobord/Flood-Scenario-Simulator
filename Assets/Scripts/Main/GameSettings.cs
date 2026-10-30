@@ -25,12 +25,14 @@ public class GameSettings : ScriptableObject
     public string holdPromptFormat = "Hold [{0}] {1}";
     public string placePromptFormat = "Place {0}";
     public string defaultPrompt = "Interact";
+    public string selectItemMessageFormat = "Select the {0} in your hotbar first.";
+    public string reopenPromptFormat = "{0} (read again)";
+    public string reopenInstructions = "Already done. Close the window when you are finished reading.";
 
     [Header("Minigame timing")]
     public float successDelay = 0.9f;
     public float failDelay = 1.1f;
     public float holdDrainMultiplier = 1.5f;
-    [Range(0f, 0.4f)] public float targetEdgeMargin = 0.1f;
 
     [Header("Phase Timer")]
     public float preparationSeconds = 120f;
@@ -56,27 +58,16 @@ public class GameSettings : ScriptableObject
     [Header("Minigame text")]
     public string successMessage = "Success!";
     public string failMessage = "Not quite. Try again!";
-    public string hitsFormat = "Hits: {0}/{1}";
-    public string selectedMark = "[x]  ";
-    public string unselectedMark = "[ ]  ";
     public string actionWithClickFormat = "{0} or left click";
     public string holdHintFormat = "Hold {0}";
-    public string timingHintFormat = "Press {0} when the marker is in the green zone";
 
     [Header("Breaker")]
     public string breakerMainLabel = "MAIN";
-    public string breakerOnText = "ON";
-    public string breakerOffText = "OFF";
-    public Color breakerOnColor = new Color(0.75f, 0.25f, 0.25f);
-    public Color breakerOffColor = new Color(0.25f, 0.6f, 0.35f);
-    public string breakerCoverHint = "Click the cover to open the breaker panel.";
-    public string breakerSwitchHint = "Switch off every circuit first, then MAIN.";
-    public string breakerMainEarlyHint = "Spark! Switch off the other circuits before MAIN.";
+    public string breakerMainEarlyHint = "Switch off the other circuits before MAIN.";
 
     [Header("Stove")]
-    public Color stoveOnColor = new Color(0.85f, 0.45f, 0.2f);
-    public Color stoveOffColor = new Color(0.25f, 0.6f, 0.35f);
-    public string stoveKnobHint = "Drag each burner knob around until it points to OFF.";
+    public string stoveOnText = "ON";
+    public string stoveOffText = "OFF";
     public string stoveValveHint = "Now turn the LPG valve clockwise until it is closed.";
     public string stoveValveLockedHint = "Turn off every burner before closing the LPG valve.";
 
@@ -114,6 +105,11 @@ public class GameSettings : ScriptableObject
     public Color noteDoneTextColor = new Color(0.45f, 0.48f, 0.52f);
     public Color noteBoxDoneColor = new Color(0.114f, 0.62f, 0.459f);
 
+    [Header("Flashlight")]
+    public Key flashlightKey = Key.F;
+    public string flashlightReadyMessageFormat = "Flashlight ready. Press [{0}] to turn it on or off.";
+    public float flashlightHintDelay = 3.5f;
+
     [Header("Power Bank")]
     public string powerBankPlugPrompt = "Plug in the power bank";
     public string powerBankChargingFormat = "Charging power bank {0}%";
@@ -137,6 +133,10 @@ public class GameSettings : ScriptableObject
     public string doorOpenPrompt = "Open the door";
     public string doorClosePrompt = "Close the door";
 
+    [Header("Drawers")]
+    public string drawerOpenPrompt = "Open the drawer";
+    public string drawerClosePrompt = "Close the drawer";
+
     [Header("Power")]
     public string noPowerMessage = "No power. The breaker is turned off.";
     public string noPowerPrompt = "No power (breaker is off)";
@@ -158,58 +158,36 @@ public class GameSettings : ScriptableObject
     public float hazardAlertDelay = 5f;
     public string hazardAlertMessage = "Barangay alert: your area is flood prone. Check the Hazard Map app on your phone.";
     [TextArea] public string hazardWarningText = "<color=#D63031><b>Flood warning</b></color>\n<b>Your area is prone to flooding soon.</b>\nAvoid potholes and evacuate immediately.";
-    public string potholeCountFormat = "Potholes stepped in: {0}";
     public string floodedRouteMessage = "This area is flooded. Find another route.";
     public float floodedRouteMessageCooldown = 8f;
 
     [Header("Messages")]
     public string inventoryFullMessage = "Your inventory is full.";
-    public string collectedMessage = "Collected: ";
-    public string taskCompleteMessage = "Task complete: ";
+    [FormerlySerializedAs("collectedMessage")]
+    public string collectedMessageFormat = "Added {0} to your inventory.";
+    [TextArea] public string taskCompleteMessage = "Task complete:\n";
 
     [Header("Scoring")]
     public float criticalWeight = 2f;
     public float importantWeight = 1f;
-    public float speedTimeLimit = 30f;
-    [Range(0f, 1f)] public float minSpeedScore = 0.5f;
     [Range(0f, 1f)] public float mistakePenalty = 0.2f;
     [Range(0f, 1f)] public float retryPenalty = 0.1f;
-    [Range(0f, 1f)] public float minTaskScore = 0.4f;
-    public float wellPreparedPercent = 85f;
-    public float partlyPreparedPercent = 50f;
-    public string wellPreparedRating = "Well Prepared";
-    public string partlyPreparedRating = "Partially Prepared";
-    public string notPreparedRating = "Not Prepared";
+    public float domainMaxPoints = 10f;
 
     [Header("Results")]
-    public bool showScore = false;
-    public string tasksDoneFormat = "Tasks done: {0}/{1}";
-    public string missedTasksHeading = "Missed tasks:";
-    public string scorePercentFormat = "Preparedness Score: {0:0}%";
-    public string ratingFormat = "Rating: {0}";
-    public string ratingCappedNote = "(capped because a critical task was missed)";
-    public string domainPercentFormat = "{0}: {1:0}%";
-    public string taskScoreFormat = "{0} ({1:0}%)";
-    public string missedCriticalHeading = "Missed critical tasks:";
-    public string allDoneMessage = "You completed every task. You are well prepared!";
-    public string evacuationTimeFormat = "Evacuation Time: {0}";
-    public string weakestDomainFormat = "Weakest: {0}";
+    public string totalPointsFormat = "{0:0.#} / {1:0}";
+    public string domainPointsFormat = "{0:0.#} / {1:0}";
+    public string praiseFormat = "Great job on {0}!";
     public string domainSeparator = ", ";
-    public string listBullet = "- ";
-    public string recommendationFormat = "{0}: {1}";
-    public string noTasksCompletedMessage = "None";
+    public string lastDomainSeparator = " and ";
+    public string allDoneMessage = "Congratulations! You evacuated with no issues.";
     public List<DomainDisplayName> domainDisplayNames = new List<DomainDisplayName>
     {
-        new DomainDisplayName(PreparednessDomain.Planning, "Planning"),
-        new DomainDisplayName(PreparednessDomain.Training, "Training"),
-        new DomainDisplayName(PreparednessDomain.MaterialPreparedness, "Material Preparedness"),
-        new DomainDisplayName(PreparednessDomain.Information, "Information")
+        new DomainDisplayName(PreparednessDomain.Planning, "Planning", "Knowing your area and your contacts helps your family act fast."),
+        new DomainDisplayName(PreparednessDomain.Training, "Training", "Some things at home become dangerous once floodwater gets in. Making them safe protects everyone."),
+        new DomainDisplayName(PreparednessDomain.MaterialPreparedness, "Material Preparedness", "Having your essentials ready means you can leave the moment you need to."),
+        new DomainDisplayName(PreparednessDomain.Information, "Information", "Warnings often come before the water. Paying attention gives you time to prepare.")
     };
-
-    [Header("Medication")]
-    public Color medicinePickedColor = new Color(0.18f, 0.31f, 0.48f);
-    public string pouchItemFormat = "{0} ({1})";
-    public string pouchEmptyText = "Click a medicine to pack it.";
 
     [Header("Rainfall Warning")]
     public string rainfallWarningTitleFormat = "PAGASA: {0} RAINFALL WARNING";
@@ -253,11 +231,23 @@ public class GameSettings : ScriptableObject
     public Color scenarioNormalColor = new Color(0.2f, 0.24f, 0.32f);
     public Color scenarioSelectedColor = new Color(0.2f, 0.45f, 0.75f);
 
+    [Header("Loading Screen")]
+    public string loadingTitleFormat = "{0}";
+    public string loadingText = "Loading";
+    public string loadingTipFormat = "TIP: {0}";
+    [TextArea] public List<string> loadingTips = new List<string>
+    {
+        "A Yellow rainfall warning means flooding is possible in low-lying areas.",
+        "An Orange rainfall warning means flooding is threatening. Be ready to act.",
+        "A Red rainfall warning means serious flooding is expected in many areas.",
+        "PAGASA uses three rainfall warning colors: Yellow, Orange and Red.",
+        "Moving floodwater only ankle deep can make you lose your footing.",
+        "Floodwater can hide open drains, potholes and sharp debris."
+    };
+
     [Header("Colors")]
     public Color successColor = new Color(0.4f, 0.95f, 0.5f);
     public Color failColor = new Color(1f, 0.45f, 0.4f);
-    public Color choiceNormalColor = new Color(0.2f, 0.24f, 0.32f);
-    public Color choiceSelectedColor = new Color(0.2f, 0.45f, 0.75f);
 
     public string GetDomainName(PreparednessDomain domain)
     {
@@ -266,6 +256,15 @@ public class GameSettings : ScriptableObject
             if (entry.domain == domain && !string.IsNullOrEmpty(entry.displayName)) return entry.displayName;
         }
         return domain.ToString();
+    }
+
+    public string GetDomainHint(PreparednessDomain domain)
+    {
+        foreach (DomainDisplayName entry in domainDisplayNames)
+        {
+            if (entry.domain == domain) return entry.hint;
+        }
+        return "";
     }
 
     public RainfallWarningInfo GetRainfallWarning(RainfallWarningLevel level)

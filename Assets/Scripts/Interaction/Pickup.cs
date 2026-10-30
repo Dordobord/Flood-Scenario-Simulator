@@ -11,6 +11,7 @@ public class Pickup : HoldInteractable, IInteractable
         get
         {
             if (task != null && task.needsPower && !PowerSupply.HasPower) return GameSettings.Current.noPowerPrompt;
+            if (IsDone() && task.reopenToRead) return string.Format(GameSettings.Current.reopenPromptFormat, task.title);
             if (!string.IsNullOrEmpty(promptOverride)) return promptOverride;
             if (task != null) return task.title;
             return GameSettings.Current.defaultPrompt;
@@ -22,7 +23,7 @@ public class Pickup : HoldInteractable, IInteractable
         get
         {
             if (task == null) return false;
-            if (TaskManager.Instance != null && TaskManager.Instance.IsCompleted(task)) return false;
+            if (IsDone()) return task.reopenToRead;
             if (task.mustBePlaced && IsCarryingReward()) return false;
             return true;
         }
@@ -68,7 +69,8 @@ public class Pickup : HoldInteractable, IInteractable
             return;
         }
 
-        MinigameManager.Instance.Begin(task, OnMinigameFinished);
+        if (IsDone()) MinigameManager.Instance.Reopen(task);
+        else MinigameManager.Instance.Begin(task, OnMinigameFinished);
     }
 
     protected override void OnHoldComplete(float seconds)
@@ -82,6 +84,11 @@ public class Pickup : HoldInteractable, IInteractable
 
         if (TaskManager.Instance != null) TaskManager.Instance.RecordAttempt(task, true, seconds);
         OnMinigameFinished(true);
+    }
+
+    private bool IsDone()
+    {
+        return task != null && TaskManager.Instance != null && TaskManager.Instance.IsCompleted(task);
     }
 
     private bool IsHoldTask()
@@ -105,7 +112,7 @@ public class Pickup : HoldInteractable, IInteractable
         InventoryManager inventory = InventoryManager.Instance;
         if (task.rewardItem == null || inventory == null || !inventory.TryAdd(task.rewardItem)) return false;
 
-        GameEvents.RaiseMessage(GameSettings.Current.collectedMessage + task.rewardItem.displayName);
+        GameEvents.RaiseMessage(string.Format(GameSettings.Current.collectedMessageFormat, task.rewardItem.displayName));
         return true;
     }
 
@@ -115,6 +122,6 @@ public class Pickup : HoldInteractable, IInteractable
 
         GiveReward();
 
-        if (hideWhenCompleted) gameObject.SetActive(false);
+        if (hideWhenCompleted && !task.reopenToRead) gameObject.SetActive(false);
     }
 }

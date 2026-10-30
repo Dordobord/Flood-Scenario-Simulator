@@ -10,6 +10,7 @@ public class GoBagGridView : MonoBehaviour
     private int width;
     private int height;
     private float cellSize;
+    private Color emptyColor;
 
     private bool previewShown;
     private int previewX;
@@ -32,6 +33,8 @@ public class GoBagGridView : MonoBehaviour
         rectTransform = (RectTransform)transform;
         rectTransform.sizeDelta = new Vector2(width * cellSize, height * cellSize);
 
+        ClearBlueprint();
+
         cellImages = new Image[width, height];
 
         for (int x = 0; x < width; x++)
@@ -50,11 +53,29 @@ public class GoBagGridView : MonoBehaviour
                 cellRect.sizeDelta = new Vector2(cellSize - settings.cellGap, cellSize - settings.cellGap);
 
                 Image cellImage = cellObject.GetComponent<Image>();
-                cellImage.color = settings.emptyCellColor;
+                cellImage.color = emptyColor;
                 cellImage.raycastTarget = false;
 
                 cellImages[x, y] = cellImage;
             }
+        }
+    }
+
+    private void ClearBlueprint()
+    {
+        emptyColor = settings.emptyCellColor;
+
+        LayoutGroup layoutGroup = GetComponent<LayoutGroup>();
+        if (layoutGroup != null) layoutGroup.enabled = false;
+
+        for (int i = transform.childCount - 1; i >= 0; i--)
+        {
+            GameObject child = transform.GetChild(i).gameObject;
+            Image childImage = child.GetComponent<Image>();
+            if (childImage != null) emptyColor = childImage.color;
+
+            child.SetActive(false);
+            Destroy(child);
         }
     }
 
@@ -145,7 +166,7 @@ public class GoBagGridView : MonoBehaviour
         {
             for (int y = 0; y < height; y++)
             {
-                cellImages[x, y].color = settings.emptyCellColor;
+                cellImages[x, y].color = emptyColor;
             }
         }
     }

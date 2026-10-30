@@ -42,6 +42,6 @@ public class SandbagPile : MonoBehaviour, IInteractable
             return;
         }
 
-        GameEvents.RaiseMessage(settings.collectedMessage + task.rewardItem.displayName);
+        GameEvents.RaiseMessage(string.Format(settings.collectedMessageFormat, task.rewardItem.displayName));
     }
 }

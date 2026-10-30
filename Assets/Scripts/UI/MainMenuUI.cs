@@ -33,6 +33,7 @@ public class MainMenuUI : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+        AudioManager.PlayMusic(SoundLibrary.Current.menuMusic);
 
         GameSettings current = GameSettings.Current;
         if (titleText != null) titleText.text = current.menuTitle;
@@ -104,7 +105,9 @@ public class MainMenuUI : MonoBehaviour
         }
 
         TaskManager.ChosenScenario = selected;
-        SceneManager.LoadScene(selected.sceneName);
+
+        if (LoadingScreenUI.Instance != null) LoadingScreenUI.Instance.Load(selected);
+        else SceneManager.LoadScene(selected.sceneName);
     }
 
     private void Quit()

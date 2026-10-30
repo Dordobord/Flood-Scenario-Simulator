@@ -6,6 +6,9 @@ using UnityEngine.UI;
 [RequireComponent(typeof(RectTransform), typeof(Image))]
 public class GoBagItemView : MonoBehaviour, IPointerDownHandler
 {
+    [Header("Parts")]
+    [SerializeField] private Image iconImage;
+
     private GoBagItem item;
     private GoBagMinigame owner;
     private GoBagPileTile tile;
@@ -14,6 +17,8 @@ public class GoBagItemView : MonoBehaviour, IPointerDownHandler
     private float cellSize;
     private float inset;
     private float heldAlpha;
+    private RectTransform iconRect;
+    private float iconPadding;
 
     private bool isHeld;
     private bool pickedFromPile;
@@ -36,21 +41,11 @@ public class GoBagItemView : MonoBehaviour, IPointerDownHandler
         rectTransform.anchorMin = new Vector2(0f, 1f);
         rectTransform.anchorMax = new Vector2(0f, 1f);
         rectTransform.pivot = new Vector2(0f, 1f);
+        SetupIcon(settings);
         UpdateSize();
 
-        Image image = GetComponent<Image>();
-        if (item.Icon != null)
-        {
-            image.sprite = item.Icon;
-            image.color = Color.white;
-        }
-        else
-        {
-            image.color = settings.itemColor;
-        }
-
-        canvasGroup = gameObject.AddComponent<CanvasGroup>();
-        CreateLabel(settings);
+        canvasGroup = GetComponent<CanvasGroup>();
+        if (canvasGroup == null) canvasGroup = gameObject.AddComponent<CanvasGroup>();
 
         gameObject.SetActive(false);
     }
@@ -63,6 +58,32 @@ public class GoBagItemView : MonoBehaviour, IPointerDownHandler
     public void UpdateSize()
     {
         rectTransform.sizeDelta = new Vector2(item.Width * cellSize - inset * 2f, item.Height * cellSize - inset * 2f);
+
+        if (iconRect == null) return;
+
+        iconRect.sizeDelta = new Vector2(item.BaseWidth * cellSize - inset * 2f - iconPadding * 2f, item.BaseHeight * cellSize - inset * 2f - iconPadding * 2f);
+        iconRect.localEulerAngles = new Vector3(0f, 0f, item.IsRotated ? 90f : 0f);
+    }
+
+    private void SetupIcon(GoBagSettings settings)
+    {
+        if (iconImage == null || item.Icon == null)
+        {
+            if (iconImage != null) iconImage.gameObject.SetActive(false);
+
+            Image background = GetComponent<Image>();
+            background.enabled = true;
+            background.color = settings.itemColor;
+            CreateLabel(settings);
+            return;
+        }
+
+        iconImage.sprite = item.Icon;
+        iconRect = iconImage.rectTransform;
+        iconPadding = iconRect.anchorMin != iconRect.anchorMax ? -iconRect.sizeDelta.x * 0.5f : 0f;
+        iconRect.anchorMin = new Vector2(0.5f, 0.5f);
+        iconRect.anchorMax = new Vector2(0.5f, 0.5f);
+        iconRect.anchoredPosition = Vector2.zero;
     }
 
     private void CreateLabel(GoBagSettings settings)

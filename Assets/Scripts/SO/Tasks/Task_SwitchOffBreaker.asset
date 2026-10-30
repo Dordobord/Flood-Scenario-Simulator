@@ -23,7 +23,7 @@ MonoBehaviour:
   rewardItem: {fileID: 0}
   minigame:
     type: 7
-    prompt: Open the breaker panel and switch off the power safely.
+    prompt: Switch off every circuit first, then MAIN.
     holdSeconds: 3
     cursorSpeed: 1
     targetWidth: 0.2
@@ -31,22 +31,22 @@ MonoBehaviour:
     revealMessage: 
     phoneApp: {fileID: 0}
     choices:
-    - label: Kitchen
+    - label: KITCHEN
       isCorrect: 1
       icon: {fileID: 0}
       gridWidth: 1
       gridHeight: 1
-    - label: Bedrooms
+    - label: LIGHTS
       isCorrect: 1
       icon: {fileID: 0}
       gridWidth: 1
       gridHeight: 1
-    - label: Living Room
+    - label: OUTLET
       isCorrect: 1
       icon: {fileID: 0}
       gridWidth: 1
       gridHeight: 1
-    - label: Outlets
+    - label: AIRCON
       isCorrect: 1
       icon: {fileID: 0}
       gridWidth: 1

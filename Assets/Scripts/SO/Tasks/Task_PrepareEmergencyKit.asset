@@ -23,7 +23,7 @@ MonoBehaviour:
   rewardItem: {fileID: 11400000, guid: 99110357b650dac45ba6d07c0ea92a3b, type: 2}
   minigame:
     type: 11
-    prompt: Drag each item into the slot that matches its shape. Leave out what does not belong.
+    prompt: Drag each item into the slot that matches its shape.
     holdSeconds: 3
     cursorSpeed: 1
     targetWidth: 0.2
