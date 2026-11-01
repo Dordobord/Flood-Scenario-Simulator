@@ -20,6 +20,11 @@ public abstract class MinigameBase : MonoBehaviour
         get { return false; }
     }
 
+    public virtual AudioClip MistakeSound
+    {
+        get { return SoundLibrary.Current.fail; }
+    }
+
     public int Mistakes { get; protected set; }
 
     protected MinigameSettings settings;

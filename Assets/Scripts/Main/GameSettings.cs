@@ -147,6 +147,11 @@ public class GameSettings : ScriptableObject
     public string evacuationMarkerLabelFormat = "{0}\n{1} m";
     public Color evacuationMarkerColor = new Color(0.25f, 0.85f, 0.4f);
 
+    [Header("Evacuation Center Sound")]
+    [Range(0f, 1f)] public float evacCenterVolume = 1f;
+    public float evacCenterSoundMinDistance = 5f;
+    public float evacCenterSoundMaxDistance = 60f;
+
     [Header("Flood Warning Marker")]
     public string floodWarningMarkerLabelFormat = "WARNING\nFlooded\n{0} m";
     public Color floodWarningMarkerColor = new Color(0.96f, 0.77f, 0.09f);
@@ -218,8 +223,14 @@ public class GameSettings : ScriptableObject
     [Range(0f, 1f)] public float stormSkyMultiplier = 0.4f;
     [Range(0f, 1f)] public float rainVolume = 0.8f;
     [Range(0f, 1f)] public float indoorFogMultiplier = 0.15f;
-    [Range(0f, 1f)] public float indoorRainVolumeMultiplier = 0.4f;
     public float indoorBlendSeconds = 0.5f;
+    public float evacuationSoundFadeSeconds = 3f;
+    [Range(0f, 1f)] public float windVolume = 0.4f;
+    [Range(0f, 1f)] public float indoorWindVolumeMultiplier = 0.4f;
+    [Range(0f, 1f)] public float thunderVolume = 0.8f;
+    [Range(0f, 1f)] public float indoorThunderVolumeMultiplier = 0.5f;
+    public float thunderMinSeconds = 15f;
+    public float thunderMaxSeconds = 40f;
 
     [Header("Main Menu")]
     public string mainMenuSceneName = "MainMenu";

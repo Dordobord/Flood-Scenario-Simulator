@@ -16,6 +16,11 @@ public class BreakerMinigame : MinigameBase
     private List<BreakerSwitch> circuits = new List<BreakerSwitch>();
     private float warningTimer;
 
+    public override AudioClip MistakeSound
+    {
+        get { return SoundLibrary.Current.spark; }
+    }
+
     protected override void Setup()
     {
         AudioManager.PlaySfx(SoundLibrary.Current.breakerCover);
@@ -57,7 +62,6 @@ public class BreakerMinigame : MinigameBase
         if (CountCircuitsOn() > 0)
         {
             Mistakes++;
-            AudioManager.PlaySfx(SoundLibrary.Current.spark);
             main.SetWarning(true);
             warningTimer = warningSeconds;
             ShowFeedback(GameSettings.Current.breakerMainEarlyHint);

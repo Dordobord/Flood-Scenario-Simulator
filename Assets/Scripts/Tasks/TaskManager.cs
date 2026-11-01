@@ -112,11 +112,6 @@ public class TaskManager : MonoBehaviour
         return false;
     }
 
-    public List<TaskResult> GetResults()
-    {
-        return new List<TaskResult>(completed.Values);
-    }
-
     public void RecordAttempt(TaskData task, bool success, float seconds, int mistakeCount = 0)
     {
         if (task == null || IsCompleted(task)) return;

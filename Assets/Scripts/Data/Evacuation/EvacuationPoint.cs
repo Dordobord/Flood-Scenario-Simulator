@@ -14,6 +14,19 @@ public class EvacuationPoint : MonoBehaviour
         {
             Debug.LogWarning("EvacuationPoint: tick Is Trigger on the collider, or the player will bump into it instead of finishing.");
         }
+
+        GameEvents.PreparationEnded += PlayAmbience;
+    }
+
+    private void OnDestroy()
+    {
+        GameEvents.PreparationEnded -= PlayAmbience;
+    }
+
+    private void PlayAmbience()
+    {
+        GameSettings settings = GameSettings.Current;
+        AudioManager.PlayLoopAt(SoundLibrary.Current.evacCenterAmbience, transform, settings.evacCenterVolume, settings.evacCenterSoundMinDistance, settings.evacCenterSoundMaxDistance);
     }
 
     private void OnTriggerEnter(Collider other)

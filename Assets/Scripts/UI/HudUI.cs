@@ -72,11 +72,16 @@ public class HudUI : MonoBehaviour
 
     private void Update()
     {
-        if (toastHideTime > 0f && Time.time >= toastHideTime)
-        {
-            toastText.text = "";
-            toastHideTime = 0f;
-        }
+        bool expired = toastHideTime > 0f && Time.time >= toastHideTime;
+        if (expired || PhaseManager.IsTransitionActive) HideMessage();
+    }
+
+    private void HideMessage()
+    {
+        if (toastText.text == "") return;
+
+        toastText.text = "";
+        toastHideTime = 0f;
     }
 
     public void SetPrompt(string text)

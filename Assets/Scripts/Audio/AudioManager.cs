@@ -16,10 +16,6 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioMixerGroup sfxGroup;
     [SerializeField] private AudioMixerGroup ambienceGroup;
 
-    [Header("Object Loops")]
-    [SerializeField] private float loopMinDistance = 1f;
-    [SerializeField] private float loopMaxDistance = 15f;
-
     private AudioSource sfxSource;
     private AudioSource[] musicSources = new AudioSource[2];
     private int activeMusic;
@@ -68,22 +64,10 @@ public class AudioManager : MonoBehaviour
         Instance.sfxSource.PlayOneShot(clip, SoundLibrary.Current.sfxVolume);
     }
 
-    public static void PlayRandom(AudioClip[] clips)
-    {
-        if (clips == null || clips.Length == 0) return;
-        PlaySfx(clips[Random.Range(0, clips.Length)]);
-    }
-
     public static void PlayMusic(AudioClip clip)
     {
         if (Instance == null || clip == null) return;
         Instance.FadeToMusic(clip);
-    }
-
-    public static void StopMusic()
-    {
-        if (Instance == null) return;
-        Instance.FadeToMusic(null);
     }
 
     public static void PlayLoop(AudioClip clip)
@@ -100,18 +84,10 @@ public class AudioManager : MonoBehaviour
         if (Instance.loops.TryGetValue(clip, out source)) source.Stop();
     }
 
-    public static void PlayLoopAt(AudioClip clip, Transform target)
+    public static void PlayLoopAt(AudioClip clip, Transform target, float volume, float minDistance, float maxDistance)
     {
         if (Instance == null || clip == null || target == null) return;
-        Instance.StartLoopAt(clip, target);
-    }
-
-    public static void StopLoopAt(Transform target)
-    {
-        if (Instance == null || target == null) return;
-
-        AudioSource source;
-        if (Instance.objectLoops.TryGetValue(target, out source) && source != null) source.Stop();
+        Instance.StartLoopAt(clip, target, volume, minDistance, maxDistance);
     }
 
     private AudioSource CreateSource(AudioMixerGroup group)
@@ -137,7 +113,7 @@ public class AudioManager : MonoBehaviour
         if (!source.isPlaying) source.Play();
     }
 
-    private void StartLoopAt(AudioClip clip, Transform target)
+    private void StartLoopAt(AudioClip clip, Transform target, float volume, float minDistance, float maxDistance)
     {
         AudioSource source;
         if (!objectLoops.TryGetValue(target, out source) || source == null)
@@ -150,14 +126,14 @@ public class AudioManager : MonoBehaviour
             source.loop = true;
             source.spatialBlend = 1f;
             source.rolloffMode = AudioRolloffMode.Linear;
-            source.minDistance = loopMinDistance;
-            source.maxDistance = loopMaxDistance;
-            source.outputAudioMixerGroup = sfxGroup;
+            source.outputAudioMixerGroup = ambienceGroup;
             objectLoops[target] = source;
         }
 
         source.clip = clip;
-        source.volume = SoundLibrary.Current.sfxVolume;
+        source.minDistance = minDistance;
+        source.maxDistance = maxDistance;
+        source.volume = SoundLibrary.Current.ambienceVolume * volume;
         if (!source.isPlaying) source.Play();
     }
 

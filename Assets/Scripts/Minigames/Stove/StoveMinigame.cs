@@ -17,11 +17,16 @@ public class StoveMinigame : MinigameBase
     [Header("Valve")]
     [SerializeField] private float turnsToClose = 1.5f;
 
+    [Header("Crank Sound")]
+    [SerializeField] private float crankStopDelay = 0.1f;
+    [SerializeField] private float crankMinDegrees = 0.5f;
+
     private StoveKnob draggedKnob;
     private float grabOffset;
     private bool draggingValve;
     private float lastValveAngle;
     private float valveProgress;
+    private float crankTimer;
 
     protected override void Setup()
     {
@@ -34,7 +39,14 @@ public class StoveMinigame : MinigameBase
         draggedKnob = null;
         draggingValve = false;
         valveProgress = 0f;
+        crankTimer = 0f;
         UpdateValve();
+    }
+
+    public override void End()
+    {
+        StopCrankSound();
+        base.End();
     }
 
     public override void Tick()
@@ -44,6 +56,7 @@ public class StoveMinigame : MinigameBase
         {
             draggedKnob = null;
             draggingValve = false;
+            StopCrankSound();
             return;
         }
 
@@ -59,6 +72,8 @@ public class StoveMinigame : MinigameBase
 
         if (draggedKnob != null) DragKnob(mousePosition);
         if (draggingValve) DragValve(mousePosition);
+
+        UpdateCrankSound();
     }
 
     private void StartDrag(Vector2 mousePosition)
@@ -88,13 +103,16 @@ public class StoveMinigame : MinigameBase
     private void DragKnob(Vector2 mousePosition)
     {
         float angle = GetPointerAngle(draggedKnob.Dial, mousePosition) + grabOffset;
+        float turned = Mathf.Abs(Mathf.DeltaAngle(draggedKnob.Angle, angle));
+        if (turned >= crankMinDegrees) crankTimer = crankStopDelay;
+
         draggedKnob.SetAngle(angle);
 
         if (Mathf.Abs(Mathf.DeltaAngle(angle, offAngle)) > offZoneDegrees) return;
 
         draggedKnob.TurnOff(offAngle);
-        AudioManager.PlaySfx(SoundLibrary.Current.stoveKnob);
         draggedKnob = null;
+        crankTimer = 0f;
 
         if (AllKnobsOff()) ShowInstructions(GameSettings.Current.stoveValveHint);
     }
@@ -121,6 +139,27 @@ public class StoveMinigame : MinigameBase
         float degreesToClose = turnsToClose * 360f;
         valve.localEulerAngles = new Vector3(0f, 0f, -valveProgress * degreesToClose);
         if (valveGauge != null) valveGauge.fillAmount = valveProgress;
+    }
+
+    private void UpdateCrankSound()
+    {
+        if (draggedKnob == null) crankTimer = 0f;
+
+        if (crankTimer > 0f)
+        {
+            crankTimer -= Time.unscaledDeltaTime;
+            AudioManager.PlayLoop(SoundLibrary.Current.stoveCrank);
+        }
+        else
+        {
+            StopCrankSound();
+        }
+    }
+
+    private void StopCrankSound()
+    {
+        crankTimer = 0f;
+        AudioManager.StopLoop(SoundLibrary.Current.stoveCrank);
     }
 
     private bool AllKnobsOff()

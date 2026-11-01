@@ -16,52 +16,61 @@ MonoBehaviour:
   sfxVolume: 1
   ambienceVolume: 0.8
   musicFadeSeconds: 1.5
-  rainLight: {fileID: 0}
-  rainHeavy: {fileID: 0}
-  wind: {fileID: 0}
-  thunder: []
-  indoorRain: {fileID: 0}
+  rainLight: {fileID: 8300000, guid: 96fe9b9c84517004da16cd357545f4ab, type: 3}
+  rainHeavy: {fileID: 8300000, guid: b00b0431d5a48d24597b329d9e9ec142, type: 3}
+  rainLightIndoor: {fileID: 8300000, guid: 07ff01fd71d957d42b5b8cff6aa959cb, type: 3}
+  rainHeavyIndoor: {fileID: 8300000, guid: 0fcd0c148b4c3f14e8053d22cf1ae896, type: 3}
+  windLight: {fileID: 8300000, guid: c693c5f47beb50441ba6617b8b5a2ab8, type: 3}
+  windHeavy: {fileID: 8300000, guid: f8f684d4791486345bb65ab03dcf707c, type: 3}
+  thunder:
+  - {fileID: 8300000, guid: 00b961195d4886448bab0a30764746cc, type: 3}
+  - {fileID: 8300000, guid: a063927264c0d6743b67e8bf8c6542f2, type: 3}
+  - {fileID: 8300000, guid: de3b336460a2be44bb6269d16b83147d, type: 3}
+  - {fileID: 8300000, guid: e1674fd6cd3bf5043bc16c44bd18c2a8, type: 3}
+  - {fileID: 8300000, guid: 08452ab368f0342479abff9180c2044b, type: 3}
+  - {fileID: 8300000, guid: 8ae596d2fa9209847a74297a028a3f33, type: 3}
+  - {fileID: 8300000, guid: fda509d750b39fb4aab2eeadfcd0eb51, type: 3}
+  - {fileID: 8300000, guid: 607f9ab6cff61474faf7c5e3d27197e9, type: 3}
+  - {fileID: 8300000, guid: 2b13e7773a953c449a568e50233bff9f, type: 3}
+  - {fileID: 8300000, guid: bd20e8b5e78ceb040a959493baf8c20d, type: 3}
+  - {fileID: 8300000, guid: 30f7e87e151897f4c8e72c59164d3d1c, type: 3}
+  - {fileID: 8300000, guid: c3c8eebe24eafe144892212a04d0887f, type: 3}
+  - {fileID: 8300000, guid: 31585d13352c4d54fa7a170f07ef1bd5, type: 3}
+  - {fileID: 8300000, guid: 3d7abac3233eb884e937a3342de98f13, type: 3}
+  - {fileID: 8300000, guid: db290da598c58fb4886fad0f12dc6a16, type: 3}
+  - {fileID: 8300000, guid: 8d9ef563676e2b0409bff0109b822d14, type: 3}
+  - {fileID: 8300000, guid: 46fb95bf0ff63ee42ac691f1416cbd00, type: 3}
   floodWater: {fileID: 0}
+  evacCenterAmbience: {fileID: 8300000, guid: 5b2cfbb4704c4f4086014d898128d285, type: 3}
   menuMusic: {fileID: 0}
-  tensionMusic: {fileID: 0}
-  resultsSting: {fileID: 0}
   potholeSplash: {fileID: 0}
   flashlightOn: {fileID: 8300000, guid: bcb9ecc3a1af6f745bab430e204656c2, type: 3}
   flashlightOff: {fileID: 8300000, guid: 39ad55288274a9743828b87078341042, type: 3}
   doorOpen: {fileID: 8300000, guid: 26eb91f75a28ea549a2d6606aaa0d28c, type: 3}
   doorClose: {fileID: 8300000, guid: 26eb91f75a28ea549a2d6606aaa0d28c, type: 3}
-  windowOpen: {fileID: 0}
-  windowClose: {fileID: 0}
-  drawerOpen: {fileID: 0}
-  drawerClose: {fileID: 0}
-  gateCreak: {fileID: 0}
-  lampBuzz: {fileID: 0}
-  lampPowerOff: {fileID: 0}
+  windowOpen: {fileID: 8300000, guid: 09f4e3b91ac802424821dd2850f88d2e, type: 3}
+  windowClose: {fileID: 8300000, guid: ef63323094284ae85851a3e323dae65f, type: 3}
+  drawerOpen: {fileID: 8300000, guid: dc7bd8a4104f05b409b37d43e194442c, type: 3}
+  drawerClose: {fileID: 8300000, guid: d7994ce391e36b2409b76edd2eddc180, type: 3}
+  gateCreak: {fileID: 8300000, guid: d82143b899859144a9d17d594606b9ae, type: 3}
   powerOn: {fileID: 8300000, guid: a36825aa7886588428b6adec77140ebe, type: 3}
-  fanHum: {fileID: 0}
   breakerCover: {fileID: 8300000, guid: 7bb73ef067208b44b824faf77a6b25a4, type: 3}
   breakerFlip: {fileID: 8300000, guid: 35a431184d4ac304ebe3bc2650fe5631, type: 3}
-  spark: {fileID: 0}
+  spark: {fileID: 8300000, guid: 1b00037346c0f1342b21ed69589055a4, type: 3}
   unplug: {fileID: 0}
-  stoveKnob: {fileID: 0}
-  lpgValve: {fileID: 0}
+  stoveCrank: {fileID: 8300000, guid: 95c500bcba3dd6246a2b0bb78c57e14b, type: 3}
   battery: {fileID: 8300000, guid: afe21787a1166c540b043916694a2058, type: 3}
   itemDrop: {fileID: 8300000, guid: 639c0a32053208a4bbfd968aa23b280d, type: 3}
   goBagPlace: {fileID: 8300000, guid: 69c35e9a0fb4e3f42bd791ccc139d1e8, type: 3}
   goBagZip: {fileID: 8300000, guid: 59bd0b6aadb41f54689fa74c08120913, type: 3}
-  cardPick: {fileID: 8300000, guid: 2e22e458692bfa74998be3345b4b7fb4, type: 3}
   tvStatic: {fileID: 0}
   tvClick: {fileID: 8300000, guid: b720c169f17080c4190442717604874f, type: 3}
-  radioStatic: {fileID: 0}
-  sandbagThud: {fileID: 0}
+  radioStatic: {fileID: 8300000, guid: cb4838b64f9f26048b65297712093b64, type: 3}
+  sandbagThud: {fileID: 8300000, guid: 725ca0a9103757b448208516168b13e5, type: 3}
   plugInBeep: {fileID: 0}
-  paper: {fileID: 0}
-  holdTick: {fileID: 0}
   buttonClick: {fileID: 8300000, guid: f4820c1b2753a5643a03074ee64762af, type: 3}
   taskComplete: {fileID: 8300000, guid: 3e42184132498344c8be5c56ab724791, type: 3}
   fail: {fileID: 8300000, guid: 200d8b8e1597a4b41b2e44f17acbe07e, type: 3}
-  hotbarTick: {fileID: 0}
-  toastPop: {fileID: 0}
   timerBeep: {fileID: 8300000, guid: a3f54db019a64044d8739efe7cf60e86, type: 3}
   evacSiren: {fileID: 8300000, guid: c460ec45c45c8b444a6cb675067d866b, type: 3}
   arrivalChime: {fileID: 0}

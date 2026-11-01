@@ -128,6 +128,7 @@ public class PhaseManager : MonoBehaviour
         CurrentPhase = GamePhase.Transitioning;
         IsTransitionActive = true;
         CloseMinigames();
+        AudioManager.PlaySfx(SoundLibrary.Current.gateCreak);
 
         if (useTransitionScreen && TransitionUI.Instance != null)
         {

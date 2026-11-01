@@ -45,11 +45,7 @@ public class TransitionUI : MonoBehaviour
 
         float holdSeconds = settings.transitionHoldSeconds;
         AudioClip gateCreak = SoundLibrary.Current.gateCreak;
-        if (gateCreak != null)
-        {
-            AudioManager.PlaySfx(gateCreak);
-            holdSeconds = Mathf.Max(holdSeconds, gateCreak.length);
-        }
+        if (gateCreak != null) holdSeconds = Mathf.Max(holdSeconds, gateCreak.length - settings.transitionFadeSeconds);
 
         yield return new WaitForSecondsRealtime(holdSeconds);
 

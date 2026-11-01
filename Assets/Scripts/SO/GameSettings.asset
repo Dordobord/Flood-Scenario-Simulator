@@ -109,6 +109,9 @@ MonoBehaviour:
 
     {1} m'
   evacuationMarkerColor: {r: 0.25, g: 0.85, b: 0.4, a: 1}
+  evacCenterVolume: 1
+  evacCenterSoundMinDistance: 5
+  evacCenterSoundMaxDistance: 60
   floodWarningMarkerLabelFormat: 'WARNING
 
     Flooded
@@ -185,8 +188,14 @@ MonoBehaviour:
   stormSkyMultiplier: 0.4
   rainVolume: 0.8
   indoorFogMultiplier: 0.15
-  indoorRainVolumeMultiplier: 0.4
   indoorBlendSeconds: 0.5
+  evacuationSoundFadeSeconds: 3
+  windVolume: 0.4
+  indoorWindVolumeMultiplier: 0.4
+  thunderVolume: 0.8
+  indoorThunderVolumeMultiplier: 0.5
+  thunderMinSeconds: 15
+  thunderMaxSeconds: 40
   mainMenuSceneName: MainMenu
   menuTitle: The Storm Waits for Nobody
   menuSubtitle: Choose a flood scenario

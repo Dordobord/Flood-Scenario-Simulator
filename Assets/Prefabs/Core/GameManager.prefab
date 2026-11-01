@@ -121,5 +121,3 @@ MonoBehaviour:
   musicGroup: {fileID: 0}
   sfxGroup: {fileID: 0}
   ambienceGroup: {fileID: 0}
-  loopMinDistance: 1
-  loopMaxDistance: 15

@@ -12,15 +12,16 @@ public class SoundLibrary : ScriptableObject
     [Header("Ambience")]
     public AudioClip rainLight;
     public AudioClip rainHeavy;
-    public AudioClip wind;
+    public AudioClip rainLightIndoor;
+    public AudioClip rainHeavyIndoor;
+    public AudioClip windLight;
+    public AudioClip windHeavy;
     public AudioClip[] thunder;
-    public AudioClip indoorRain;
     public AudioClip floodWater;
+    public AudioClip evacCenterAmbience;
 
     [Header("Music")]
     public AudioClip menuMusic;
-    public AudioClip tensionMusic;
-    public AudioClip resultsSting;
 
     [Header("Player")]
     public AudioClip potholeSplash;
@@ -35,37 +36,28 @@ public class SoundLibrary : ScriptableObject
     public AudioClip drawerOpen;
     public AudioClip drawerClose;
     public AudioClip gateCreak;
-    public AudioClip lampBuzz;
-    public AudioClip lampPowerOff;
     public AudioClip powerOn;
-    public AudioClip fanHum;
 
     [Header("Tasks")]
     public AudioClip breakerCover;
     public AudioClip breakerFlip;
     public AudioClip spark;
     public AudioClip unplug;
-    public AudioClip stoveKnob;
-    public AudioClip lpgValve;
+    public AudioClip stoveCrank;
     public AudioClip battery;
     public AudioClip itemDrop;
     public AudioClip goBagPlace;
     public AudioClip goBagZip;
-    public AudioClip cardPick;
     public AudioClip tvStatic;
     public AudioClip tvClick;
     public AudioClip radioStatic;
     public AudioClip sandbagThud;
     public AudioClip plugInBeep;
-    public AudioClip paper;
-    public AudioClip holdTick;
 
     [Header("UI")]
     public AudioClip buttonClick;
     public AudioClip taskComplete;
     public AudioClip fail;
-    public AudioClip hotbarTick;
-    public AudioClip toastPop;
     public AudioClip timerBeep;
     public AudioClip evacSiren;
     public AudioClip arrivalChime;

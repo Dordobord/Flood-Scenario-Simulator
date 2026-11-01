@@ -10,7 +10,11 @@ public class RainController : MonoBehaviour
     [SerializeField] private ParticleSystem rain;
     [SerializeField] private Light sun;
     [SerializeField] private AudioSource rainSound;
+    [SerializeField] private AudioSource indoorRainSound;
+    [SerializeField] private AudioSource heavyRainSound;
+    [SerializeField] private AudioSource heavyIndoorRainSound;
     [SerializeField] private Vector3 followOffset = new Vector3(0f, 12f, 0f);
+    [SerializeField, Range(0f, 1f)] private float strengthWithoutScenario = 0f;
 
     private Transform target;
     private ScenarioData scenario;
@@ -21,6 +25,23 @@ public class RainController : MonoBehaviour
     private float strength;
     private float targetStrength;
     private float indoor;
+    private float heavyBlend;
+    private float targetHeavyBlend;
+
+    public float Strength
+    {
+        get { return strength; }
+    }
+
+    public float IndoorBlend
+    {
+        get { return indoor; }
+    }
+
+    public float HeavyBlend
+    {
+        get { return heavyBlend; }
+    }
 
     private void Start()
     {
@@ -40,22 +61,23 @@ public class RainController : MonoBehaviour
 
         SetUpShelters();
 
-        targetStrength = scenario != null ? scenario.prepRainStrength : 0f;
+        targetStrength = scenario != null ? scenario.prepRainStrength : strengthWithoutScenario;
         strength = targetStrength;
         indoor = IsSheltered() ? 1f : 0f;
+        PlayRainClip(rainSound, SoundLibrary.Current.rainLight);
+        PlayRainClip(indoorRainSound, SoundLibrary.Current.rainLightIndoor);
         Apply();
 
         GameEvents.PreparationEnded += OnPreparationEnded;
-        UseRainClip(SoundLibrary.Current.rainLight);
     }
 
-    private void UseRainClip(AudioClip clip)
+    private void PlayRainClip(AudioSource source, AudioClip clip)
     {
-        if (rainSound == null || clip == null) return;
+        if (source == null || clip == null) return;
 
-        rainSound.clip = clip;
-        rainSound.loop = true;
-        rainSound.Play();
+        source.clip = clip;
+        source.loop = true;
+        source.Play();
     }
 
     private void OnDestroy()
@@ -89,7 +111,9 @@ public class RainController : MonoBehaviour
     private void OnPreparationEnded()
     {
         if (scenario != null) targetStrength = scenario.evacuationRainStrength;
-        UseRainClip(SoundLibrary.Current.rainHeavy);
+        targetHeavyBlend = 1f;
+        PlayRainClip(heavyRainSound, SoundLibrary.Current.rainHeavy);
+        PlayRainClip(heavyIndoorRainSound, SoundLibrary.Current.rainHeavyIndoor);
     }
 
     private void Update()
@@ -109,6 +133,13 @@ public class RainController : MonoBehaviour
         {
             float blendSeconds = Mathf.Max(0.01f, settings.indoorBlendSeconds);
             indoor = Mathf.MoveTowards(indoor, targetIndoor, Time.deltaTime / blendSeconds);
+            changed = true;
+        }
+
+        if (!Mathf.Approximately(heavyBlend, targetHeavyBlend))
+        {
+            float fadeSeconds = Mathf.Max(0.01f, settings.evacuationSoundFadeSeconds);
+            heavyBlend = Mathf.MoveTowards(heavyBlend, targetHeavyBlend, Time.deltaTime / fadeSeconds);
             changed = true;
         }
 
@@ -156,10 +187,20 @@ public class RainController : MonoBehaviour
         Shader.SetGlobalFloat(WetnessProperty, strength * settings.maxWetness);
         Shader.SetGlobalFloat(IntensityProperty, strength);
 
-        if (rainSound != null && rainSound.clip != null)
-        {
-            rainSound.volume = strength * settings.rainVolume * Mathf.Lerp(1f, settings.indoorRainVolumeMultiplier, indoor);
-            if (!rainSound.isPlaying) rainSound.Play();
-        }
+        float rainLevel = strength * settings.rainVolume;
+        float outdoorLevel = rainLevel * (1f - indoor);
+        float indoorLevel = rainLevel * indoor;
+        SetRainVolume(rainSound, outdoorLevel * (1f - heavyBlend));
+        SetRainVolume(indoorRainSound, indoorLevel * (1f - heavyBlend));
+        SetRainVolume(heavyRainSound, outdoorLevel * heavyBlend);
+        SetRainVolume(heavyIndoorRainSound, indoorLevel * heavyBlend);
+    }
+
+    private void SetRainVolume(AudioSource source, float volume)
+    {
+        if (source == null || source.clip == null) return;
+
+        source.volume = volume;
+        if (!source.isPlaying) source.Play();
     }
 }

@@ -129,7 +129,7 @@ public class MinigameManager : MonoBehaviour
     {
         feedbackText.color = GameSettings.Current.failColor;
         feedbackText.text = message;
-        AudioManager.PlaySfx(SoundLibrary.Current.fail);
+        if (currentMinigame != null) AudioManager.PlaySfx(currentMinigame.MistakeSound);
     }
 
     private void OnInstructionsChanged(string message)
