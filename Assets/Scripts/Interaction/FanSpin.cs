@@ -6,9 +6,7 @@ public class FanSpin : MonoBehaviour
     [SerializeField] private AppliancePlug plug;
 
     [Header("Speed")]
-    [Tooltip("Degrees per second at full speed.")]
     [SerializeField] private float speed = 900f;
-    [Tooltip("How fast the blades speed up and slow down, in degrees per second each second.")]
     [SerializeField] private float spinUp = 500f;
 
     private Vector3 axis = Vector3.up;

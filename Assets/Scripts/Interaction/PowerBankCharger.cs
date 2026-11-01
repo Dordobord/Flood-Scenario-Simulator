@@ -16,15 +16,11 @@ public class PowerBankCharger : MonoBehaviour, IInteractable
     [SerializeField] private Transform port;
     [SerializeField] private Transform outlet;
     [SerializeField] private GameObject cableModel;
-    [Tooltip("Distance from the model's origin to the back and the front of the plug body.")]
     [SerializeField] private float plugBack = 0.015f;
     [SerializeField] private float plugFront = 0.015f;
     [SerializeField] private float cableSag = 0.15f;
-    [Tooltip("How far the cable leaves the outlet and the power bank before it starts to hang.")]
     [SerializeField] private float cableLead = 0.08f;
-    [Tooltip("Keeps the waves of the modelled cable. 0 makes it a clean curve.")]
     [SerializeField] private float cableWiggle = 0.5f;
-    [Tooltip("Size of the plug and the cable thickness compared to the model.")]
     [SerializeField] private float cableScale = 1.25f;
 
     private bool pluggedIn;

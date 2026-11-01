@@ -4,7 +4,6 @@ public class BreakerPanelView : MonoBehaviour
 {
     [Header("Model")]
     [SerializeField] private Transform[] switches;
-    [Tooltip("Points out of the panel, toward the room.")]
     [SerializeField] private Transform front;
 
     private Quaternion[] switchesOn;

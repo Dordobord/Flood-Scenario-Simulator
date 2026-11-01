@@ -49,6 +49,9 @@ public class GameSettings : ScriptableObject
     public string transitionText = "Heading to higher ground...";
     public float transitionFadeSeconds = 1f;
     public float transitionHoldSeconds = 1.5f;
+    public string arrivalText = "You have reached the evacuation center";
+    public float arrivalFadeSeconds = 1.5f;
+    public float arrivalHoldSeconds = 3f;
     [FormerlySerializedAs("floodStartedMessage")]
     public string evacuationStartedMessage = "Evacuate! Get to the evacuation center.";
 
@@ -154,12 +157,15 @@ public class GameSettings : ScriptableObject
 
     [Header("Flood Warning Marker")]
     public string floodWarningMarkerLabelFormat = "WARNING\nFlooded\n{0} m";
-    public Color floodWarningMarkerColor = new Color(0.96f, 0.77f, 0.09f);
+    public Color floodWarningMarkerColor = new Color(0.88f, 0.27f, 0.23f);
 
     [Header("Hazards")]
     [Range(0f, 1f)] public float potholeSpeedMultiplier = 0.4f;
     public float potholeDepth = 0.3f;
     public float potholeDropSpeed = 3f;
+    public Color hazardSignColor = new Color(0.95f, 0.76f, 0.19f);
+    public float hazardSignBobHeight = 0.15f;
+    public float hazardSignBobSpeed = 2f;
     public float hazardAlertDelay = 5f;
     public string hazardAlertMessage = "Barangay alert: your area is flood prone. Check the Hazard Map app on your phone.";
     [TextArea] public string hazardWarningText = "<color=#D63031><b>Flood warning</b></color>\n<b>Your area is prone to flooding soon.</b>\nAvoid potholes and evacuate immediately.";
@@ -205,7 +211,7 @@ public class GameSettings : ScriptableObject
 
     [Header("Pause")]
     public Key pauseKey = Key.Escape;
-    public string pauseTitle = "Paused";
+    public string pauseTitle = "PAUSED";
 
     [Header("Prep Boundary")]
     public string leaveHouseMessage = "Finish preparing first. You will evacuate when the timer ends.";
@@ -215,6 +221,7 @@ public class GameSettings : ScriptableObject
     public float maxRainDropsPerSecond = 4000f;
     public float rainRampSeconds = 4f;
     public float maxWetness = 1f;
+    public bool floodHouseInside = false;
     public Color clearFogColor = new Color(0.62f, 0.66f, 0.72f);
     public Color stormFogColor = new Color(0.3f, 0.33f, 0.38f);
     public float clearFogDensity = 0.002f;
@@ -233,14 +240,15 @@ public class GameSettings : ScriptableObject
     public float thunderMaxSeconds = 40f;
 
     [Header("Main Menu")]
-    public string mainMenuSceneName = "MainMenu";
+    public string mainMenuSceneName = "Main Menu";
+    public string scenarioSelectorSceneName = "LevelSelector";
     public string menuTitle = "The Storm Waits for Nobody";
     public string menuSubtitle = "Choose a flood scenario";
     public string noScenarioSelectedTitle = "No scenario selected";
     public string noScenarioSelectedMessage = "Pick a scenario on the left to see its details.";
     public string preparationTimeFormat = "Preparation time: {0}";
-    public Color scenarioNormalColor = new Color(0.2f, 0.24f, 0.32f);
-    public Color scenarioSelectedColor = new Color(0.2f, 0.45f, 0.75f);
+    public Color scenarioNormalColor = Color.white;
+    public Color scenarioSelectedColor = new Color(0.6f, 0.68f, 0.76f);
 
     [Header("Loading Screen")]
     public string loadingTitleFormat = "{0}";

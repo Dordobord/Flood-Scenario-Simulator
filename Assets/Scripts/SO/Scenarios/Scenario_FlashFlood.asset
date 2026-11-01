@@ -14,13 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ScenarioData
   type: 1
   displayName: Flash Flood
-  description: Your house sits at the foot of a hill beside a creek. A flash flood can arrive with very little warning, so you have the least time to prepare. The evacuation center is the chapel up the hill.
-  sceneName: UrbanScenario
+  description: Flash floods are fast and some roads are already closed. Prepare your household, then find your way to the evacuation center immediately.
+  sceneName: FlashFloodScenario
   evacuationCenterName: Evacuation Center
-  preparationSeconds: 120
+  preparationSeconds: 180
   prepRainStrength: 0.7
   evacuationRainStrength: 1
   rainfallWarning: 2
+  floodWaterMaterial: {fileID: 2100000, guid: 135b85ae1fb8486e8ace05befd00ef1b, type: 2}
   tasks:
   - {fileID: 11400000, guid: 14421b2e1b3e9d640b72a11e02158a7a, type: 2}
   - {fileID: 11400000, guid: bba5967fb3b50ed45b5439718b2771d3, type: 2}
@@ -37,4 +38,3 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 764671656186d3846b58fbf89bea7227, type: 2}
   - {fileID: 11400000, guid: 0e234e705a054024982d53b5747243fe, type: 2}
   - {fileID: 11400000, guid: ad1424c25aa5c4d49b6735d6e5b5b352, type: 2}
-  floodWaterMaterial: {fileID: 2100000, guid: 135b85ae1fb8486e8ace05befd00ef1b, type: 2}

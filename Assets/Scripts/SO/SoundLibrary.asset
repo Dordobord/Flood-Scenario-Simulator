@@ -63,7 +63,7 @@ MonoBehaviour:
   itemDrop: {fileID: 8300000, guid: 639c0a32053208a4bbfd968aa23b280d, type: 3}
   goBagPlace: {fileID: 8300000, guid: 69c35e9a0fb4e3f42bd791ccc139d1e8, type: 3}
   goBagZip: {fileID: 8300000, guid: 59bd0b6aadb41f54689fa74c08120913, type: 3}
-  tvStatic: {fileID: 0}
+  tvStatic: {fileID: 8300000, guid: 486cdfe62f98e6c45ae77f701f65b1a5, type: 3}
   tvClick: {fileID: 8300000, guid: b720c169f17080c4190442717604874f, type: 3}
   radioStatic: {fileID: 8300000, guid: cb4838b64f9f26048b65297712093b64, type: 3}
   sandbagThud: {fileID: 8300000, guid: 725ca0a9103757b448208516168b13e5, type: 3}

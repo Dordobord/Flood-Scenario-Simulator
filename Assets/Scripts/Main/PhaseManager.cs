@@ -210,6 +210,13 @@ public class PhaseManager : MonoBehaviour
 
         EvacuationSeconds = Time.time - evacuationStartTime;
         CurrentPhase = GamePhase.Finished;
+
+        if (TransitionUI.Instance != null)
+        {
+            TransitionUI.Instance.PlayArrival(GameEvents.RaiseEvacuationCompleted);
+            return;
+        }
+
         GameEvents.RaiseEvacuationCompleted();
     }
 }

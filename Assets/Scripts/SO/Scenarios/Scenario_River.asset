@@ -14,13 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ScenarioData
   type: 2
   displayName: Riverine Flood
-  description: Your house is on a riverbank and the river keeps rising. Not every bridge is safe to cross. Prepare your household, then cross the river to the school on high ground.
+  description: Your house is on a riverbank and the river keeps rising. Not every bridge is safe to cross. Prepare your household and find the route to the evacuation center.
   sceneName: RiverScenario
   evacuationCenterName: Evacuation Center
-  preparationSeconds: 180
+  preparationSeconds: 200
   prepRainStrength: 0.5
   evacuationRainStrength: 0.8
-  rainfallWarning: 1
+  rainfallWarning: 2
+  floodWaterMaterial: {fileID: 0}
   tasks:
   - {fileID: 11400000, guid: 14421b2e1b3e9d640b72a11e02158a7a, type: 2}
   - {fileID: 11400000, guid: bba5967fb3b50ed45b5439718b2771d3, type: 2}

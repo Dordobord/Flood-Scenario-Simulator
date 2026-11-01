@@ -14,13 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ScenarioData
   type: 0
   displayName: Urban Flood
-  description: Heavy rain has overwhelmed the drainage in your crowded neighborhood. Streets flood fast and some roads are already closed. Prepare your household, then find your way to the barangay hall on higher ground.
+  description: Heavy rain has overwhelmed the drainage in your crowded neighborhood. Streets flood fast and some roads are already closed. Prepare your household and evacuate.
   sceneName: UrbanScenario
   evacuationCenterName: Evacuation Center
-  preparationSeconds: 180
+  preparationSeconds: 240
   prepRainStrength: 0.5
   evacuationRainStrength: 0.8
   rainfallWarning: 1
+  floodWaterMaterial: {fileID: 2100000, guid: f76d235881463b045a80c76868b2fd7c, type: 2}
   tasks:
   - {fileID: 11400000, guid: 14421b2e1b3e9d640b72a11e02158a7a, type: 2}
   - {fileID: 11400000, guid: bba5967fb3b50ed45b5439718b2771d3, type: 2}
@@ -37,4 +38,3 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 764671656186d3846b58fbf89bea7227, type: 2}
   - {fileID: 11400000, guid: 0e234e705a054024982d53b5747243fe, type: 2}
   - {fileID: 11400000, guid: ad1424c25aa5c4d49b6735d6e5b5b352, type: 2}
-  floodWaterMaterial: {fileID: 2100000, guid: f76d235881463b045a80c76868b2fd7c, type: 2}

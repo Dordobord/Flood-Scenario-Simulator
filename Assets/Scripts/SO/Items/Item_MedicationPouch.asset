@@ -15,7 +15,7 @@ MonoBehaviour:
   id: Item_MedicationPouch
   displayName: Medication Pouch
   description: Regularly taken medication with a prescription copy.
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: c6a33e5e2bab2b140ad42accf1d4243f, type: 3}
   fallbackColor: {r: 0.4, g: 0.7, b: 0.95, a: 1}
   cost: 0
   hhiIndicator: Adequate supply of regularly taken medication (32%)

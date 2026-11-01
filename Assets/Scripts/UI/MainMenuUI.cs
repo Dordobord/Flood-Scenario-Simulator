@@ -20,6 +20,7 @@ public class MainMenuUI : MonoBehaviour
     [Header("Buttons")]
     [SerializeField] private Button startButton;
     [SerializeField] private Button quitButton;
+    [SerializeField] private Button backButton;
 
     private ScenarioButton[] buttons = new ScenarioButton[0];
     private ScenarioData selected;
@@ -41,6 +42,7 @@ public class MainMenuUI : MonoBehaviour
 
         if (startButton != null) startButton.onClick.AddListener(StartScenario);
         if (quitButton != null) quitButton.onClick.AddListener(Quit);
+        if (backButton != null) backButton.onClick.AddListener(BackToMainMenu);
 
         FindButtons();
         ShowDetails(null);
@@ -108,6 +110,11 @@ public class MainMenuUI : MonoBehaviour
 
         if (LoadingScreenUI.Instance != null) LoadingScreenUI.Instance.Load(selected);
         else SceneManager.LoadScene(selected.sceneName);
+    }
+
+    private void BackToMainMenu()
+    {
+        SceneManager.LoadScene(GameSettings.Current.mainMenuSceneName);
     }
 
     private void Quit()

@@ -86,7 +86,7 @@ public class FloodWaterPhase : MonoBehaviour
 
     private void FloodHouse()
     {
-        if (houseWater == null) return;
+        if (houseWater == null || !GameSettings.Current.floodHouseInside) return;
 
         bool sandbagged = sandbagWall != null && sandbagWall.IsFull;
         if (sandbagged) return;

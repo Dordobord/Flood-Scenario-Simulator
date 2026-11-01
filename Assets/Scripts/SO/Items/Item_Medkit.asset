@@ -15,7 +15,7 @@ MonoBehaviour:
   id: Item_Medkit
   displayName: Emergency Kit
   description: A stocked first aid kit with the household's medicine.
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: a861f29aceb9896489b63feb296588e0, type: 3}
   fallbackColor: {r: 0.9, g: 0.3, b: 0.3, a: 1}
   cost: 0
   hhiIndicator: Medkit (33%)

@@ -33,13 +33,19 @@ public class TransitionUI : MonoBehaviour
         StartCoroutine(Sequence(atBlackout, onComplete));
     }
 
+    public void PlayArrival(Action onComplete)
+    {
+        StartCoroutine(ArrivalSequence(onComplete));
+    }
+
     private IEnumerator Sequence(Action atBlackout, Action onComplete)
     {
         GameSettings settings = GameSettings.Current;
         messageText.text = settings.transitionText;
+        messageText.alpha = 1f;
         canvasGroup.blocksRaycasts = true;
 
-        yield return Fade(0f, 1f, settings.transitionFadeSeconds);
+        yield return Fade(0f, 1f, settings.transitionFadeSeconds, SetScreenAlpha);
 
         if (atBlackout != null) atBlackout();
 
@@ -49,13 +55,39 @@ public class TransitionUI : MonoBehaviour
 
         yield return new WaitForSecondsRealtime(holdSeconds);
 
-        yield return Fade(1f, 0f, settings.transitionFadeSeconds);
+        yield return Fade(1f, 0f, settings.transitionFadeSeconds, SetScreenAlpha);
 
         canvasGroup.blocksRaycasts = false;
         if (onComplete != null) onComplete();
     }
 
-    private IEnumerator Fade(float from, float to, float seconds)
+    private IEnumerator ArrivalSequence(Action onComplete)
+    {
+        GameSettings settings = GameSettings.Current;
+        messageText.text = settings.arrivalText;
+        messageText.alpha = 0f;
+        canvasGroup.blocksRaycasts = true;
+
+        yield return Fade(0f, 1f, settings.arrivalFadeSeconds, SetScreenAlpha);
+        yield return Fade(0f, 1f, settings.arrivalFadeSeconds, SetTextAlpha);
+        yield return new WaitForSecondsRealtime(settings.arrivalHoldSeconds);
+        yield return Fade(1f, 0f, settings.arrivalFadeSeconds, SetTextAlpha);
+
+        canvasGroup.blocksRaycasts = false;
+        if (onComplete != null) onComplete();
+    }
+
+    private void SetScreenAlpha(float alpha)
+    {
+        canvasGroup.alpha = alpha;
+    }
+
+    private void SetTextAlpha(float alpha)
+    {
+        messageText.alpha = alpha;
+    }
+
+    private IEnumerator Fade(float from, float to, float seconds, Action<float> apply)
     {
         float elapsed = 0f;
         seconds = Mathf.Max(0.01f, seconds);
@@ -63,9 +95,9 @@ public class TransitionUI : MonoBehaviour
         while (elapsed < seconds)
         {
             elapsed += Time.unscaledDeltaTime;
-            canvasGroup.alpha = Mathf.Lerp(from, to, elapsed / seconds);
+            apply(Mathf.Lerp(from, to, elapsed / seconds));
             yield return null;
         }
-        canvasGroup.alpha = to;
+        apply(to);
     }
 }
