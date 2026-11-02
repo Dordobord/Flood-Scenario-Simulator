@@ -36,6 +36,12 @@ public class TVMinigame : MinigameBase
     private int targetChannel;
     private bool isRevealed;
     private float revealTimer;
+    private bool hasTuned;
+
+    public override bool CanReopen
+    {
+        get { return hasTuned; }
+    }
 
     private void Awake()
     {
@@ -95,8 +101,18 @@ public class TVMinigame : MinigameBase
         if (channel != targetChannel) return;
 
         isRevealed = true;
+        hasTuned = true;
         SetButtons(false);
         AudioManager.StopLoop(SoundLibrary.Current.tvStatic);
+    }
+
+    protected override void ShowFinished()
+    {
+        isRevealed = true;
+        channel = targetChannel;
+        SetButtons(false);
+        ShowWarning();
+        UpdateScreen();
     }
 
     private void UpdateScreen()

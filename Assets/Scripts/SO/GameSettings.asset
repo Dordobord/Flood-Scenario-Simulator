@@ -33,7 +33,7 @@ MonoBehaviour:
   failDelay: 1.1
   holdDrainMultiplier: 1.5
   preparationSeconds: 120
-  prepTimerFormat: 'Prep: {0}'
+  prepTimerFormat: 'PREP PHASE: {0}'
   evacuationTimerText: EVACUATION PHASE
   timerWarningSeconds: 30
   timerNormalColor: {r: 1, g: 1, b: 1, a: 1}

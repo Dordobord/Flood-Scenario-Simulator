@@ -37,3 +37,4 @@ MonoBehaviour:
     choices: []
   mustBePlaced: 0
   needsPower: 1
+  reopenToRead: 1
