@@ -2104,9 +2104,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
   library: {fileID: 11400000, guid: 9c019fd93d81580d134ee4f65c13b650, type: 2}
-  musicGroup: {fileID: 0}
-  sfxGroup: {fileID: 0}
-  ambienceGroup: {fileID: 0}
+  musicGroup: {fileID: -8361601929086405401, guid: 55e886d56d6d1404c91948bf755b9d4f, type: 2}
+  sfxGroup: {fileID: 5551621850026728569, guid: 55e886d56d6d1404c91948bf755b9d4f, type: 2}
+  ambienceGroup: {fileID: -2245488123971581265, guid: 55e886d56d6d1404c91948bf755b9d4f, type: 2}
 --- !u!4 &2023494459
 Transform:
   m_ObjectHideFlags: 0
