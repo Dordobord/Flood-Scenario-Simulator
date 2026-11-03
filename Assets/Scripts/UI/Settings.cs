@@ -16,6 +16,7 @@ public class Settings : MonoBehaviour
     [SerializeField] private Slider AmbienceSlider;
     [SerializeField] private Slider EffectsSlider;
     public AudioMixer audioMixer;
+    public SoundLibrary soundLibrary;
     void Start()
     {
         InitializeResolutionDropdown();
@@ -59,8 +60,14 @@ public class Settings : MonoBehaviour
 
     public void SetVolume()
     {
-        float volume = MasterSlider.value;
-        audioMixer.SetFloat("volume", volume);
+        float masterVolume = MasterSlider.value;
+        float musicVolume = MusicSlider.value;
+        float ambienceVolume = AmbienceSlider.value;
+        float effectsVolume = EffectsSlider.value;
+        audioMixer.SetFloat("MasterVolume", masterVolume);
+        audioMixer.SetFloat("MusicVolume", musicVolume);
+        audioMixer.SetFloat("AmbienceVolume", ambienceVolume);
+        audioMixer.SetFloat("EffectsVolume", effectsVolume);
     }
 
     private void SetVolumeSliderValue()
