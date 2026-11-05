@@ -51,3 +51,10 @@ public enum ScenarioType
     River,
     Coastal
 }
+
+public enum TaskRowState
+{
+    MustDo,
+    Finished,
+    Missed
+}

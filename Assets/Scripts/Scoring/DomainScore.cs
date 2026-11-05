@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class DomainScore
 {
     public PreparednessDomain domain;
@@ -17,6 +19,20 @@ public class DomainScore
         {
             if (totalWeight <= 0f) return 0f;
             return earnedWeight / totalWeight * maxPoints;
+        }
+    }
+
+    public bool IsPerfect
+    {
+        get { return Mathf.Approximately(Points, maxPoints); }
+    }
+
+    public bool HasStar
+    {
+        get
+        {
+            float needed = maxPoints * GameSettings.Current.domainStarPercent;
+            return Points >= needed || Mathf.Approximately(Points, needed);
         }
     }
 }

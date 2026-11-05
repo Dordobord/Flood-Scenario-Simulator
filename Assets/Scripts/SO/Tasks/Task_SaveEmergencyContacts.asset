@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StormWaits.TaskData
   id: Task_SaveEmergencyContacts
   title: Save Emergency Contacts
+  shortTitle: Contacts
   description: Save the numbers you will need during the flood.
   domain: 0
   priority: 0

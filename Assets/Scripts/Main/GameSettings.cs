@@ -188,10 +188,19 @@ public class GameSettings : ScriptableObject
     [Header("Results")]
     public string totalPointsFormat = "{0:0.#} / {1:0}";
     public string domainPointsFormat = "{0:0.#} / {1:0}";
-    public string praiseFormat = "Great job on {0}!";
-    public string domainSeparator = ", ";
-    public string lastDomainSeparator = " and ";
-    public string allDoneMessage = "Congratulations! You evacuated with no issues.";
+    public string resultsPrompt = "Click a category to view more of your results";
+    public string resultsPerfectLine = "You were fully prepared.";
+    public string resultsPartialLine = "You made it, but you can be more prepared.";
+    public string starMeaningFormat = "Each star is one part of being prepared for a flood. You earned {0} of {1}.";
+    public string mustDoFormat = "Must-do tasks: {0}";
+    public string taskSeparator = ", ";
+    public Color mustDoRowColor = new Color(0.98f, 0.78f, 0.46f);
+    public Color mustDoTextColor = new Color(0.25f, 0.14f, 0.01f);
+    public Color finishedTextColor = Color.white;
+    public Color missedTextColor = new Color(0.22f, 0.54f, 0.87f);
+    [Range(0f, 1f)] public float domainStarPercent = 0.7f;
+    public Color starOnColor = new Color(1f, 0.8f, 0.2f);
+    public Color starOffColor = new Color(0.3f, 0.3f, 0.3f);
     public List<DomainDisplayName> domainDisplayNames = new List<DomainDisplayName>
     {
         new DomainDisplayName(PreparednessDomain.Planning, "Planning", "Knowing your area and your contacts helps your family act fast."),
@@ -277,13 +286,25 @@ public class GameSettings : ScriptableObject
         return domain.ToString();
     }
 
-    public string GetDomainHint(PreparednessDomain domain)
+    public DomainDisplayName GetDomainDisplay(PreparednessDomain domain)
     {
         foreach (DomainDisplayName entry in domainDisplayNames)
         {
-            if (entry.domain == domain) return entry.hint;
+            if (entry.domain == domain) return entry;
         }
-        return "";
+        return null;
+    }
+
+    public Color GetStarColor(bool earned)
+    {
+        return earned ? starOnColor : starOffColor;
+    }
+
+    public Color GetTaskRowTextColor(TaskRowState state)
+    {
+        if (state == TaskRowState.MustDo) return mustDoTextColor;
+        if (state == TaskRowState.Finished) return finishedTextColor;
+        return missedTextColor;
     }
 
     public RainfallWarningInfo GetRainfallWarning(RainfallWarningLevel level)

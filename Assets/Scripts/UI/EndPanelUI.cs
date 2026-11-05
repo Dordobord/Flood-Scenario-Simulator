@@ -1,7 +1,7 @@
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class EndPanelUI : MonoBehaviour
@@ -13,7 +13,17 @@ public class EndPanelUI : MonoBehaviour
     [Header("Results")]
     [SerializeField] private TMP_Text totalText;
     [SerializeField] private DomainBarUI[] domainBars;
-    [SerializeField] private TMP_Text recommendationsText;
+    [FormerlySerializedAs("recommendationsText")]
+    [SerializeField] private TMP_Text promptText;
+    [SerializeField] private Image[] totalStars;
+    [SerializeField] private TMP_Text closingText;
+    [SerializeField] private DomainResultPopup domainPopup;
+
+    [Header("Slides")]
+    [SerializeField] private ResultSlider slider;
+    [SerializeField] private TaskCardUI[] taskCards;
+
+    private PreparednessScore score;
 
     private void Awake()
     {
@@ -34,6 +44,7 @@ public class EndPanelUI : MonoBehaviour
     {
         panel.SetActive(true);
         ShowResults();
+        slider.ShowFirst();
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -42,19 +53,21 @@ public class EndPanelUI : MonoBehaviour
     private void ShowResults()
     {
         TaskManager taskManager = TaskManager.Instance;
-        PreparednessScore score = ScoreCalculator.Calculate(taskManager.ActiveTasks, taskManager, PhaseManager.Instance.EvacuationSeconds);
+        score = ScoreCalculator.Calculate(taskManager.ActiveTasks, taskManager, PhaseManager.Instance.EvacuationSeconds);
         GameSettings settings = GameSettings.Current;
 
         totalText.text = string.Format(settings.totalPointsFormat, score.totalPoints, score.maxPoints);
-        ShowDomainBars(score);
-        recommendationsText.text = BuildRecommendations(score, settings);
+        ShowDomainBars();
+        ShowTotalStars(settings);
+        ShowTaskCards(taskManager);
+        promptText.text = settings.resultsPrompt;
     }
 
-    private void ShowDomainBars(PreparednessScore score)
+    private void ShowDomainBars()
     {
         foreach (DomainBarUI bar in domainBars)
         {
-            DomainScore domainScore = FindDomainScore(score, bar.Domain);
+            DomainScore domainScore = FindDomainScore(bar.Domain);
 
             if (domainScore == null)
             {
@@ -62,48 +75,54 @@ public class EndPanelUI : MonoBehaviour
                 continue;
             }
 
-            bar.ShowScore(domainScore);
+            bar.ShowScore(domainScore, ShowDomainPopup);
         }
     }
 
-    private DomainScore FindDomainScore(PreparednessScore score, PreparednessDomain domain)
+    private void ShowTotalStars(GameSettings settings)
+    {
+        int earned = 0;
+        foreach (DomainScore domainScore in score.domainScores)
+        {
+            if (domainScore.HasStar) earned++;
+        }
+
+        for (int i = 0; i < totalStars.Length; i++)
+        {
+            totalStars[i].gameObject.SetActive(i < score.domainScores.Count);
+            totalStars[i].color = settings.GetStarColor(i < earned);
+        }
+
+        string line = earned == score.domainScores.Count ? settings.resultsPerfectLine : settings.resultsPartialLine;
+        closingText.text = line + "\n" + string.Format(settings.starMeaningFormat, earned, score.domainScores.Count);
+    }
+
+    private void ShowTaskCards(TaskManager taskManager)
+    {
+        foreach (TaskCardUI card in taskCards)
+        {
+            if (FindDomainScore(card.Domain) == null)
+            {
+                card.gameObject.SetActive(false);
+                continue;
+            }
+
+            card.Show(taskManager.ActiveTasks);
+        }
+    }
+
+    private void ShowDomainPopup(DomainScore domainScore)
+    {
+        domainPopup.Show(domainScore);
+    }
+
+    private DomainScore FindDomainScore(PreparednessDomain domain)
     {
         foreach (DomainScore domainScore in score.domainScores)
         {
             if (domainScore.domain == domain) return domainScore;
         }
         return null;
-    }
-
-    private string BuildRecommendations(PreparednessScore score, GameSettings settings)
-    {
-        if (score.weakestDomains.Count == 0) return settings.allDoneMessage;
-
-        string text = "";
-
-        if (score.strongestDomains.Count > 0)
-        {
-            text += string.Format(settings.praiseFormat, JoinDomainNames(score.strongestDomains, settings)) + "\n\n";
-        }
-
-        foreach (PreparednessDomain domain in score.weakestDomains)
-        {
-            text += settings.GetDomainHint(domain) + "\n\n";
-        }
-        return text.TrimEnd();
-    }
-
-    private string JoinDomainNames(List<PreparednessDomain> domains, GameSettings settings)
-    {
-        string names = "";
-        for (int i = 0; i < domains.Count; i++)
-        {
-            if (i > 0 && i == domains.Count - 1) names += settings.lastDomainSeparator;
-            else if (i > 0) names += settings.domainSeparator;
-
-            names += settings.GetDomainName(domains[i]);
-        }
-        return names;
     }
 
     private void Retry()

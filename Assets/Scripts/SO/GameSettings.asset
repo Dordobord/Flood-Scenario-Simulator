@@ -139,23 +139,55 @@ MonoBehaviour:
   domainMaxPoints: 10
   totalPointsFormat: '{0:0.#} / {1:0}'
   domainPointsFormat: '{0:0.#} / {1:0}'
-  praiseFormat: Great job on {0}!
-  domainSeparator: ', '
-  lastDomainSeparator: ' and '
-  allDoneMessage: Congratulations! You evacuated with no issues.
+  resultsPrompt: Click a category to view more of your results
+  domainStarPercent: 0.7
+  starOnColor: {r: 1, g: 0.8, b: 0.2, a: 1}
+  starOffColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
   domainDisplayNames:
   - domain: 0
     displayName: Planning
-    hint: Knowing your area and your contacts helps your family act fast.
+    shortName: Planning
+    icon: {fileID: 21300000, guid: be604a7c3ef0a6546bffb4ab47f9d423, type: 3}
+    hint: Planning means deciding what to do before a flood happens. With a plan, you will not have to guess when the water rises.
+    greatMessage: You did great on Planning.
+    goodMessage: You did well on Planning.
+    weakMessage: You still have room to grow in Planning.
+    mustDoTasks:
+    - {fileID: 11400000, guid: ad1424c25aa5c4d49b6735d6e5b5b352, type: 2}
+    - {fileID: 11400000, guid: be5d49db71a17b445ba2b99ac69f5e46, type: 2}
   - domain: 1
     displayName: Training
-    hint: Some things at home become dangerous once floodwater gets in. Making them safe protects everyone.
+    shortName: Training
+    icon: {fileID: 21300000, guid: ad24c60a763c3a84fa80b95e84f3cc64, type: 3}
+    hint: Training means knowing the right steps to stay safe. Doing them correctly helps prevent shocks and fires.
+    greatMessage: You did great on Training.
+    goodMessage: You did well on Training.
+    weakMessage: You still have room to grow in Training.
+    mustDoTasks:
+    - {fileID: 11400000, guid: 7ab07306cc304f17b9aa6934a40c5907, type: 2}
+    - {fileID: 11400000, guid: ec8e91a1de81e5d43b521b6274b5528d, type: 2}
   - domain: 2
     displayName: Material Preparedness
-    hint: Having your essentials ready means you can leave the moment you need to.
+    shortName: Material
+    icon: {fileID: 21300000, guid: 1ce28610cd7a89a48be59dd93e53d5a7, type: 3}
+    hint: Material preparedness means having your supplies ready before a flood. When they are packed, you can leave right away.
+    greatMessage: You did great on Material Preparedness.
+    goodMessage: You did well on Material Preparedness.
+    weakMessage: You still have room to grow in Material Preparedness.
+    mustDoTasks:
+    - {fileID: 11400000, guid: 9ea2e202740d0bd4091af7065a13a130, type: 2}
+    - {fileID: 11400000, guid: 0e234e705a054024982d53b5747243fe, type: 2}
   - domain: 3
     displayName: Information
-    hint: Warnings often come before the water. Paying attention gives you time to prepare.
+    shortName: Information
+    icon: {fileID: 21300000, guid: 4459c5fe1fc1c30469ee2f2933e59a3b, type: 3}
+    hint: Information means knowing what is happening and what to do next. Official warnings tell you when it is time to evacuate.
+    greatMessage: You did great on Information.
+    goodMessage: You did well on Information.
+    weakMessage: You still have room to grow in Information.
+    mustDoTasks:
+    - {fileID: 11400000, guid: 1f263728515eb2d4aa27263798ae5701, type: 2}
+    - {fileID: 11400000, guid: 14421b2e1b3e9d640b72a11e02158a7a, type: 2}
   rainfallWarningTitleFormat: 'PAGASA: {0} RAINFALL WARNING'
   rainfallWarnings:
   - level: 0
