@@ -22,8 +22,11 @@ public class PhoneContactRow : MonoBehaviour
     [FormerlySerializedAs("star")]
     [SerializeField] private Image marker;
 
-    private Color backgroundColor;
-    private Color markerColor;
+    [Header("Colors")]
+    [SerializeField] private Color rowColor = new Color(0.945f, 0.937f, 0.91f);
+    [SerializeField] private Color savedRowColor = Color.white;
+    [SerializeField] private Color markerColor = new Color(0.706f, 0.698f, 0.663f);
+    [SerializeField] private Color savedMarkerColor = new Color(0.729f, 0.459f, 0.09f);
 
     public bool IsNeeded
     {
@@ -34,9 +37,9 @@ public class PhoneContactRow : MonoBehaviour
 
     private void Awake()
     {
-        backgroundColor = background.color;
-        markerColor = marker.color;
         button.onClick.AddListener(Toggle);
+        marker.sprite = GameSettings.Current.contactStarSprite;
+        marker.preserveAspect = true;
     }
 
     private void OnValidate()
@@ -54,11 +57,14 @@ public class PhoneContactRow : MonoBehaviour
 
     public void SetSaved(bool saved)
     {
-        GameSettings settings = GameSettings.Current;
-
         IsSaved = saved;
-        background.color = saved ? settings.contactSavedRowColor : backgroundColor;
-        marker.color = saved ? settings.contactMarkerSavedColor : markerColor;
+        background.color = saved ? savedRowColor : rowColor;
+        marker.color = saved ? savedMarkerColor : markerColor;
+    }
+
+    public void SetLocked(bool locked)
+    {
+        button.enabled = !locked;
     }
 
     private void Toggle()

@@ -23,6 +23,10 @@ public class EndPanelUI : MonoBehaviour
     [SerializeField] private ResultSlider slider;
     [SerializeField] private TaskCardUI[] taskCards;
 
+    [Header("Star Colors")]
+    [SerializeField] private Color starOnColor = new Color(1f, 0.8f, 0.2f);
+    [SerializeField] private Color starOffColor = new Color(0.122f, 0.141f, 0.169f);
+
     private PreparednessScore score;
 
     private void Awake()
@@ -90,7 +94,7 @@ public class EndPanelUI : MonoBehaviour
         for (int i = 0; i < totalStars.Length; i++)
         {
             totalStars[i].gameObject.SetActive(i < score.domainScores.Count);
-            totalStars[i].color = settings.GetStarColor(i < earned);
+            totalStars[i].color = i < earned ? starOnColor : starOffColor;
         }
 
         string line = earned == score.domainScores.Count ? settings.resultsPerfectLine : settings.resultsPartialLine;

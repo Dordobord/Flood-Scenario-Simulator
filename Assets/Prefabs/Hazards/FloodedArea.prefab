@@ -513,3 +513,4 @@ MonoBehaviour:
   iconImage: {fileID: 892723338049442008}
   label: {fileID: 5916497446257569881}
   edgePadding: 20
+  markerColor: {r: 0.88, g: 0.27, b: 0.23, a: 1}

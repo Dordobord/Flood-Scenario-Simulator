@@ -21,6 +21,10 @@ public class ResultSlider : MonoBehaviour
     [SerializeField] private float arrowMoveDistance = 4f;
     [SerializeField] private float arrowMoveSeconds = 0.5f;
 
+    [Header("Dot Colors")]
+    [SerializeField] private Color dotOnColor = new Color(1f, 0.8f, 0.2f);
+    [SerializeField] private Color dotOffColor = new Color(0.612f, 0.682f, 0.741f);
+
     private int current;
     private RectTransform previousRect;
     private RectTransform nextRect;
@@ -80,7 +84,7 @@ public class ResultSlider : MonoBehaviour
 
         for (int i = 0; i < dots.Length; i++)
         {
-            dots[i].color = GameSettings.Current.GetStarColor(i == current);
+            dots[i].color = i == current ? dotOnColor : dotOffColor;
         }
 
         slides[current].transform.SetAsLastSibling();

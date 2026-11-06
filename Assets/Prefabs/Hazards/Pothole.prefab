@@ -72,6 +72,7 @@ MonoBehaviour:
   sign: {fileID: 4014977420178490880}
   signSprite: {fileID: 6807731708068334592}
   showDistance: 30
+  signColor: {r: 0.95, g: 0.76, b: 0.19, a: 1}
 --- !u!1 &6717955381045102863
 GameObject:
   m_ObjectHideFlags: 0

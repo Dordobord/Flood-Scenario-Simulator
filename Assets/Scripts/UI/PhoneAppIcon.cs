@@ -11,6 +11,9 @@ public class PhoneAppIcon : MonoBehaviour
     [Header("App")]
     [SerializeField] private PhonePage page;
 
+    [Header("Done Colors")]
+    [SerializeField] private Color doneIconColor = new Color(0.45f, 0.48f, 0.52f);
+
     private PhoneHomeScreen homeScreen;
     private Color iconColor;
     private string appName;
@@ -34,7 +37,7 @@ public class PhoneAppIcon : MonoBehaviour
         GameSettings settings = GameSettings.Current;
         bool done = task != null && tasks != null && tasks.IsCompleted(task);
 
-        iconImage.color = done ? settings.phoneDoneIconColor : iconColor;
+        iconImage.color = done ? doneIconColor : iconColor;
         label.text = done ? appName + "\n" + settings.phoneDoneText : appName;
         button.interactable = !done;
     }

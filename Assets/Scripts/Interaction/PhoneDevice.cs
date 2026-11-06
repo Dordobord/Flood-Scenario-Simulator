@@ -5,6 +5,8 @@ public class PhoneDevice : MonoBehaviour
     [Header("Phone")]
     [SerializeField] private ItemData phoneItem;
 
+    private float nextEvacuationMessageTime;
+
     private void Start()
     {
         if (InventoryManager.Instance != null) InventoryManager.Instance.SelectionChanged += OnSelectionChanged;
@@ -32,6 +34,17 @@ public class PhoneDevice : MonoBehaviour
         }
 
         if (CanOpen()) MinigameManager.Instance.BeginPhone(this);
+        else ShowEvacuationMessage();
+    }
+
+    private void ShowEvacuationMessage()
+    {
+        if (PhaseManager.Instance == null || PhaseManager.Instance.CurrentPhase == GamePhase.Preparation) return;
+        if (Time.time < nextEvacuationMessageTime) return;
+
+        GameSettings settings = GameSettings.Current;
+        nextEvacuationMessageTime = Time.time + settings.phoneEvacuationMessageCooldown;
+        GameEvents.RaiseMessage(settings.phoneEvacuationMessage);
     }
 
     private bool CanOpen()

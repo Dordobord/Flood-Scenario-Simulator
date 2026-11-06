@@ -133,8 +133,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StormWaits.TransitionUI
   canvasGroup: {fileID: 2625312885861619382}
   messageText: {fileID: 5846788064355966109}
-  audioSource: {fileID: 5047165367627419331}
-  blackoutClip: {fileID: 0}
 --- !u!82 &5047165367627419331
 AudioSource:
   m_ObjectHideFlags: 0

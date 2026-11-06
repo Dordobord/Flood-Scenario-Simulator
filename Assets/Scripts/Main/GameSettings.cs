@@ -40,10 +40,7 @@ public class GameSettings : ScriptableObject
     [FormerlySerializedAs("floodTimerText")]
     public string evacuationTimerText = "EVACUATE";
     public float timerWarningSeconds = 30f;
-    public Color timerNormalColor = Color.white;
-    public Color timerWarningColor = new Color(1f, 0.3f, 0.3f);
     [FormerlySerializedAs("floodTimerColor")]
-    public Color evacuationTimerColor = new Color(1f, 0.3f, 0.3f);
 
     [Header("Phase Transition")]
     public string transitionText = "Heading to higher ground...";
@@ -89,24 +86,19 @@ public class GameSettings : ScriptableObject
     [Header("Hotbar")]
     public Key[] hotbarKeys = { Key.Digit1, Key.Digit2, Key.Digit3, Key.Digit4, Key.Digit5 };
     public bool hotbarScrollWheel = true;
-    public Color hotbarNormalColor = new Color(0f, 0f, 0f, 0.55f);
-    public Color hotbarSelectedColor = new Color(0.25f, 0.28f, 0.32f, 0.85f);
-    public Color hotbarOutlineColor = new Color(1f, 1f, 1f, 1f);
     public float hotbarSelectedScale = 1.1f;
 
     [Header("Phone")]
     public string phoneTitle = "Phone";
-    public string phoneTimeFormat = "HH:mm";
     public string phoneDoneText = "Done";
-    public Color phoneDoneIconColor = new Color(0.45f, 0.48f, 0.52f);
 
     [Header("Phone Contacts")]
-    public Color contactSavedRowColor = new Color(0.12f, 0.165f, 0.21f);
-    public Color contactMarkerSavedColor = new Color(0.216f, 0.541f, 0.867f);
-
-    [Header("Phone Notes")]
-    public Color noteDoneTextColor = new Color(0.45f, 0.48f, 0.52f);
-    public Color noteBoxDoneColor = new Color(0.114f, 0.62f, 0.459f);
+    public Sprite contactStarSprite;
+    public string contactConfirmText = "Confirm";
+    public float contactSortSeconds = 1.5f;
+    public string contactHelpTitle = "Important Contacts";
+    [TextArea] public string contactHelpMessage = "Star the people you will need during a flood, then press Confirm.";
+    public string contactHelpButtonText = "Got it";
 
     [Header("Flashlight")]
     public Key flashlightKey = Key.F;
@@ -148,7 +140,6 @@ public class GameSettings : ScriptableObject
 
     [Header("Evacuation Marker")]
     public string evacuationMarkerLabelFormat = "{0}\n{1} m";
-    public Color evacuationMarkerColor = new Color(0.25f, 0.85f, 0.4f);
 
     [Header("Evacuation Center Sound")]
     [Range(0f, 1f)] public float evacCenterVolume = 1f;
@@ -157,13 +148,12 @@ public class GameSettings : ScriptableObject
 
     [Header("Flood Warning Marker")]
     public string floodWarningMarkerLabelFormat = "WARNING\nFlooded\n{0} m";
-    public Color floodWarningMarkerColor = new Color(0.88f, 0.27f, 0.23f);
 
     [Header("Hazards")]
     [Range(0f, 1f)] public float potholeSpeedMultiplier = 0.4f;
     public float potholeDepth = 0.3f;
     public float potholeDropSpeed = 3f;
-    public Color hazardSignColor = new Color(0.95f, 0.76f, 0.19f);
+    public string potholeMessage = "You stepped in a pothole. You are slowed down.";
     public float hazardSignBobHeight = 0.15f;
     public float hazardSignBobSpeed = 2f;
     public float hazardAlertDelay = 5f;
@@ -177,6 +167,15 @@ public class GameSettings : ScriptableObject
     [FormerlySerializedAs("collectedMessage")]
     public string collectedMessageFormat = "Added {0} to your inventory.";
     [TextArea] public string taskCompleteMessage = "Task complete:\n";
+
+    [Header("Phone Alert")]
+    public ItemData phoneAlertItem;
+    public string phoneAlertToast = "Emergency alert! Check your phone.";
+    public string phoneAlertTitle = "Emergency Alert";
+    public string phoneAlertTime = "now";
+    public float phoneAlertBlinkSeconds = 0.4f;
+    public string phoneEvacuationMessage = "Save your battery and keep your phone dry. Focus on reaching the evacuation center.";
+    public float phoneEvacuationMessageCooldown = 8f;
 
     [Header("Scoring")]
     public float criticalWeight = 2f;
@@ -194,13 +193,7 @@ public class GameSettings : ScriptableObject
     public string starMeaningFormat = "Each star is one part of being prepared for a flood. You earned {0} of {1}.";
     public string mustDoFormat = "Must-do tasks: {0}";
     public string taskSeparator = ", ";
-    public Color mustDoRowColor = new Color(0.98f, 0.78f, 0.46f);
-    public Color mustDoTextColor = new Color(0.25f, 0.14f, 0.01f);
-    public Color finishedTextColor = Color.white;
-    public Color missedTextColor = new Color(0.22f, 0.54f, 0.87f);
     [Range(0f, 1f)] public float domainStarPercent = 0.7f;
-    public Color starOnColor = new Color(1f, 0.8f, 0.2f);
-    public Color starOffColor = new Color(0.3f, 0.3f, 0.3f);
     public List<DomainDisplayName> domainDisplayNames = new List<DomainDisplayName>
     {
         new DomainDisplayName(PreparednessDomain.Planning, "Planning", "Knowing your area and your contacts helps your family act fast."),
@@ -256,8 +249,6 @@ public class GameSettings : ScriptableObject
     public string noScenarioSelectedTitle = "No scenario selected";
     public string noScenarioSelectedMessage = "Pick a scenario on the left to see its details.";
     public string preparationTimeFormat = "Preparation time: {0}";
-    public Color scenarioNormalColor = Color.white;
-    public Color scenarioSelectedColor = new Color(0.6f, 0.68f, 0.76f);
 
     [Header("Loading Screen")]
     public string loadingTitleFormat = "{0}";
@@ -293,18 +284,6 @@ public class GameSettings : ScriptableObject
             if (entry.domain == domain) return entry;
         }
         return null;
-    }
-
-    public Color GetStarColor(bool earned)
-    {
-        return earned ? starOnColor : starOffColor;
-    }
-
-    public Color GetTaskRowTextColor(TaskRowState state)
-    {
-        if (state == TaskRowState.MustDo) return mustDoTextColor;
-        if (state == TaskRowState.Finished) return finishedTextColor;
-        return missedTextColor;
     }
 
     public RainfallWarningInfo GetRainfallWarning(RainfallWarningLevel level)

@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Task_SaveEmergencyContacts
   m_EditorClassIdentifier: Assembly-CSharp::StormWaits.TaskData
   id: Task_SaveEmergencyContacts
-  title: Save Emergency Contacts
+  title: Mark Important Contacts
   shortTitle: Contacts
-  description: Save the numbers you will need during the flood.
+  description: Star the contacts you will need during the flood.
   domain: 0
   priority: 0
   scoreMethod: 3
@@ -24,7 +24,7 @@ MonoBehaviour:
   rewardItem: {fileID: 0}
   minigame:
     type: 9
-    prompt: Tap the contacts you need, then save them.
+    prompt: Tap the star on the contacts you need, then press Confirm.
     holdSeconds: 3
     cursorSpeed: 1
     targetWidth: 0.2

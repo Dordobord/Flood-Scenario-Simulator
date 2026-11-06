@@ -12,6 +12,11 @@ public class InventorySlot : MonoBehaviour
     [SerializeField] private Outline outline;
     [SerializeField] private TMP_Text numberText;
 
+    [Header("Colors")]
+    [SerializeField] private Color normalColor = new Color(0f, 0f, 0f, 0.55f);
+    [SerializeField] private Color selectedColor = new Color(0.25f, 0.28f, 0.32f, 0.85f);
+    [SerializeField] private Color outlineColor = Color.white;
+
     public void SetItem(ItemData item)
     {
         if (item == null)
@@ -42,15 +47,20 @@ public class InventorySlot : MonoBehaviour
         if (numberText != null) numberText.text = number.ToString();
     }
 
+    public void SetBlinkColor(Color color)
+    {
+        if (background != null) background.color = color;
+    }
+
     public void SetSelected(bool selected)
     {
         GameSettings settings = GameSettings.Current;
 
-        if (background != null) background.color = selected ? settings.hotbarSelectedColor : settings.hotbarNormalColor;
+        if (background != null) background.color = selected ? selectedColor : normalColor;
         if (outline != null)
         {
             outline.enabled = selected;
-            outline.effectColor = settings.hotbarOutlineColor;
+            outline.effectColor = outlineColor;
         }
         transform.localScale = Vector3.one * (selected ? settings.hotbarSelectedScale : 1f);
     }

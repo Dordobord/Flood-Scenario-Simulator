@@ -5,6 +5,11 @@ public class TimerUI : MonoBehaviour
 {
     [SerializeField] private TMP_Text timerText;
 
+    [Header("Colors")]
+    [SerializeField] private Color normalColor = Color.white;
+    [SerializeField] private Color warningColor = new Color(1f, 0.3f, 0.3f);
+    [SerializeField] private Color evacuationColor = new Color(1f, 0.3f, 0.3f);
+
     private int lastBeepSecond = -1;
 
     private void Update()
@@ -20,7 +25,7 @@ public class TimerUI : MonoBehaviour
         if (PhaseManager.Instance.CurrentPhase != GamePhase.Preparation)
         {
             timerText.text = settings.evacuationTimerText;
-            timerText.color = settings.evacuationTimerColor;
+            timerText.color = evacuationColor;
             return;
         }
 
@@ -30,7 +35,7 @@ public class TimerUI : MonoBehaviour
         string clock = minutes.ToString("00") + ":" + seconds.ToString("00");
 
         timerText.text = string.Format(settings.prepTimerFormat, clock);
-        timerText.color = remaining <= settings.timerWarningSeconds ? settings.timerWarningColor : settings.timerNormalColor;
+        timerText.color = remaining <= settings.timerWarningSeconds ? warningColor : normalColor;
 
         BeepEachSecond(remaining, settings);
     }

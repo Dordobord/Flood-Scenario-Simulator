@@ -36,9 +36,6 @@ MonoBehaviour:
   prepTimerFormat: 'PREP PHASE: {0}'
   evacuationTimerText: EVACUATION PHASE
   timerWarningSeconds: 30
-  timerNormalColor: {r: 1, g: 1, b: 1, a: 1}
-  timerWarningColor: {r: 1, g: 0.3, b: 0.3, a: 1}
-  evacuationTimerColor: {r: 1, g: 0.3, b: 0.3, a: 1}
   transitionText: Heading to higher ground...
   transitionFadeSeconds: 1
   transitionHoldSeconds: 1.5
@@ -67,18 +64,15 @@ MonoBehaviour:
   leaveConfirmSeconds: 3
   hotbarKeys: 290000002a0000002b0000002c0000002d000000i
   hotbarScrollWheel: 1
-  hotbarNormalColor: {r: 0, g: 0, b: 0, a: 0.55}
-  hotbarSelectedColor: {r: 0.25, g: 0.28, b: 0.32, a: 0.85}
-  hotbarOutlineColor: {r: 1, g: 1, b: 1, a: 1}
   hotbarSelectedScale: 1.1
   phoneTitle: Phone
-  phoneTimeFormat: HH:mm
   phoneDoneText: Done
-  phoneDoneIconColor: {r: 0.45, g: 0.48, b: 0.52, a: 1}
-  contactSavedRowColor: {r: 0.12, g: 0.165, b: 0.21, a: 1}
-  contactMarkerSavedColor: {r: 0.216, g: 0.541, b: 0.867, a: 1}
-  noteDoneTextColor: {r: 0.45, g: 0.48, b: 0.52, a: 1}
-  noteBoxDoneColor: {r: 0.114, g: 0.62, b: 0.459, a: 1}
+  contactStarSprite: {fileID: 4815476061570213978, guid: d74666859baf6f64482c05ca055009f9, type: 3}
+  contactConfirmText: Confirm
+  contactSortSeconds: 1.5
+  contactHelpTitle: Important Contacts
+  contactHelpMessage: Pin the important contacts you will need during a flood, then press Confirm.
+  contactHelpButtonText: Got it
   flashlightKey: 20
   flashlightReadyMessageFormat: Flashlight ready. Press [{0}] to turn it on or off.
   flashlightHintDelay: 3.5
@@ -106,7 +100,6 @@ MonoBehaviour:
   evacuationMarkerLabelFormat: '{0}
 
     {1} m'
-  evacuationMarkerColor: {r: 0.25, g: 0.85, b: 0.4, a: 1}
   evacCenterVolume: 1
   evacCenterSoundMinDistance: 5
   evacCenterSoundMaxDistance: 60
@@ -115,15 +108,14 @@ MonoBehaviour:
     Flooded
 
     {0} m'
-  floodWarningMarkerColor: {r: 0.88, g: 0.27, b: 0.23, a: 1}
   potholeSpeedMultiplier: 0.4
   potholeDepth: 0.3
   potholeDropSpeed: 3
-  hazardSignColor: {r: 0.95, g: 0.76, b: 0.19, a: 1}
+  potholeMessage: You stepped in a pothole. You are slowed down.
   hazardSignBobHeight: 0.15
   hazardSignBobSpeed: 2
   hazardAlertDelay: 4
-  hazardAlertMessage: 'Barangay alert: your area is flood prone. Prepare your household and evacuate.'
+  hazardAlertMessage: 'NDRRMC: Ang inyong lugar ay madaling bahain. Tingnan ang Hazard Map app sa inyong phone.'
   hazardWarningText: "<b>Legend</b>\n<color=#178C4F>\u25A0</color> Evacuation center\n<color=#D7E920>\u25A0</color> Your location\n<color=#FF0D00>\u25A0</color> Flooded area\n<color=#FF7F00>\u25CF</color> Pothole"
   floodedRouteMessage: This area is flooded. Find another route.
   floodedRouteMessageCooldown: 8
@@ -132,6 +124,13 @@ MonoBehaviour:
   taskCompleteMessage: 'Task complete:
 
 '
+  phoneAlertItem: {fileID: 11400000, guid: 0194c55d9756ff8478131e52706261ee, type: 2}
+  phoneAlertToast: Emergency alert! Check your phone.
+  phoneAlertTitle: Emergency Alert
+  phoneAlertTime: now
+  phoneAlertBlinkSeconds: 0.4
+  phoneEvacuationMessage: Save your battery and keep your phone dry. Focus on reaching the evacuation center.
+  phoneEvacuationMessageCooldown: 8
   criticalWeight: 2
   importantWeight: 1
   mistakePenalty: 0.2
@@ -140,9 +139,12 @@ MonoBehaviour:
   totalPointsFormat: '{0:0.#} / {1:0}'
   domainPointsFormat: '{0:0.#} / {1:0}'
   resultsPrompt: Click a category to view more of your results
+  resultsPerfectLine: You were fully prepared.
+  resultsPartialLine: You made it, but you can be more prepared.
+  starMeaningFormat: Each star is one part of being prepared for a flood. You earned {0} of {1}.
+  mustDoFormat: 'Must-do tasks: {0}'
+  taskSeparator: ', '
   domainStarPercent: 0.7
-  starOnColor: {r: 1, g: 0.8, b: 0.2, a: 1}
-  starOffColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
   domainDisplayNames:
   - domain: 0
     displayName: Planning
@@ -233,12 +235,10 @@ MonoBehaviour:
   noScenarioSelectedTitle: No scenario selected
   noScenarioSelectedMessage: Pick a scenario on the left to see its details.
   preparationTimeFormat: 'Preparation time: {0}'
-  scenarioNormalColor: {r: 1, g: 1, b: 1, a: 1}
-  scenarioSelectedColor: {r: 0.6, g: 0.68, b: 0.76, a: 1}
   loadingTitleFormat: '{0}'
   loadingText: Loading
   loadingTipFormat: 'TIP: {0}'
   loadingTips:
-  - If there is still time, pack your things that is essential before evacuating.
+  - If there is still time, pack your essential things before evacuating.
   successColor: {r: 0.4, g: 0.95, b: 0.5, a: 1}
   failColor: {r: 1, g: 0.45, b: 0.4, a: 1}
