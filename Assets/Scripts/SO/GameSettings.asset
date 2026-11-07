@@ -116,7 +116,7 @@ MonoBehaviour:
   hazardSignBobSpeed: 2
   hazardAlertDelay: 4
   hazardAlertMessage: 'NDRRMC: Ang inyong lugar ay madaling bahain. Tingnan ang Hazard Map app sa inyong phone.'
-  hazardWarningText: "<b>Legend</b>\n<color=#178C4F>\u25A0</color> Evacuation center\n<color=#D7E920>\u25A0</color> Your location\n<color=#FF0D00>\u25A0</color> Flooded area\n<color=#FF7F00>\u25CF</color> Pothole"
+  hazardWarningText: "<b>Legend</b>\n<color=#178C4F>\u25A0</color> Evacuation center\n<color=#D7E920>\u25A0</color> Your location\n<color=#DB635F>\u25A0</color> Flooded area\n<color=#E78349>\u25CF</color> Pothole"
   floodedRouteMessage: This area is flooded. Find another route.
   floodedRouteMessageCooldown: 8
   inventoryFullMessage: Your inventory is full.

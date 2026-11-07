@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2628190433893510032}
   - component: {fileID: 2080753583749605504}
   m_Layer: 0
-  m_Name: Pothole
+  m_Name: Pothole_Warning_Sign
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
