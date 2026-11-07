@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: Task_TurnOffStove
   title: Turn Off the Stove and LPG
+  shortTitle: Stove
   description: Shut off the burners and the LPG tank so gas cannot leak during the flood.
   domain: 1
   priority: 1

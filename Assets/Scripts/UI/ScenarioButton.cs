@@ -13,6 +13,10 @@ public class ScenarioButton : MonoBehaviour
     [SerializeField] private Image background;
     [SerializeField] private TMP_Text label;
 
+    [Header("Colors")]
+    [SerializeField] private Color normalColor = Color.white;
+    [SerializeField] private Color selectedColor = new Color(0.6f, 0.68f, 0.76f);
+
     public ScenarioData Scenario
     {
         get { return scenario; }
@@ -35,7 +39,6 @@ public class ScenarioButton : MonoBehaviour
 
     public void SetSelected(bool selected)
     {
-        GameSettings settings = GameSettings.Current;
-        background.color = selected ? settings.scenarioSelectedColor : settings.scenarioNormalColor;
+        background.color = selected ? selectedColor : normalColor;
     }
 }

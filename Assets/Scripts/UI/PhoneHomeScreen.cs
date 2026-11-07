@@ -5,7 +5,15 @@ public class PhoneHomeScreen : MonoBehaviour
 {
     public event Action<PhonePage> AppChosen;
 
+    [Header("Alert")]
+    [SerializeField] private PhoneAlertCard alertCard;
+
     private PhoneAppIcon[] icons;
+
+    private void Update()
+    {
+        if (alertCard != null) alertCard.Refresh();
+    }
 
     public void Show()
     {
@@ -25,6 +33,7 @@ public class PhoneHomeScreen : MonoBehaviour
 
     public void OpenApp(PhonePage page)
     {
+        PhoneAlertCard.IsPending = false;
         if (AppChosen != null) AppChosen(page);
     }
 

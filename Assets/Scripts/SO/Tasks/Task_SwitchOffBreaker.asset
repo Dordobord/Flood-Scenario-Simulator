@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: Task_SwitchOffBreaker
   title: Switch Off the Electrical Breaker
+  shortTitle: Breaker
   description: Cut the power before floodwater reaches outlets and wiring.
   domain: 1
   priority: 0

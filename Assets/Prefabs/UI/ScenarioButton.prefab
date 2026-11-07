@@ -160,6 +160,8 @@ MonoBehaviour:
   button: {fileID: 8311323955080220476}
   background: {fileID: 6033874165287217310}
   label: {fileID: 7465461788290906360}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  selectedColor: {r: 0.6, g: 0.68, b: 0.76, a: 1}
 --- !u!1 &5005111967192163396
 GameObject:
   m_ObjectHideFlags: 0

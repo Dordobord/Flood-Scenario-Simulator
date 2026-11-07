@@ -33,12 +33,9 @@ MonoBehaviour:
   failDelay: 1.1
   holdDrainMultiplier: 1.5
   preparationSeconds: 120
-  prepTimerFormat: 'Prep: {0}'
+  prepTimerFormat: 'PREP PHASE: {0}'
   evacuationTimerText: EVACUATION PHASE
   timerWarningSeconds: 30
-  timerNormalColor: {r: 1, g: 1, b: 1, a: 1}
-  timerWarningColor: {r: 1, g: 0.3, b: 0.3, a: 1}
-  evacuationTimerColor: {r: 1, g: 0.3, b: 0.3, a: 1}
   transitionText: Heading to higher ground...
   transitionFadeSeconds: 1
   transitionHoldSeconds: 1.5
@@ -67,18 +64,15 @@ MonoBehaviour:
   leaveConfirmSeconds: 3
   hotbarKeys: 290000002a0000002b0000002c0000002d000000i
   hotbarScrollWheel: 1
-  hotbarNormalColor: {r: 0, g: 0, b: 0, a: 0.55}
-  hotbarSelectedColor: {r: 0.25, g: 0.28, b: 0.32, a: 0.85}
-  hotbarOutlineColor: {r: 1, g: 1, b: 1, a: 1}
   hotbarSelectedScale: 1.1
   phoneTitle: Phone
-  phoneTimeFormat: HH:mm
   phoneDoneText: Done
-  phoneDoneIconColor: {r: 0.45, g: 0.48, b: 0.52, a: 1}
-  contactSavedRowColor: {r: 0.12, g: 0.165, b: 0.21, a: 1}
-  contactMarkerSavedColor: {r: 0.216, g: 0.541, b: 0.867, a: 1}
-  noteDoneTextColor: {r: 0.45, g: 0.48, b: 0.52, a: 1}
-  noteBoxDoneColor: {r: 0.114, g: 0.62, b: 0.459, a: 1}
+  contactStarSprite: {fileID: 4815476061570213978, guid: d74666859baf6f64482c05ca055009f9, type: 3}
+  contactConfirmText: Confirm
+  contactSortSeconds: 1.5
+  contactHelpTitle: Important Contacts
+  contactHelpMessage: Pin the important contacts you will need during a flood, then press Confirm.
+  contactHelpButtonText: Got it
   flashlightKey: 20
   flashlightReadyMessageFormat: Flashlight ready. Press [{0}] to turn it on or off.
   flashlightHintDelay: 3.5
@@ -106,7 +100,6 @@ MonoBehaviour:
   evacuationMarkerLabelFormat: '{0}
 
     {1} m'
-  evacuationMarkerColor: {r: 0.25, g: 0.85, b: 0.4, a: 1}
   evacCenterVolume: 1
   evacCenterSoundMinDistance: 5
   evacCenterSoundMaxDistance: 60
@@ -115,16 +108,15 @@ MonoBehaviour:
     Flooded
 
     {0} m'
-  floodWarningMarkerColor: {r: 0.88, g: 0.27, b: 0.23, a: 1}
   potholeSpeedMultiplier: 0.4
   potholeDepth: 0.3
   potholeDropSpeed: 3
-  hazardSignColor: {r: 0.95, g: 0.76, b: 0.19, a: 1}
+  potholeMessage: You stepped in a pothole. You are slowed down.
   hazardSignBobHeight: 0.15
   hazardSignBobSpeed: 2
   hazardAlertDelay: 4
-  hazardAlertMessage: 'Barangay alert: your area is flood prone. Prepare your household and evacuate.'
-  hazardWarningText: "<b>Legend</b>\n<color=#178C4F>\u25A0</color> Evacuation center\n<color=#D7E920>\u25A0</color> Your location\n<color=#FF0D00>\u25A0</color> Flooded area\n<color=#FF7F00>\u25CF</color> Pothole"
+  hazardAlertMessage: 'NDRRMC: Ang inyong lugar ay madaling bahain. Tingnan ang Hazard Map app sa inyong phone.'
+  hazardWarningText: "<b>Legend</b>\n<color=#178C4F>\u25A0</color> Evacuation center\n<color=#D7E920>\u25A0</color> Your location\n<color=#DB635F>\u25A0</color> Flooded area\n<color=#E78349>\u25CF</color> Pothole"
   floodedRouteMessage: This area is flooded. Find another route.
   floodedRouteMessageCooldown: 8
   inventoryFullMessage: Your inventory is full.
@@ -132,6 +124,13 @@ MonoBehaviour:
   taskCompleteMessage: 'Task complete:
 
 '
+  phoneAlertItem: {fileID: 11400000, guid: 0194c55d9756ff8478131e52706261ee, type: 2}
+  phoneAlertToast: Emergency alert! Check your phone.
+  phoneAlertTitle: Emergency Alert
+  phoneAlertTime: now
+  phoneAlertBlinkSeconds: 0.4
+  phoneEvacuationMessage: Save your battery and keep your phone dry. Focus on reaching the evacuation center.
+  phoneEvacuationMessageCooldown: 8
   criticalWeight: 2
   importantWeight: 1
   mistakePenalty: 0.2
@@ -139,23 +138,58 @@ MonoBehaviour:
   domainMaxPoints: 10
   totalPointsFormat: '{0:0.#} / {1:0}'
   domainPointsFormat: '{0:0.#} / {1:0}'
-  praiseFormat: Great job on {0}!
-  domainSeparator: ', '
-  lastDomainSeparator: ' and '
-  allDoneMessage: Congratulations! You evacuated with no issues.
+  resultsPrompt: Click a category to view more of your results
+  resultsPerfectLine: You were fully prepared.
+  resultsPartialLine: You made it, but you can be more prepared.
+  starMeaningFormat: Each star is one part of being prepared for a flood. You earned {0} of {1}.
+  mustDoFormat: 'Must-do tasks: {0}'
+  taskSeparator: ', '
+  domainStarPercent: 0.7
   domainDisplayNames:
   - domain: 0
     displayName: Planning
-    hint: Knowing your area and your contacts helps your family act fast.
+    shortName: Planning
+    icon: {fileID: 21300000, guid: be604a7c3ef0a6546bffb4ab47f9d423, type: 3}
+    hint: Planning means deciding what to do before a flood happens. With a plan, you will not have to guess when the water rises.
+    greatMessage: You did great on Planning.
+    goodMessage: You did well on Planning.
+    weakMessage: You still have room to grow in Planning.
+    mustDoTasks:
+    - {fileID: 11400000, guid: ad1424c25aa5c4d49b6735d6e5b5b352, type: 2}
+    - {fileID: 11400000, guid: be5d49db71a17b445ba2b99ac69f5e46, type: 2}
   - domain: 1
     displayName: Training
-    hint: Some things at home become dangerous once floodwater gets in. Making them safe protects everyone.
+    shortName: Training
+    icon: {fileID: 21300000, guid: ad24c60a763c3a84fa80b95e84f3cc64, type: 3}
+    hint: Training means knowing the right steps to stay safe. Doing them correctly helps prevent shocks and fires.
+    greatMessage: You did great on Training.
+    goodMessage: You did well on Training.
+    weakMessage: You still have room to grow in Training.
+    mustDoTasks:
+    - {fileID: 11400000, guid: 7ab07306cc304f17b9aa6934a40c5907, type: 2}
+    - {fileID: 11400000, guid: ec8e91a1de81e5d43b521b6274b5528d, type: 2}
   - domain: 2
     displayName: Material Preparedness
-    hint: Having your essentials ready means you can leave the moment you need to.
+    shortName: Material
+    icon: {fileID: 21300000, guid: 1ce28610cd7a89a48be59dd93e53d5a7, type: 3}
+    hint: Material preparedness means having your supplies ready before a flood. When they are packed, you can leave right away.
+    greatMessage: You did great on Material Preparedness.
+    goodMessage: You did well on Material Preparedness.
+    weakMessage: You still have room to grow in Material Preparedness.
+    mustDoTasks:
+    - {fileID: 11400000, guid: 9ea2e202740d0bd4091af7065a13a130, type: 2}
+    - {fileID: 11400000, guid: 0e234e705a054024982d53b5747243fe, type: 2}
   - domain: 3
     displayName: Information
-    hint: Warnings often come before the water. Paying attention gives you time to prepare.
+    shortName: Information
+    icon: {fileID: 21300000, guid: 4459c5fe1fc1c30469ee2f2933e59a3b, type: 3}
+    hint: Information means knowing what is happening and what to do next. Official warnings tell you when it is time to evacuate.
+    greatMessage: You did great on Information.
+    goodMessage: You did well on Information.
+    weakMessage: You still have room to grow in Information.
+    mustDoTasks:
+    - {fileID: 11400000, guid: 1f263728515eb2d4aa27263798ae5701, type: 2}
+    - {fileID: 11400000, guid: 14421b2e1b3e9d640b72a11e02158a7a, type: 2}
   rainfallWarningTitleFormat: 'PAGASA: {0} RAINFALL WARNING'
   rainfallWarnings:
   - level: 0
@@ -201,12 +235,10 @@ MonoBehaviour:
   noScenarioSelectedTitle: No scenario selected
   noScenarioSelectedMessage: Pick a scenario on the left to see its details.
   preparationTimeFormat: 'Preparation time: {0}'
-  scenarioNormalColor: {r: 1, g: 1, b: 1, a: 1}
-  scenarioSelectedColor: {r: 0.6, g: 0.68, b: 0.76, a: 1}
   loadingTitleFormat: '{0}'
   loadingText: Loading
   loadingTipFormat: 'TIP: {0}'
   loadingTips:
-  - If there is still time, pack your things that is essential before evacuating.
+  - If there is still time, pack your essential things before evacuating.
   successColor: {r: 0.4, g: 0.95, b: 0.5, a: 1}
   failColor: {r: 1, g: 0.45, b: 0.4, a: 1}

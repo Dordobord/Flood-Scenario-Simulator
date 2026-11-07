@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TaskData
   id: Task_ReplaceFlashlightBatteries
   title: Replace the Flashlight Batteries
+  shortTitle: Flashlight
   description: The flashlight batteries are dead. Swap in new ones.
   domain: 2
   priority: 0

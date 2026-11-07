@@ -7,9 +7,6 @@ public class BreakerMinigame : MinigameBase
     [SerializeField] private Transform circuitParent;
     [SerializeField] private BreakerSwitch mainSwitch;
 
-    [Header("Prefabs")]
-    [SerializeField] private BreakerSwitch circuitPrefab;
-
     [Header("Warning")]
     [SerializeField] private float warningSeconds = 0.4f;
 
@@ -24,14 +21,13 @@ public class BreakerMinigame : MinigameBase
     protected override void Setup()
     {
         AudioManager.PlaySfx(SoundLibrary.Current.breakerCover);
-        ClearChildren(circuitParent);
         circuits.Clear();
+        circuitParent.GetComponentsInChildren(true, circuits);
 
-        foreach (SelectChoice choice in settings.choices)
+        for (int i = 0; i < circuits.Count; i++)
         {
-            BreakerSwitch circuit = Instantiate(circuitPrefab, circuitParent);
-            circuit.Setup(choice.label, OnCircuitClicked);
-            circuits.Add(circuit);
+            string label = i < settings.choices.Count ? settings.choices[i].label : "";
+            circuits[i].Setup(label, OnCircuitClicked);
         }
 
         mainSwitch.Setup(GameSettings.Current.breakerMainLabel, OnMainClicked);

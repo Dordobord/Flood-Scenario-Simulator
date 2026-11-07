@@ -33,8 +33,14 @@ public class MinigameSettings
 [CreateAssetMenu(fileName = "NewTask", menuName = "Storm Waits/Task")]
 public class TaskData : ScriptableObject
 {
+    public string ResultName
+    {
+        get { return string.IsNullOrEmpty(shortTitle) ? title : shortTitle; }
+    }
+
     public string id;
     public string title = "New Task";
+    public string shortTitle;
     [TextArea] public string description;
 
     [Header("Preparedness")]

@@ -9,6 +9,7 @@ public class Pothole : MonoBehaviour
     [Header("Sign")]
     [SerializeField] private Transform sign;
     [SerializeField] private SpriteRenderer signSprite;
+    [SerializeField] private Color signColor = new Color(0.95f, 0.76f, 0.19f);
     [SerializeField] private float showDistance = 30f;
 
     private FirstPersonController playerInside;
@@ -66,7 +67,7 @@ public class Pothole : MonoBehaviour
         float offset = Mathf.Sin(Time.time * settings.hazardSignBobSpeed + bobPhase) * settings.hazardSignBobHeight;
         sign.localPosition = signStartPosition + Vector3.up * offset;
 
-        if (signSprite != null) signSprite.color = settings.hazardSignColor;
+        if (signSprite != null) signSprite.color = signColor;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -80,6 +81,7 @@ public class Pothole : MonoBehaviour
         player.CameraDrop = GameSettings.Current.potholeDepth;
         PhaseManager.Instance.AddPotholeStep();
         AudioManager.PlaySfx(SoundLibrary.Current.potholeSplash);
+        if (HudUI.Instance != null) HudUI.Instance.SetHazardText(GameSettings.Current.potholeMessage);
     }
 
     private void OnTriggerExit(Collider other)
@@ -90,5 +92,6 @@ public class Pothole : MonoBehaviour
         playerInside.SpeedMultiplier = 1f;
         playerInside.CameraDrop = 0f;
         playerInside = null;
+        if (HudUI.Instance != null) HudUI.Instance.SetHazardText("");
     }
 }

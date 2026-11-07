@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2628190433893510032}
   - component: {fileID: 2080753583749605504}
   m_Layer: 0
-  m_Name: Pothole
+  m_Name: Pothole_Warning_Sign
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -71,6 +71,8 @@ MonoBehaviour:
   hazardMapTask: {fileID: 11400000, guid: ad1424c25aa5c4d49b6735d6e5b5b352, type: 2}
   sign: {fileID: 4014977420178490880}
   signSprite: {fileID: 6807731708068334592}
+  showDistance: 30
+  signColor: {r: 0.95, g: 0.76, b: 0.19, a: 1}
 --- !u!1 &6717955381045102863
 GameObject:
   m_ObjectHideFlags: 0
@@ -88,7 +90,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8535100720500908676
 Transform:
   m_ObjectHideFlags: 0
@@ -196,6 +198,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6807731708068334592
 SpriteRenderer:
+  serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -211,6 +214,11 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -232,9 +240,11 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_Sprite: {fileID: 3119020103343890530, guid: 8f7598de4d8fa924f8f193f8bcb1104e, type: 3}
   m_Color: {r: 0.95, g: 0.76, b: 0.19, a: 1}
   m_FlipX: 0
@@ -244,8 +254,8 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+  m_BlendShapeWeights: []
 --- !u!114 &8255180543410310144
 MonoBehaviour:
   m_ObjectHideFlags: 0

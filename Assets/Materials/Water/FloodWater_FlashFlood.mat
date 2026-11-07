@@ -43,9 +43,9 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Caustic_Opacity: 0.75
+    - _Caustic_Opacity: 0.85
     - _Caustic_Power: 1
-    - _Color_Steps: 16
+    - _Color_Steps: 64
     - _Depth_Sample_Offset: 0.05
     - _Foam_Distance: 0.15
     - _Foam_Opacity: 0.85
@@ -59,7 +59,7 @@ Material:
     - _QueueOffset: 0
     - _Smoothness: 0
     - _Vertex_Color_Strength: 1
-    - _Water_Opacity: 0.9
+    - _Water_Opacity: 0.95
     - _Wave_Length: 4
     - _Wave_Speed: 2
     - _Wave_Strength: 0.15

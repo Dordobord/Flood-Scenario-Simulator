@@ -2359,6 +2359,7 @@ MonoBehaviour:
   heavyRainSound: {fileID: 6743497638405628207}
   heavyIndoorRainSound: {fileID: 1083717302329417728}
   followOffset: {x: 0, y: 12, z: 0}
+  strengthWithoutScenario: 0
 --- !u!82 &8208818627486197583
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2747,6 +2748,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &4457354930908118528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2153223959582368274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcaf9e9276db465ca0bd1bb754198201, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StormSounds
+  rain: {fileID: 4562732758255084622}
+  windSound: {fileID: 7946969478832077824}
+  heavyWindSound: {fileID: 2696876004126061473}
+  thunderSound: {fileID: 4085836773312574464}
 --- !u!82 &6743497638405628207
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3038,22 +3055,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &4457354930908118528
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2153223959582368274}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fcaf9e9276db465ca0bd1bb754198201, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::StormSounds
-  rain: {fileID: 4562732758255084622}
-  windSound: {fileID: 7946969478832077824}
-  heavyWindSound: {fileID: 2696876004126061473}
-  thunderSound: {fileID: 4085836773312574464}
 --- !u!1 &5769362883069474793
 GameObject:
   m_ObjectHideFlags: 0
