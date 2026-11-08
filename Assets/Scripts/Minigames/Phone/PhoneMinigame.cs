@@ -1,12 +1,10 @@
 using System;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PhoneMinigame : MinigameBase
 {
     [Header("Screen")]
-    [SerializeField] private TMP_Text timeText;
     [SerializeField] private Button homeButton;
 
     [Header("Pages")]
@@ -30,11 +28,6 @@ public class PhoneMinigame : MinigameBase
         {
             page.Init(this);
         }
-    }
-
-    private void Update()
-    {
-        timeText.text = DateTime.Now.ToString(GameSettings.Current.phoneTimeFormat);
     }
 
     public void ShowHome()

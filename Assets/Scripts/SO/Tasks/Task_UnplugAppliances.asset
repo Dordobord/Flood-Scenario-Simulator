@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TaskData
   id: Task_UnplugAppliances
   title: Unplug the Appliances
+  shortTitle: Appliances
   description: Unplug the appliances before switching off the main breaker.
   domain: 1
   priority: 0

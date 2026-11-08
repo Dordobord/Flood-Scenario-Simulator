@@ -12,6 +12,7 @@ public class FloodWarningMarker : MonoBehaviour
     [SerializeField] private RectTransform pin;
     [SerializeField] private Image iconImage;
     [SerializeField] private TMP_Text label;
+    [SerializeField] private Color markerColor = new Color(0.88f, 0.27f, 0.23f);
 
     [Header("Screen")]
     [SerializeField] private float edgePadding = 20f;
@@ -33,8 +34,8 @@ public class FloodWarningMarker : MonoBehaviour
 
         pin.position = GetScreenPoint(mainCamera);
         label.text = string.Format(settings.floodWarningMarkerLabelFormat, Mathf.RoundToInt(meters));
-        label.color = settings.floodWarningMarkerColor;
-        iconImage.color = settings.floodWarningMarkerColor;
+        label.color = markerColor;
+        iconImage.color = markerColor;
     }
 
     private Vector3 GetScreenPoint(Camera mainCamera)

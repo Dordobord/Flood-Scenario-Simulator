@@ -7,6 +7,7 @@ public class HazardMapAlert : MonoBehaviour
 
     private void Start()
     {
+        PhoneAlertCard.IsPending = false;
         Invoke(nameof(ShowAlert), GameSettings.Current.hazardAlertDelay);
     }
 
@@ -17,6 +18,11 @@ public class HazardMapAlert : MonoBehaviour
         if (!tasks.ActiveTasks.Contains(hazardMapTask) || tasks.IsCompleted(hazardMapTask)) return;
         if (PhaseManager.Instance != null && PhaseManager.Instance.CurrentPhase != GamePhase.Preparation) return;
 
-        GameEvents.RaiseMessage(GameSettings.Current.hazardAlertMessage);
+        GameSettings settings = GameSettings.Current;
+
+        PhoneAlertCard.IsPending = true;
+        AudioManager.PlaySfx(SoundLibrary.Current.evacSiren);
+        if (HudUI.Instance != null) HudUI.Instance.BlinkItem(settings.phoneAlertItem);
+        GameEvents.RaiseMessage(settings.phoneAlertToast);
     }
 }

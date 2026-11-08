@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StormWaits.TaskData
   id: Task_PlaceSandbags
   title: Place Sandbags at the Entrance
+  shortTitle: Sandbags
   description: Block the entrance against incoming floodwater.
   domain: 2
   priority: 1

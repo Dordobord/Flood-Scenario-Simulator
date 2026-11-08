@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StormWaits.TaskData
   id: Task_CloseWindows
   title: Close All Windows
+  shortTitle: Windows
   description: Close every window so wind-driven rain and floodwater have fewer ways into the house.
   domain: 2
   priority: 1

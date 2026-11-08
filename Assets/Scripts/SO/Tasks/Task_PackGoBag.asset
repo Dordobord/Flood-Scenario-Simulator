@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StormWaits.TaskData
   id: Task_PackGoBag
   title: Pack the Go Bag
+  shortTitle: Go bag
   description: Fit all the essentials in the go bag.
   domain: 2
   priority: 0

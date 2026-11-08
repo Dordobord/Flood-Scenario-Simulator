@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: c7c4bafe1c6fd8e4cb3ff1a517e0fe4f
+guid: 272e11ee0489cbe46b1d425c579f4f3b
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5822653755368913648
-    second: StarIcon_0
+      213: 4948933554451466441
+    second: telephone_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -42,11 +42,11 @@ TextureImporter:
     mipBias: 0
     wrapU: 1
     wrapV: 1
-    wrapW: 1
+    wrapW: 0
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -115,13 +115,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: StarIcon_0
+      name: telephone_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 64
-        height: 64
+        width: 512
+        height: 512
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -130,8 +130,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0fabbd2adb83ec050800000000000000
-      internalID: 5822653755368913648
+      spriteID: 9c84712e8d42ea440800000000000000
+      internalID: 4948933554451466441
       vertices: []
       indices: 
       edges: []
@@ -140,7 +140,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -150,7 +150,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      StarIcon_0: 5822653755368913648
+      telephone_0: 4948933554451466441
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -43,12 +43,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Caustic_Opacity: 0.4
+    - _Caustic_Opacity: 0.85
     - _Caustic_Power: 1
     - _Color_Steps: 16
     - _Depth_Sample_Offset: 0.05
     - _Foam_Distance: 0.1
-    - _Foam_Opacity: 0.4
+    - _Foam_Opacity: 0.85
     - _Foam_Resolution_Factor: 512
     - _Foam_Scale: 512
     - _Intersection_Power: 20
@@ -59,12 +59,12 @@ Material:
     - _QueueOffset: 0
     - _Smoothness: 0
     - _Vertex_Color_Strength: 1
-    - _Water_Opacity: 0.9
+    - _Water_Opacity: 0.95
     - _Wave_Length: 1
     - _Wave_Speed: 0.2
     - _Wave_Strength: 0.05
     m_Colors:
-    - _Caustic_Tint: {r: 1, g: 1, b: 1, a: 1}
+    - _Caustic_Tint: {r: 0.6, g: 0.63, b: 0.68, a: 1}
     - _Foam_Color: {r: 1, g: 1, b: 1, a: 1}
     - _Foam_Speed: {r: 0.01, g: 0.01, b: 0, a: 0}
     - _Scroll_Speed: {r: 0.02, g: 0, b: 0, a: 0}

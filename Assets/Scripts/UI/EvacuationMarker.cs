@@ -12,6 +12,7 @@ public class EvacuationMarker : MonoBehaviour
     [SerializeField] private RectTransform pin;
     [SerializeField] private Image iconImage;
     [SerializeField] private TMP_Text label;
+    [SerializeField] private Color markerColor = new Color(0.25f, 0.85f, 0.4f);
 
     [Header("Screen")]
     [SerializeField] private float edgePadding = 20f;
@@ -33,7 +34,7 @@ public class EvacuationMarker : MonoBehaviour
 
         pin.position = GetScreenPoint(mainCamera);
         label.text = string.Format(settings.evacuationMarkerLabelFormat, GetCenterName(), Mathf.RoundToInt(meters));
-        iconImage.color = settings.evacuationMarkerColor;
+        iconImage.color = markerColor;
     }
 
     private Vector3 GetScreenPoint(Camera mainCamera)

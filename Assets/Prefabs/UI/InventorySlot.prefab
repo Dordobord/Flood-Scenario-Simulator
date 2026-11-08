@@ -446,6 +446,9 @@ MonoBehaviour:
   background: {fileID: 1416481899834600501}
   outline: {fileID: 3672113048652085578}
   numberText: {fileID: 7891768164892967210}
+  normalColor: {r: 0, g: 0, b: 0, a: 0.55}
+  selectedColor: {r: 0.25, g: 0.28, b: 0.32, a: 0.85}
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &3672113048652085578
 MonoBehaviour:
   m_ObjectHideFlags: 0

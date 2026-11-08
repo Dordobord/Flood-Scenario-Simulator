@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StormWaits.TaskData
   id: Task_PrepareEmergencyKit
   title: Prepare the First Aid Kit
+  shortTitle: First aid kit
   description: Stock the first aid kit with the supplies your household needs.
   domain: 2
   priority: 1
