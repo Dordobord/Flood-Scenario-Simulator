@@ -10,7 +10,7 @@ public class FloodedRoute : MonoBehaviour
     [SerializeField] private GameObject mapReadSign;
     [SerializeField] private GameObject deepWater;
 
-    private float lastMessageTime = -999f;
+    private bool playerInside;
 
     private void Reset()
     {
@@ -42,10 +42,17 @@ public class FloodedRoute : MonoBehaviour
     {
         if (other.GetComponentInParent<FirstPersonController>() == null || PhaseManager.Instance == null) return;
         if (PhaseManager.Instance.CurrentPhase != GamePhase.Evacuation) return;
-        if (Time.time - lastMessageTime < GameSettings.Current.floodedRouteMessageCooldown) return;
 
-        lastMessageTime = Time.time;
-        GameEvents.RaiseMessage(GameSettings.Current.floodedRouteMessage);
+        playerInside = true;
+        if (HudUI.Instance != null) HudUI.Instance.SetHazardText(GameSettings.Current.floodedRouteMessage);
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (!playerInside || other.GetComponentInParent<FirstPersonController>() == null) return;
+
+        playerInside = false;
+        if (HudUI.Instance != null) HudUI.Instance.SetHazardText("");
     }
 
     private void SetVisible(GameObject target, bool show)

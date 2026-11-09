@@ -160,7 +160,6 @@ public class GameSettings : ScriptableObject
     public string hazardAlertMessage = "Barangay alert: your area is flood prone. Check the Hazard Map app on your phone.";
     [TextArea] public string hazardWarningText = "<color=#D63031><b>Flood warning</b></color>\n<b>Your area is prone to flooding soon.</b>\nAvoid potholes and evacuate immediately.";
     public string floodedRouteMessage = "This area is flooded. Find another route.";
-    public float floodedRouteMessageCooldown = 8f;
 
     [Header("Messages")]
     public string inventoryFullMessage = "Your inventory is full.";
