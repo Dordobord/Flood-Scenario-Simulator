@@ -531,7 +531,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5789707317090999144, guid: facfe56d35ec3b94185f5c79576f14c2, type: 3}
       propertyPath: m_Name
-      value: Canvas
+      value: Options Panel
+      objectReference: {fileID: 0}
+    - target: {fileID: 7245879931854954923, guid: facfe56d35ec3b94185f5c79576f14c2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7848550886714819945, guid: facfe56d35ec3b94185f5c79576f14c2, type: 3}
       propertyPath: m_AnchorMax.y

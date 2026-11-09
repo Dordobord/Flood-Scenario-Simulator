@@ -16,12 +16,10 @@ public class Settings : MonoBehaviour
     [SerializeField] private Slider AmbienceSlider;
     [SerializeField] private Slider EffectsSlider;
     public AudioMixer audioMixer;
-    public SoundLibrary soundLibrary;
-    void Start()
+    private void Start()
     {
         InitializeResolutionDropdown();
-
-        SetVolumeSliderValue();
+        SetVolumeSliders();
     }
 
     private void InitializeResolutionDropdown()
@@ -53,42 +51,57 @@ public class Settings : MonoBehaviour
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
     }
 
-    public void SetFullScreen(bool isFullscreen)
+    private void SetVolumeSliders()
     {
-        Screen.fullScreen = isFullscreen;
+        if (!PlayerPrefs.HasKey("MasterVolume"))
+            PlayerPrefs.SetFloat("MasterVolume", 1f);
+
+        if (!PlayerPrefs.HasKey("MusicVolume"))
+            PlayerPrefs.SetFloat("MusicVolume", 1f);
+
+        if (!PlayerPrefs.HasKey("AmbienceVolume"))
+            PlayerPrefs.SetFloat("AmbienceVolume", 1f);
+
+        if (!PlayerPrefs.HasKey("EffectsVolume"))
+            PlayerPrefs.SetFloat("EffectsVolume", 1f);
+
+        PlayerPrefs.Save();
+
+        LoadVolume();
+    }
+    public void ChangeMasterVolume()
+    {
+        audioMixer.SetFloat("MasterVolume", MasterSlider.value);
     }
 
-    public void SetVolume()
+    public void ChangeMusicVolume()
     {
-        float masterVolume = MasterSlider.value;
-        float musicVolume = MusicSlider.value;
-        float ambienceVolume = AmbienceSlider.value;
-        float effectsVolume = EffectsSlider.value;
-        audioMixer.SetFloat("MasterVolume", masterVolume);
-        audioMixer.SetFloat("MusicVolume", musicVolume);
-        audioMixer.SetFloat("AmbienceVolume", ambienceVolume);
-        audioMixer.SetFloat("EffectsVolume", effectsVolume);
+        audioMixer.SetFloat("MusicVolume", MusicSlider.value);
     }
 
-    private void SetVolumeSliderValue()
+    public void ChangeAmbienceVolume()
     {
-        float defaultVolume;
-        bool result = audioMixer.GetFloat("volume", out defaultVolume);
-
-        if (result)
-        {
-            MasterSlider.value = defaultVolume;
-        }
+        audioMixer.SetFloat("AmbienceVolume", AmbienceSlider.value);
     }
 
-    private void OnEnable()
+    public void ChangeEffectsVolume()
     {
-        SetVolumeSliderValue();
+        audioMixer.SetFloat("EffectsVolume", EffectsSlider.value);
     }
 
-    //back button
-    public void Back()
+    private void LoadVolume()
     {
-        SceneManager.LoadScene("MASTER_Start");
+        MasterSlider.value = PlayerPrefs.GetFloat("MasterVolume");
+        MusicSlider.value = PlayerPrefs.GetFloat("MusicVolume");
+        AmbienceSlider.value = PlayerPrefs.GetFloat("AmbienceVolume");
+        EffectsSlider.value = PlayerPrefs.GetFloat("EffectsVolume");
+    }
+
+    private void SaveVolume()
+    {
+        PlayerPrefs.SetFloat("MasterVolume", MasterSlider.value);
+        PlayerPrefs.SetFloat("MusicVolume", MusicSlider.value);
+        PlayerPrefs.SetFloat("AmbienceVolume", AmbienceSlider.value);
+        PlayerPrefs.SetFloat("EffectsVolume", EffectsSlider.value);
     }
 }

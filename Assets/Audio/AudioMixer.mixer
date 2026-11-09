@@ -72,6 +72,8 @@ AudioMixerController:
     name: AmbienceVolume
   - guid: 6d44c68544e13344b9175e8254f8cc24
     name: EffectsVolume
+  - guid: d9aec5f26b9637e43b015b599a1c465a
+    name: MasterVolume
   - guid: f9b93ff5d5ce5c54d859e0eaf2723d4c
     name: MusicVolume
   m_AudioMixerGroupViews:
@@ -129,9 +131,10 @@ AudioMixerSnapshotController:
   m_AudioMixer: {fileID: 24100000}
   m_SnapshotID: 8f04a05c8dd1ed04abfae468e82b1319
   m_FloatValues:
-    d9aec5f26b9637e43b015b599a1c465a: 0.44032478
-    6d44c68544e13344b9175e8254f8cc24: -0.48210806
-    f9b93ff5d5ce5c54d859e0eaf2723d4c: -30.320118
+    d9aec5f26b9637e43b015b599a1c465a: 0.50781465
+    6d44c68544e13344b9175e8254f8cc24: 0.78017235
+    f9b93ff5d5ce5c54d859e0eaf2723d4c: 0.97899175
+    3604f3ff42b3f214296221f04411c31f: 0.78017235
   m_TransitionOverrides: {}
 --- !u!244 &3751833828606308540
 AudioMixerEffectController:
