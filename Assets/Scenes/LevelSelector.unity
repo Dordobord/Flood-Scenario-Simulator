@@ -410,6 +410,8 @@ MonoBehaviour:
   button: {fileID: 124457815}
   background: {fileID: 124457816}
   label: {fileID: 1648846131}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  selectedColor: {r: 0.6, g: 0.68, b: 0.76, a: 1}
 --- !u!1 &215929997
 GameObject:
   m_ObjectHideFlags: 0
@@ -796,6 +798,8 @@ MonoBehaviour:
   button: {fileID: 424453136}
   background: {fileID: 424453137}
   label: {fileID: 1593691835}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  selectedColor: {r: 0.6, g: 0.68, b: 0.76, a: 1}
 --- !u!1 &554268027
 GameObject:
   m_ObjectHideFlags: 0
@@ -2597,6 +2601,8 @@ MonoBehaviour:
   button: {fileID: 1169696255}
   background: {fileID: 1169696256}
   label: {fileID: 1743310066}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  selectedColor: {r: 0.6, g: 0.68, b: 0.76, a: 1}
 --- !u!1 &1192806735
 GameObject:
   m_ObjectHideFlags: 0
@@ -4308,9 +4314,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
   library: {fileID: 11400000, guid: 9c019fd93d81580d134ee4f65c13b650, type: 2}
-  musicGroup: {fileID: 0}
-  sfxGroup: {fileID: 0}
-  ambienceGroup: {fileID: 0}
+  musicGroup: {fileID: -8361601929086405401, guid: 55e886d56d6d1404c91948bf755b9d4f, type: 2}
+  sfxGroup: {fileID: 5551621850026728569, guid: 55e886d56d6d1404c91948bf755b9d4f, type: 2}
+  ambienceGroup: {fileID: -2245488123971581265, guid: 55e886d56d6d1404c91948bf755b9d4f, type: 2}
 --- !u!4 &2023494459
 Transform:
   m_ObjectHideFlags: 0
@@ -4431,6 +4437,8 @@ MonoBehaviour:
   button: {fileID: 2144535296}
   background: {fileID: 2144535297}
   label: {fileID: 1967328531}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  selectedColor: {r: 0.6, g: 0.68, b: 0.76, a: 1}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
