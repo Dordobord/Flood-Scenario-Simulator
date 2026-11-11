@@ -14,8 +14,10 @@ public class ResultSlider : MonoBehaviour
     [Header("Motion")]
     [SerializeField] private float slideSpacing = 700f;
     [SerializeField, Range(0f, 1f)] private float sideScale = 0.76f;
-    [SerializeField, Range(0f, 1f)] private float sideAlpha = 0.5f;
     [SerializeField] private float moveSpeed = 8f;
+
+    [Header("Dim")]
+    [SerializeField] private Image backdrop;
 
     [Header("Arrows")]
     [SerializeField] private float arrowMoveDistance = 4f;
@@ -40,6 +42,8 @@ public class ResultSlider : MonoBehaviour
 
         previousButton.onClick.AddListener(() => ChangeSlide(-1));
         nextButton.onClick.AddListener(() => ChangeSlide(1));
+
+        if (backdrop != null) backdrop.raycastTarget = false;
     }
 
     private void Update()
@@ -87,6 +91,12 @@ public class ResultSlider : MonoBehaviour
             dots[i].color = i == current ? dotOnColor : dotOffColor;
         }
 
+        if (backdrop != null)
+        {
+            backdrop.transform.SetParent(slides[current].transform.parent, false);
+            backdrop.transform.SetAsLastSibling();
+        }
+
         slides[current].transform.SetAsLastSibling();
     }
 
@@ -96,7 +106,7 @@ public class ResultSlider : MonoBehaviour
         RectTransform rect = slides[index].GetComponent<RectTransform>();
 
         float scale = distance == 0 ? 1f : sideScale;
-        float alpha = distance == 0 ? 1f : Mathf.Abs(distance) == 1 ? sideAlpha : 0f;
+        float alpha = Mathf.Abs(distance) <= 1 ? 1f : 0f;
 
         rect.anchoredPosition = Vector2.Lerp(rect.anchoredPosition, new Vector2(distance * slideSpacing, 0f), step);
         rect.localScale = Vector3.Lerp(rect.localScale, Vector3.one * scale, step);

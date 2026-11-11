@@ -19,17 +19,14 @@ MonoBehaviour:
   domain: 2
   priority: 0
   scoreMethod: 0
-  isRequired: 1
   recommendation: 
   rewardItem: {fileID: 11400000, guid: 411a2805952cc2344b08c36bff28c831, type: 2}
   minigame:
     type: 6
     prompt: 
     holdSeconds: 3
-    cursorSpeed: 1
-    targetWidth: 0.2
-    requiredHits: 1
     revealMessage: 
+    showRainfallWarning: 0
     choices:
     - label: Government-issued ID
       isCorrect: 1
@@ -67,3 +64,6 @@ MonoBehaviour:
       gridWidth: 1
       gridHeight: 1
   mustBePlaced: 1
+  needsPower: 0
+  reopenToRead: 0
+  completeMessage: Your documents are sealed and stored in a high place.

@@ -61,6 +61,7 @@ public class TaskData : ScriptableObject
 
     [Header("After completing")]
     public bool reopenToRead;
+    [TextArea] public string completeMessage;
 }
 
 [Serializable]

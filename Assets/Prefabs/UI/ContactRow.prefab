@@ -857,7 +857,7 @@ MonoBehaviour:
   rowColor: {r: 0.945, g: 0.937, b: 0.91, a: 1}
   savedRowColor: {r: 1, g: 1, b: 1, a: 1}
   markerColor: {r: 0.706, g: 0.698, b: 0.663, a: 1}
-  savedMarkerColor: {r: 0.729, g: 0.459, b: 0.09, a: 1}
+  savedMarkerColor: {r: 0.9331634, g: 0.9811321, b: 0, a: 1}
 --- !u!1 &8720919355895381252
 GameObject:
   m_ObjectHideFlags: 0

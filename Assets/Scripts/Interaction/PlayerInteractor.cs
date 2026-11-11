@@ -5,12 +5,14 @@ public class PlayerInteractor : MonoBehaviour
     [SerializeField] private LayerMask interactMask = ~0;
 
     private IHoldInteractable currentHold;
+    private HoverOutline currentOutline;
 
     private void Update()
     {
         if (MinigameManager.IsActive || PhaseManager.IsPlayerLocked)
         {
             SetHoldTarget(null);
+            SetOutline(null);
             SetPrompt("");
             return;
         }
@@ -26,6 +28,7 @@ public class PlayerInteractor : MonoBehaviour
 
         if (currentHold != null)
         {
+            SetOutline(OutlineFor(currentHold as Component));
             IInteractable holdInfo = hitCollider.GetComponentInParent<IInteractable>();
             if (holdInfo != null)
             {
@@ -44,10 +47,12 @@ public class PlayerInteractor : MonoBehaviour
 
         if (target == null || !target.CanInteract)
         {
+            SetOutline(null);
             SetPrompt("");
             return;
         }
 
+        SetOutline(OutlineFor(target as Component));
         SetPrompt(string.Format(settings.promptFormat, settings.interactKey, target.Prompt));
 
         if (MinigameInput.KeyPressedThisFrame(settings.interactKey))
@@ -59,6 +64,25 @@ public class PlayerInteractor : MonoBehaviour
     private void OnDisable()
     {
         SetHoldTarget(null);
+        SetOutline(null);
+    }
+
+    private HoverOutline OutlineFor(Component owner)
+    {
+        if (owner == null) return null;
+
+        HoverOutline outline = owner.GetComponentInParent<HoverOutline>();
+        if (outline == null) outline = owner.gameObject.AddComponent<HoverOutline>();
+        return outline;
+    }
+
+    private void SetOutline(HoverOutline outline)
+    {
+        if (currentOutline == outline) return;
+
+        if (currentOutline != null) currentOutline.SetShown(false);
+        currentOutline = outline;
+        if (currentOutline != null) currentOutline.SetShown(true);
     }
 
     private IInteractable FindInteractable(Collider hitCollider)

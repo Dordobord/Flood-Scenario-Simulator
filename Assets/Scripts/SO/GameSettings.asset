@@ -29,6 +29,7 @@ MonoBehaviour:
   selectItemMessageFormat: You're not holding {0} in your hand.
   reopenPromptFormat: '{0} (read again)'
   reopenInstructions: Already done. Close the window when you are finished reading.
+  hoverOutlineMaterial: {fileID: 2100000, guid: 2ff05452c74442a41b77f2c2be9c8205, type: 2}
   successDelay: 0.9
   failDelay: 1.1
   holdDrainMultiplier: 1.5
@@ -118,7 +119,6 @@ MonoBehaviour:
   hazardAlertMessage: 'NDRRMC: Ang inyong lugar ay madaling bahain. Tingnan ang Hazard Map app sa inyong phone.'
   hazardWarningText: "<b>Legend</b>\n<color=#178C4F>\u25A0</color> Evacuation center\n<color=#D7E920>\u25A0</color> Your location\n<color=#DB635F>\u25A0</color> Flooded area\n<color=#E78349>\u25CF</color> Pothole"
   floodedRouteMessage: This area is flooded. Find another route.
-  floodedRouteMessageCooldown: 8
   inventoryFullMessage: Your inventory is full.
   collectedMessageFormat: 'Added {0} to your inventory. '
   taskCompleteMessage: 'Task complete:

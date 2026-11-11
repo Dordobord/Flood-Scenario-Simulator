@@ -164,7 +164,8 @@ public class HudUI : MonoBehaviour
 
     private void ShowTaskCompleted(TaskData task)
     {
-        ShowMessage(GameSettings.Current.taskCompleteMessage + task.title);
+        if (!string.IsNullOrEmpty(task.completeMessage)) ShowMessage(task.completeMessage);
+        else ShowMessage(GameSettings.Current.taskCompleteMessage + task.title);
     }
 
     private void FindSlots()

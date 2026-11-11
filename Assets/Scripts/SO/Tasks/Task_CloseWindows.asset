@@ -15,23 +15,20 @@ MonoBehaviour:
   id: Task_CloseWindows
   title: Close All Windows
   shortTitle: Windows
-  description: Close every window so wind-driven rain and floodwater have fewer ways into the house.
+  description: "Close every window so strong wind can\u2019t blow rain and debris into the house."
   domain: 2
   priority: 1
   scoreMethod: 0
-  isRequired: 1
-  recommendation: Close and lock every window before you leave so rain and floodwater have fewer ways in.
+  recommendation: "Close and lock every window before a typhoon so wind can\u2019t blow rain and debris inside."
   rewardItem: {fileID: 0}
   minigame:
     type: 0
     prompt: 
     holdSeconds: 3
-    cursorSpeed: 0.9
-    targetWidth: 0.2
-    requiredHits: 3
     revealMessage: 
-    question: 
-    phoneApp: {fileID: 0}
+    showRainfallWarning: 0
     choices: []
   mustBePlaced: 0
   needsPower: 0
+  reopenToRead: 0
+  completeMessage: "All windows are closed. Strong wind can\u2019t blow rain and debris inside."

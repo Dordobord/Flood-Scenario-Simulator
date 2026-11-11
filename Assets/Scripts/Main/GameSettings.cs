@@ -29,6 +29,9 @@ public class GameSettings : ScriptableObject
     public string reopenPromptFormat = "{0} (read again)";
     public string reopenInstructions = "Already done. Close the window when you are finished reading.";
 
+    [Header("Hover Outline")]
+    public Material hoverOutlineMaterial;
+
     [Header("Minigame timing")]
     public float successDelay = 0.9f;
     public float failDelay = 1.1f;
