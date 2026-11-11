@@ -208,7 +208,7 @@ MonoBehaviour:
   pauseTitle: PAUSED
   leaveHouseMessage: Finish preparing first. You will evacuate when the timer ends.
   leaveHouseMessageCooldown: 3
-  maxRainDropsPerSecond: 4000
+  maxRainDropsPerSecond: 2000
   rainRampSeconds: 4
   maxWetness: 1
   floodHouseInside: 0
