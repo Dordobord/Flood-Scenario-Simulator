@@ -49,6 +49,7 @@ public class PauseMenuUI : MonoBehaviour
     private bool CanPause()
     {
         if (MinigameManager.IsActive || PhaseManager.Instance == null) return false;
+        if (MinigameManager.ClosedFrame == Time.frameCount) return false;
 
         GamePhase phase = PhaseManager.Instance.CurrentPhase;
         return phase == GamePhase.Preparation || phase == GamePhase.Evacuation;

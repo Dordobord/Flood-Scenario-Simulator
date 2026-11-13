@@ -19,23 +19,18 @@ MonoBehaviour:
   domain: 3
   priority: 0
   scoreMethod: 0
-  isRequired: 1
   recommendation: Check the TV, radio, or phone for the latest PAGASA warning before the storm arrives.
   rewardItem: {fileID: 0}
   minigame:
     type: 12
     prompt: The TV is full of static. Change the channel until the picture clears.
     holdSeconds: 3
-    cursorSpeed: 1
-    targetWidth: 0.2
-    requiredHits: 1
     revealMessage: 'PAGASA: ORANGE RAINFALL WARNING
 
       Flooding is threatening in low-lying areas and near rivers.'
-    question: 
     showRainfallWarning: 1
-    phoneApp: {fileID: 0}
     choices: []
   mustBePlaced: 0
   needsPower: 1
-  reopenToRead: 1
+  reopenToRead: 0
+  completeMessage: 

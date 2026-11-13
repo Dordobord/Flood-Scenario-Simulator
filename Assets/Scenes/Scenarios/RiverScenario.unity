@@ -400,7 +400,7 @@ PrefabInstance:
     - target: {fileID: 8917502404622742489, guid: ce36b5219398dba4d8fac23cc027afdb, type: 3}
       propertyPath: group
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 926537950}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 1256836179333364341, guid: ce36b5219398dba4d8fac23cc027afdb, type: 3}
@@ -19522,6 +19522,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3617475087589272711, guid: 70ba7d74e39aa964db9652d9c388dc6d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8170329770194155053, guid: 70ba7d74e39aa964db9652d9c388dc6d, type: 3}
       propertyPath: m_Name
       value: EvacuationCenter
@@ -22703,6 +22707,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fb6acf120102f7f4db99d4ed9f3afedb, type: 3}
+--- !u!114 &926537950 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 467740330823868808, guid: fb6acf120102f7f4db99d4ed9f3afedb, type: 3}
+  m_PrefabInstance: {fileID: 926537949}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbd67ff80e760774e8749088d56838f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ApplianceGroup
 --- !u!1001 &927899496
 PrefabInstance:
   m_ObjectHideFlags: 0

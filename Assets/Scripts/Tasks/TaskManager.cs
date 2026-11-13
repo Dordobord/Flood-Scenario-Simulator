@@ -90,6 +90,7 @@ public class TaskManager : MonoBehaviour
     public void ResetTask(TaskData task)
     {
         if (task == null || !completed.Remove(task)) return;
+        attempts.Remove(task);
         if (Changed != null) Changed();
     }
 

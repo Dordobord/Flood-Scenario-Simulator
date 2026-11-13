@@ -13,6 +13,8 @@ public class MinigameManager : MonoBehaviour
 
     public static bool CursorFree { get; private set; }
 
+    public static int ClosedFrame { get; private set; }
+
     public static bool IsPhoneOpen
     {
         get { return Instance != null && IsActive && Instance.phoneDevice != null; }
@@ -292,7 +294,7 @@ public class MinigameManager : MonoBehaviour
         if (!IsActive) return;
 
         GameSettings settings = GameSettings.Current;
-        if (MinigameInput.KeyPressedThisFrame(settings.cancelMinigameKey))
+        if (MinigameInput.KeyPressedThisFrame(settings.cancelMinigameKey) || MinigameInput.KeyPressedThisFrame(settings.pauseKey))
         {
             Cancel();
             return;
@@ -427,6 +429,7 @@ public class MinigameManager : MonoBehaviour
         HideAllMinigames();
         window.SetActive(false);
         IsActive = false;
+        ClosedFrame = Time.frameCount;
 
         SetCursorFree(false);
 
